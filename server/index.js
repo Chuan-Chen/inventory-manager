@@ -1,10 +1,11 @@
-const express = require('express');
-
-const cors = require("cors");
+const dotenv = require("dotenv")
 const server = require("./src/app");
+const connectDB = require('./src/services/mongo');
+
+dotenv.config()
 const PORT = process.env.PORT;
 
-console.log(process.env.PORT)
+connectDB();
 
 server.listen(PORT, ()=>{
     console.log(`listening on http://localhost:${PORT}`)
