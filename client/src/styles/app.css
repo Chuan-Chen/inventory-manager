@@ -1,5 +1,5 @@
-body, html, #root{
+#app{
+    background-color: #e8e9f3;
     height: 100%;
     width: 100%;
-    margin: 0px;
 }

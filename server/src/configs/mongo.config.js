@@ -3,5 +3,9 @@ dotenv.config();
 
 module.exports = {
     URI: process.env.MONGO_URI,
-    DB_NAME: "Inventory_Manager",
+    Connection_Options: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: "Inventory_Manager",
+    },
 };

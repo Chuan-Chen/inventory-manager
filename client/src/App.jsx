@@ -1,11 +1,13 @@
-import "./app.css";
+import "./styles/app.css"
+
+import Sidebar from "./components/Sidebar";
 
 
 
 function App() {
   return (
     <div id = "app">
-
+      <Sidebar id="sidebar"/>
     </div> 
   )
 }
