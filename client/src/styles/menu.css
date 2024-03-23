@@ -1,0 +1,9 @@
+.menu{
+    position: absolute;
+    height: 32px;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: 4s ease-out;
+}

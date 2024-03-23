@@ -7,17 +7,19 @@ import logo from "../images/logo.svg"
 import info from "../images/info.svg"
 import home from "../images/home.svg"
 import profile from "../images/person.svg"
+import menu from "../images/menu.svg"
+import menu_open from "../images/menu_open.svg";
+import { useState } from "react"
 
 
-
-export default function Sidebar(){
-
+export default function Sidebar({toggle}){
 
     return (
-        <div id = "sidebar">
+        <div id = "sidebar-parent" style = {{visibility: toggle ? "visible" : "hidden", width: toggle ? "20%" : "0%", fontSize: toggle ? "1em" : "0em"}}>
+            <div id="sidebar">
             <div id = "logo">
-                <img src = {logo} height="70px"></img>
-                <div id = "sidebar-logo-description">The Shelf</div>
+                <img src = {logo} height = "100%" width = "20%"></img>
+                <div id = "sidebar-logo-description">Shelfy</div>
             </div>
             <div id = "sidebar-container">
                 <div id = "searchArea" alt = "Search..">
@@ -67,6 +69,8 @@ export default function Sidebar(){
             </div>
 
         </div>
+        </div>
+        
     )
 
 
