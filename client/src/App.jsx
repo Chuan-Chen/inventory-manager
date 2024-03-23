@@ -18,9 +18,9 @@ function App() {
 
   return (
     <div id = "app">
-      <Searchbar toggle = {true}></Searchbar>
+      <Searchbar toggle = {false} ></Searchbar>
       <MenuBtn toggle = {sidebarHandler}></MenuBtn>
-      <Sidebar id="sidebar" toggle = {sidebarToggle}/>
+      <Sidebar id="sidebar" toggle = {sidebarToggle} max_width = "20%"/>
     </div> 
   )
 }

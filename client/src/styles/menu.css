@@ -7,3 +7,9 @@
     user-select: none;
     transition: 4s ease-out;
 }
+
+@media only screen and (max-width: 768px){
+    .menu{
+        display: none;
+    }
+}

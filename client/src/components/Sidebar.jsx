@@ -12,10 +12,10 @@ import menu_open from "../images/menu_open.svg";
 import { useState } from "react"
 
 
-export default function Sidebar({toggle}){
+export default function Sidebar({toggle, max_width}){
 
     return (
-        <div id = "sidebar-parent" style = {{visibility: toggle ? "visible" : "hidden", width: toggle ? "20%" : "0%", fontSize: toggle ? "1em" : "0em"}}>
+        <div id = "sidebar-parent" style = {{visibility: toggle ? "visible" : "hidden", width: toggle ? max_width : "0%", fontSize: toggle ? "1em" : "0em"}}>
             <div id="sidebar">
             <div id = "logo">
                 <img src = {logo} height = "100%" width = "20%"></img>
