@@ -16,11 +16,17 @@ function App() {
     setSidebarToggle(!sidebarToggle);
   }
 
+  const searchbarHandler = () => {
+    setSearchBarToggle(!searchbarToggle);
+    console.log("toggle called")
+    return searchbarToggle;
+  }
+
   return (
     <div id = "app">
-      <Searchbar toggle = {false} ></Searchbar>
+      <Searchbar toggle = {searchbarHandler} display = {searchbarToggle}></Searchbar>
       <MenuBtn toggle = {sidebarHandler}></MenuBtn>
-      <Sidebar id="sidebar" toggle = {sidebarToggle} max_width = "20%"/>
+      <Sidebar id="sidebar" toggle = {sidebarToggle} searchbar_toggle = {searchbarHandler} max_width = "20%"/>
     </div> 
   )
 }

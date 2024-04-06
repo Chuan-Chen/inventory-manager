@@ -12,7 +12,7 @@ import menu_open from "../images/menu_open.svg";
 import { useState } from "react"
 
 
-export default function Sidebar({toggle, max_width}){
+export default function Sidebar({toggle, searchbar_toggle , max_width}){
 
     return (
         <div id = "sidebar-parent" style = {{visibility: toggle ? "visible" : "hidden", width: toggle ? max_width : "0%", fontSize: toggle ? "1em" : "0em"}}>
@@ -24,7 +24,7 @@ export default function Sidebar({toggle, max_width}){
             <div id = "sidebar-container">
                 <div id = "searchArea" alt = "Search..">
                     <div id = "sidebar-item-logo">
-                        <img src = {search}></img>
+                        <img id = "sidebar-search-icon" src = {search} onClick={searchbar_toggle}></img>
                     </div>
                     <input id = "sidebar-search" placeholder="Search..."></input>
                 </div>
