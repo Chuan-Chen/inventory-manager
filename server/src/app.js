@@ -6,12 +6,16 @@ const itemRoutes = require("./routes/itemRoutes");
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(cors());
 
+/*
 app.use("/", (req, res)=>{
     res.send("hi")
 });
-
+*/
 app.use("/api/item", itemRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/category", categoryRoutes);
