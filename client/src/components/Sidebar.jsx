@@ -7,6 +7,7 @@ import logo from "../images/logo.svg"
 import info from "../images/info.svg"
 import home from "../images/home.svg"
 import profile from "../images/person.svg"
+import {Link} from "react-router-dom"
 import menu from "../images/menu.svg"
 import menu_open from "../images/menu_open.svg";
 import { useState } from "react"
@@ -32,7 +33,8 @@ export default function Sidebar({toggle, searchbar_toggle , max_width}){
                     <div id = 'sidebar-item-logo'>
                         <img src = {profile}></img>
                     </div>
-                    <div id = "sidebar-items-description">Profile</div>
+                    <Link to = "/"><div id = "sidebar-items-description">Profile</div></Link>
+                    
                 </div>
                 <div id = "sidebar-items">
                     <div id = 'sidebar-item-logo'>
