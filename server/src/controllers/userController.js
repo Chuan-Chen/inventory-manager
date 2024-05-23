@@ -16,8 +16,10 @@ const createUser = async(req, res) => {
 
 const readUser = async(req, res) => {
     try{
-        console.log({Username: req.body.Username, Password: req.body.Password})
-        const user = User.findOne({"Username": req.body.Username, "Password": req.body.Password});
+        const username = req.body.Username;
+        const password = req.body.Password;
+        const user = await User.findOne({"Username": username, "Password": password}).exec();
+        //const user = await User.find({});
         res.status(200).json({user})
     }catch(e){
         res.status(400).json({msg: "user doesn't exist"})
