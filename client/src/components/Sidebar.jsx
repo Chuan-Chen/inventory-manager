@@ -33,7 +33,7 @@ export default function Sidebar({toggle, searchbar_toggle , max_width}){
                     <div id = 'sidebar-item-logo'>
                         <img src = {profile}></img>
                     </div>
-                    <Link to = "/"><div id = "sidebar-items-description">Profile</div></Link>
+                    <div id = "sidebar-items-description">Profile</div>
                     
                 </div>
                 <div id = "sidebar-items">

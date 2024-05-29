@@ -12,6 +12,7 @@ export default function Searchbar({toggle, display}){
                 <input className = "searchbar" placeholder="Search..."></input>
     
             </div>
+            
         </div>
     )
 }
