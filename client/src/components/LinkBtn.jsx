@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 
 const Btn = styled(Link)`
+    font-size: .9em;
     text-decoration: none;
     color: inherit;
     user-select: none;
@@ -10,10 +11,10 @@ const Btn = styled(Link)`
     }
 `
 
-function LinkBtn({link, text, style}){
+function LinkBtn({link, text, style, onClick}){
     // <Link style={{...style, ...btnStyle}} to = {link}>{text}</Link>
     return (
-       <Btn style = {{...style}} to = {link}>{text}</Btn>
+       <Btn style = {{...style}} to = {link} onClick = {onClick}>{text}</Btn>
     )
 }
 

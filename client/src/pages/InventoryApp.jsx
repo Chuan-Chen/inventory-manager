@@ -21,19 +21,13 @@ function InventoryApp() {
     console.log("toggle called")
     return searchbarToggle;
   }
-
   return (
-    
     <div id = "app">
-      
       <Searchbar toggle = {searchbarHandler} display = {searchbarToggle}></Searchbar>
       <MenuBtn toggle = {sidebarHandler}></MenuBtn>
       <Sidebar id="sidebar" toggle = {sidebarToggle} searchbar_toggle = {searchbarHandler} max_width = "20%"/>
       
-    </div> 
-
-    
-    
+    </div>
   )
 }
 

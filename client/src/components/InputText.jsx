@@ -4,7 +4,6 @@ const text = {
     boxShadow: "0 0 2px black",
     padding: "8px",
     borderRadius: "5px",
-
 }
 
 const inputT = styled.input`
@@ -12,7 +11,7 @@ const inputT = styled.input`
     box-shadow: 0 0 2px black;
     padding: 8px; 
     borderRadius: 5px; 
-    :active{
+    &:active{
         border: none;
     }
 `

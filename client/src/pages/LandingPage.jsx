@@ -35,7 +35,7 @@ function LandingPage(){
                 <div>The Inventory mangement service you deserve<img height = "5px" src = {logo}></img></div>
             </div>
         </div>
-        <LinkBtn link = "/login" text = "Get Started" style = {startBtn}></LinkBtn>
+        <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
         </div>
     </div>
     )
