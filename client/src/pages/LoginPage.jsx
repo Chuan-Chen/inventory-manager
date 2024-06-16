@@ -73,9 +73,9 @@ function LoginPage(){
                 <div style={{display: "grid", gridAutoFlow: "row", gap: '10px'}}>
                     <div style = {{display: isSignup ? "grid" : "none", gap: "10px"}}>
                         
-                        <InputText placeholder="First Name" onChange={(e)=>{setFName(e.target.value);console.log(e.target.value)}}></InputText>
-                        <InputText placeholder="Last Name" onChange={(e)=>{setLName(e.target.value); console.log(e.target.value)}}></InputText>
-                        <InputText placeholder="E-mail" onChange={(e)=>{setEmail(e.target.value); console.log(e.target.value)}}></InputText> 
+                        <InputText placeholder="First Name" onChange={(e)=>{setFName(e.target.value)}}></InputText>
+                        <InputText placeholder="Last Name" onChange={(e)=>{setLName(e.target.value)}}></InputText>
+                        <InputText placeholder="E-mail" onChange={(e)=>{setEmail(e.target.value)}}></InputText> 
                     </div>
                     <InputText placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}}></InputText>
                     <InputText placeholder="Password" type = "password" onChange={(e)=>{setPassword(e.target.value)}}></InputText>
@@ -90,6 +90,7 @@ function LoginPage(){
                     <LoginBtn style = {{display: isSignup? "none" : "grid", gridAutoFlow: "column", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", gap: "8px"}} onClick={()=>{
                         }}><img src = {GithubLogo} height={"20px"}></img><div>Login with Github</div></LoginBtn>
                 </div>
+                {fName, lName}
                 <div style = {{display: isSignup ? "none" : "grid", alignItems: "center", justifyContent: "center", gap: "2px"}}>
                     <LinkBtn text = "Sign Up" style = {{borderRadius: "5px", backgroundColor: "#f0f0f0", padding: '5px', textAlign: "center"}} onClick = {handleSignup}></LinkBtn>
                     <div style = {{fontSize: ".7em", textAlign: 'center', display: "grid", gridAutoFlow: "column", alignItems: "center", justifyContent: "center", gap: "5px"}}>Create account here<img src = {DownArrow} height={"15px"} style = {{transform: "rotate(180deg)"}}></img></div>
