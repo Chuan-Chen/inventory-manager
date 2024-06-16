@@ -2,10 +2,14 @@ const {Schema, model: Model} = require('mongoose');
 
 const itemSchema = new Schema(
     {
+        User: {
+            type: String, 
+            required: true,
+        },
         ItemName: {
             type: String,
             required: true,
-            unique: true,
+            unique: false,
         },
         ItemImage: {
             url: {
@@ -16,7 +20,7 @@ const itemSchema = new Schema(
             type: String,
         },
         ItemCategory: [
-
+            
         ]
     }
 )

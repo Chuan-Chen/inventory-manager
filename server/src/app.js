@@ -7,17 +7,23 @@ const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 
 
+const corsOptions = {
+    origin: ["http://localhost:5173"],
+}
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(cors());
+app.use(cors(corsOptions));
+
+
+
+app.use("/api/item", itemRoutes);
+app.use("/api/user", cors(corsOptions), userRoutes);
+app.use("/api/category", categoryRoutes);
 
 
 app.use("/", (req, res)=>{
-    res.send("hi")
+    res.send(`null`)
 });
-
-app.use("/api/item", itemRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/category", categoryRoutes);
 
 module.exports = app;

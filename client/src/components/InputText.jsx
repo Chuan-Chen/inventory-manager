@@ -16,9 +16,9 @@ const inputT = styled.input`
     }
 `
 
-function InputText({placeholder, style}){
+function InputText({placeholder, style, onChange}){
     return (
-        <input placeholder = {placeholder} style = {{...style, ...text}}></input>
+        <input placeholder = {placeholder} style = {{...style, ...text}} onChange={onChange}></input>
     )
 }
 
