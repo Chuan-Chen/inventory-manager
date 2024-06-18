@@ -7,7 +7,7 @@ import GithubLogo from "../images/github-mark.svg"
 import {LoginBtn} from "../components/StyledComponents"
 import DownArrow from "../images/down_arrow.svg"
 import styled from "styled-components";
-import { Login, Signup } from "../components/AuthFunctions";
+import { Login, Signup, SignupWithGithub } from "../components/AuthFunctions";
 import { useNavigate } from "react-router-dom";
 
 
@@ -36,10 +36,15 @@ function LoginPage(){
     const [email, setEmail] = useState("");
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
+    const [userExists, setUserExists] = useState("false");
 
     const [isSignup, setisSignup] = useState(false);
 
     const navi = useNavigate();
+
+    const handleUser = () => {
+        setUserExists(!userExists);
+    }
 
     const handleNavi = () => {
         navi("/app");
@@ -52,6 +57,7 @@ function LoginPage(){
         setLName("");
     }
     const handleSignup = () => {
+        
         setisSignup(!isSignup);
         
     }
@@ -77,25 +83,28 @@ function LoginPage(){
                         <InputText placeholder="Last Name" onChange={(e)=>{setLName(e.target.value)}}></InputText>
                         <InputText placeholder="E-mail" onChange={(e)=>{setEmail(e.target.value)}}></InputText> 
                     </div>
-                    <InputText placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}}></InputText>
+                    
+                    <InputText placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}} style ={{boxShadow: `0 0 2px ${userExists && isSignup? "red" : "black"}`}}></InputText>
                     <InputText placeholder="Password" type = "password" onChange={(e)=>{setPassword(e.target.value)}}></InputText>
-                    {isSignup ? <InputText placeholder="Retype Password"></InputText> : ""}
+                    {isSignup ? <InputText placeholder="Retype Password" type = "password" onChange={(e)=>{setRepassword(e.target.value)}}></InputText> : ""}
                     <LoginBtn style = {{height: "100%", width: "100%"}} onClick={()=>{
                         if(isSignup){
-                            Signup(username, password, email, fName, lName).then((res)=>{if(res.user != null){handleSignup(); console.log(res)}else{alert("User already exists")}});
+                            Signup(username, password, email, fName, lName).then((res)=>{if(res.user != null){console.log(res); }else{alert(res.msg); console.log(res); setUserExists(true)}});
+                            handleUser();
                         }else{
-                            Login(username, password).then((res)=>{if(res.user != null){handleNavi(); console.log(res)}else{alert("User does not exist")}});
+                            Login(username, password).then((res)=>{if(res.user != null){handleNavi(); console.log(res)}else{alert(res.msg)}});
                         }
                         }}> {isSignup ? "Create Account" : "Login"} </LoginBtn> 
-                    <LoginBtn style = {{display: isSignup? "none" : "grid", gridAutoFlow: "column", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", gap: "8px"}} onClick={()=>{
+                    <LoginBtn style = {{display: isSignup? "none" : "grid", gridAutoFlow: "column", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", gap: "8px"}} onClick={(e)=>{
+                        window.location.href = "https://github.com/login/oauth/authorize?client_id=Ov23li89YEGmiemPiS1t";
                         }}><img src = {GithubLogo} height={"20px"}></img><div>Login with Github</div></LoginBtn>
                 </div>
-                {fName, lName}
                 <div style = {{display: isSignup ? "none" : "grid", alignItems: "center", justifyContent: "center", gap: "2px"}}>
                     <LinkBtn text = "Sign Up" style = {{borderRadius: "5px", backgroundColor: "#f0f0f0", padding: '5px', textAlign: "center"}} onClick = {handleSignup}></LinkBtn>
                     <div style = {{fontSize: ".7em", textAlign: 'center', display: "grid", gridAutoFlow: "column", alignItems: "center", justifyContent: "center", gap: "5px"}}>Create account here<img src = {DownArrow} height={"15px"} style = {{transform: "rotate(180deg)"}}></img></div>
                 </div>
             </Page>
+            
         </div>
     )
 }

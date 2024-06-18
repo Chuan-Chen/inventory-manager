@@ -6,11 +6,10 @@ import LoginPage from "./pages/LoginPage";
 
 
 function App() {
-
-
   return (
     <>
     <Routes>
+      <Route path = "oauth" element={<InventoryApp/>}></Route>
       <Route path = "auth" element={<LoginPage/>}></Route>
       <Route path = "app" element={<InventoryApp/>}></Route>
       <Route path = "/" element={<LandingPage/>}></Route>

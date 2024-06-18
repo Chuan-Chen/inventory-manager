@@ -8,7 +8,7 @@ const text = {
 
 const inputT = styled.input`
     border: none;
-    box-shadow: 0 0 2px black;
+    
     padding: 8px; 
     borderRadius: 5px; 
     &:active{
@@ -16,9 +16,9 @@ const inputT = styled.input`
     }
 `
 
-function InputText({placeholder, style, onChange}){
+function InputText({placeholder, style, onChange, type}){
     return (
-        <input placeholder = {placeholder} style = {{...style, ...text}} onChange={onChange}></input>
+        <input placeholder = {placeholder} style = {{...text, ...style}} type = {type} onChange={onChange}></input>
     )
 }
 
