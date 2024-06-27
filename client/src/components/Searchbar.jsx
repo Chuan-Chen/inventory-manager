@@ -1,5 +1,5 @@
-import { useState } from "react";
-import searchIcon from "../images/search.svg";
+
+import searchIcon from "../assets/search.svg";
 import "../styles/searchbar.css";
 
 export default function Searchbar({toggle, display}){

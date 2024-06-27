@@ -1,6 +1,6 @@
 import LinkBtn from "../components/LinkBtn"
-import logo from "../images/logo.svg"
-import shelf from "../images/shelf2.svg"
+import logo from "../assets/logo.svg"
+import shelf from "../assets/shelf2.svg"
 import styled from "styled-components"
 
 

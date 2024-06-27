@@ -7,6 +7,7 @@ const itemRoutes = require("./routes/itemRoutes");
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const oauthRoutes = require("./routes/oauthRoutes");
+const { generateToken } = require('./middleware/authentication');
 
 
 const corsOptions = {

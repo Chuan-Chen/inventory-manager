@@ -1,11 +1,11 @@
 import { useState } from "react";
 import LinkBtn from "../components/LinkBtn";
-import Back from "../images/back.svg"
+import Back from "../assets/back.svg"
 import InputText from "../components/InputText"
-import Logo from "../images/logo.svg"
-import GithubLogo from "../images/github-mark.svg"
+import Logo from "../assets/logo.svg"
+import GithubLogo from "../assets/github-mark.svg"
 import {LoginBtn} from "../components/StyledComponents"
-import DownArrow from "../images/down_arrow.svg"
+import DownArrow from "../assets/down_arrow.svg"
 import styled from "styled-components";
 import { Login, Signup, SignupWithGithub } from "../components/AuthFunctions";
 import { useNavigate } from "react-router-dom";

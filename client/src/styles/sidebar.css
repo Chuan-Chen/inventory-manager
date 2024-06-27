@@ -6,7 +6,7 @@
 #sidebar{
     background-color: #ffffff;
     height: 100%;
-    width: 100%;
+    width: 20%;
     display: grid;
     grid-auto-flow: row;
     grid-auto-rows: 1fr 6fr .1fr .5fr;
@@ -67,7 +67,7 @@
     grid-template-columns: 1fr 5fr;
     align-items: center;
     cursor: pointer;
-    width: 80%;
+    width: 100%;
     height: 50px;
     border-radius: 6px;
 }
@@ -111,6 +111,9 @@
         bottom: 0;
         font-size: small;
     }
+    #sidebar-parent{
+        
+    }
     #sidebar-container{
         width: 100%;
         display: grid;
@@ -122,8 +125,8 @@
     }
     #sidebar-items{
         color: black;
-        height: 70%;
-        width: 70%;
+        height: 100%;
+        width: 100%;
         display: grid;
         grid-template-columns: 1fr;
         align-items: center;
@@ -131,8 +134,12 @@
         user-select: none;
     }   
 
+
     #sidebar-items-description, #sidebar-about, #sidebar-search, #sidebar-logo-description, #sidebar-divider, #menu{
-        display: none; 
+        display: none;
+    }
+    #sidebar-about{
+        display: none;
     }
     #logo > img{
         height: 32px;

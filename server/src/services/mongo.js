@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const mongoconfig = require('../configs/mongo.config.js');
 
 const connectDB = async () => {

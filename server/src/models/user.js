@@ -29,6 +29,9 @@ const userSchema = new Schema(
     },
     Items: [
 
+    ],
+    Categories: [
+
     ]
   },
   // to include createdAt and updatedAt fields automatically

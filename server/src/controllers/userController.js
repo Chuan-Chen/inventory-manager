@@ -1,33 +1,47 @@
 const User = require('../models/user')
 const hash = require("../services/hash")
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
 
 const createUser = async(req, res) => {
     try{
-        if(req.body.Username == "" || req.body.Email == "" || req.body.FirstName == "" || req.body.LastName == ""){
+        //console.log(req)
+        if(req.body.Username == "" || req.body.Email == "" || req.body.FirstName == "" || req.body.LastName == "" || req.body.Password == ""){
             res.status(401).json({user: null, msg: "Please provide all fields.", usernameExists: null})
         }else{
-            const user = new User({
+            const auth = hash.hash(req.body.Password);
+            const userParameters = {
                 Username: req.body.Username,
+                Password: auth.Password,
                 Email: req.body.Email,
                 FirstName: req.body.FirstName,
-                LastName: req.body.LastName
-            })
-            const auth = hash.hash(req.body.Password)
-            user.Password = auth.Password;
-            user.Salt = auth.Salt;
+                LastName: req.body.LastName,
+                Salt: auth.Salt
+            }
+
+            const userParametersAccessToken = {
+                Username: userParameters.Username, 
+                Email: userParameters.Email, FirstName: 
+                userParameters.FirstName, 
+                LastName: userParameters.LastName
+            }
+
+            const user = new User(userParameters);
+            console.log(req.token.access_token)
+            console.log(req.token.refresh_token)
             //console.log(auth);
             const check = await User.findOne({Username: req.body.Username}, "Username");
             //console.log(check)
             if(check === null || check.Username === undefined){
                 //console.log("saving....")
                 user.save();
-                res.status(200).json({user, msg: "User created successfully!", usernameExists: true})
+                res.status(200).json({user: userParametersAccessToken, msg: "User created successfully!", usernameExists: true, Access_Token: req.access_token})
             }else{
                 res.status(203).json({user: null, msg: "User already exists!", usernameExists: true})
             }
         }
     }catch(e){
-        res.status(400).json({user: null, msg: "User created unsuccessfully.", usernameExists: null})
+        res.status(400).json({user: null, msg: "User created unsuccessfully.", usernameExists: null, error: e.toString()})
     }
 }
 
