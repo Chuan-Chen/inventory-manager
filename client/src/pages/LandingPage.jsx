@@ -35,7 +35,13 @@ function LandingPage(){
                 <div>The Inventory mangement service you deserve<img height = "5px" src = {logo}></img></div>
             </div>
         </div>
-        <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
+        {(()=>{
+            if(localStorage.getItem('isAuthenticated') && localStorage.getItem('isAuthenticated') != null){
+                return <LinkBtn link = "/app" text = {`Welcome back, ${JSON.parse(localStorage.getItem('user')).FirstName}`} style = {startBtn}></LinkBtn>
+            }else{
+                return <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
+            }
+        })()}
         </div>
     </div>
     )

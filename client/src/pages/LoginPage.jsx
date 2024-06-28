@@ -9,8 +9,8 @@ import DownArrow from "../assets/down_arrow.svg"
 import styled from "styled-components";
 import { Login, Signup, SignupWithGithub } from "../components/AuthFunctions";
 import { useNavigate } from "react-router-dom";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { authSlice } from "../features/authSlice";
 
 const Page = styled.div`
     height: 500px;
@@ -39,7 +39,7 @@ function LoginPage(){
     const [userExists, setUserExists] = useState("false");
 
     const [isSignup, setisSignup] = useState(false);
-
+    const dispatch = useDispatch();
     const navi = useNavigate();
 
     const handleUser = () => {
@@ -89,10 +89,11 @@ function LoginPage(){
                     {isSignup ? <InputText placeholder="Retype Password" type = "password" onChange={(e)=>{setRepassword(e.target.value)}}></InputText> : ""}
                     <LoginBtn style = {{height: "100%", width: "100%"}} onClick={()=>{
                         if(isSignup){
-                            Signup(username, password, email, fName, lName).then((res)=>{if(res.user != null){console.log(res); }else{alert(res.msg); console.log(res); setUserExists(true)}});
+                            //using login dispatch since it would do the same as signup only on return of the response would the information be stored.
+                            Signup(username, password, email, fName, lName).then((res)=>{if(res.user != null){console.log(res); dispatch(authSlice.actions.login(res)); handleNavi();}else{alert(res.msg); console.log(res); setUserExists(true)}});
                             handleUser();
                         }else{
-                            Login(username, password).then((res)=>{if(res.user != null){handleNavi(); console.log(res)}else{alert(res.msg)}});
+                            Login(username, password).then((res)=>{if(res.user != null){console.log(res); dispatch(authSlice.actions.login(res)); handleNavi();}else{alert(res.msg)}});
                         }
                         }}> {isSignup ? "Create Account" : "Login"} </LoginBtn> 
                     <LoginBtn style = {{display: isSignup? "none" : "grid", gridAutoFlow: "column", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", gap: "8px"}} onClick={(e)=>{

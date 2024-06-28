@@ -4,7 +4,7 @@ const itemController = require("../controllers/itemController.js");
 const { authenticateToken } = require('../middleware/authentication.js');
 
 Router.post("/create", authenticateToken , itemController.createItem);
-Router.get("/update", itemController.updateItem);
+Router.get("/update", authenticateToken, itemController.updateItem);
 
 //read items without auth
 Router.post("/read", itemController.readItem);

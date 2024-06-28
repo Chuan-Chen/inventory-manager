@@ -7,11 +7,11 @@ import {Provider} from 'react-redux';
 import authStore from './features/authSlice.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+
     <Provider store = {authStore}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  
 )

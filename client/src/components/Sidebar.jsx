@@ -26,11 +26,10 @@ const LinkTo = styled(Link)`
 
 //<div id = "sidebar-parent" style = {{visibility: toggle ? "visible" : "hidden", width: toggle ? max_width : "0%", fontSize: toggle ? "1em" : "0em"}}>
 
-export default function Sidebar({toggle, searchbar_toggle , clickHandler}){
+export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}){
 
     return (
-        
-            <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em"}}>
+            <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%")}}>
             <div id = "logo">
                 <img src = {logo} height = "100%" width = "20%"></img>
                 <div id = "sidebar-logo-description">Shelfy</div>

@@ -8,7 +8,7 @@ const generateToken = (req, res, next) => {
         FirstName: req.body.firstName,
         LastName: req.body.LastName
     }
-    const access_token = jwt.sign(userParametersAccessToken, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15min'});
+    const access_token = jwt.sign(userParametersAccessToken, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
     const refresh_token = jwt.sign(userParametersAccessToken, process.env.REFRESH_ACCESS_TOKEN_SECRET)
     req.token = {access_token: access_token, refresh_token: refresh_token}
     next();
@@ -22,10 +22,19 @@ const authenticateToken = (req, res, next) => {
     console.log("verifying user")
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if(err) return res.status(403).json();
-        req.user = user;
+        if(err) req.authorization = {isAuthorized: false}; 
+        else req.authorization = {isAuthorized: true};
+        //req.token = {access_token: token};
         next();
     });
 };
 
-module.exports = {generateToken, authenticateToken}
+function parseJWT (token) {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
+
+function tokenExpiration(token){
+    return new Date(parseJWT(token));
+}
+
+module.exports = {generateToken, authenticateToken, parseJWT}
