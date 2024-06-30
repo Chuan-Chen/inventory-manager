@@ -2,7 +2,8 @@ import LinkBtn from "../components/LinkBtn"
 import logo from "../assets/logo.svg"
 import shelf from "../assets/shelf2.svg"
 import styled from "styled-components"
-
+import { useDispatch, useSelector } from "react-redux"
+import { authSlice } from "../features/authSlice"
 
 const page = {
     height: "100%",
@@ -12,6 +13,40 @@ const page = {
     alignItems: "center",
     backgroundColor: "#e8e9f3"
 }
+
+const Page = styled.div`
+
+    height: 100%;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8e9f3;
+`
+
+const Content = styled.div`
+    @keyframes tracking-in-expand-fwd-top {
+            0% {
+                letter-spacing: -0.5em;
+                -webkit-transform: translateZ(-700px) translateY(-500px);
+                        transform: translateZ(-700px) translateY(-500px);
+                opacity: 0;
+            }
+            40% {
+                opacity: 0.6;
+            }
+            100% {
+                -webkit-transform: translateZ(0) translateY(0);
+                        transform: translateZ(0) translateY(0);
+                opacity: 1;
+            }
+        }
+    animation: tracking-in-expand-fwd-top 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    width: 500px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+`
 
 const startBtn = {
     zIndex: "1",
@@ -26,9 +61,12 @@ const startBtn = {
 
 //<img src = {shelf} width = "600px" style = {{position: "absolute", display: 'grid', alignSelf: "center", justifySelf: 'center', zIndex: "0"}}></img>
 function LandingPage(){
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
     return (
-    <div style = {page}>
-        <div style = {{display: "grid",justifyContent: "center",alignItems: "center", width: "500px"}}>
+    <Page>
+        <Content>
         <div style={{zIndex: "1"}}>
             <div>
                 <div style = {{fontWeight: "bold", fontSize: "40px"}}>Shelfy<img height = "16px" src = {logo}></img></div>
@@ -36,14 +74,14 @@ function LandingPage(){
             </div>
         </div>
         {(()=>{
-            if(localStorage.getItem('isAuthenticated') && localStorage.getItem('isAuthenticated') != null){
+            if(isAuthenticated){
                 return <LinkBtn link = "/app" text = {`Welcome back, ${JSON.parse(localStorage.getItem('user')).FirstName}`} style = {startBtn}></LinkBtn>
             }else{
                 return <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
             }
         })()}
-        </div>
-    </div>
+        </Content>
+    </Page>
     )
 }
 

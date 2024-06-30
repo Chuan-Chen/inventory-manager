@@ -25,7 +25,6 @@ const authSlice = createSlice({
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('access_token', state.access_token);
         },
-
         logout: (state, action) => {
             state.user = null;
             state.access_token = null;
@@ -34,19 +33,22 @@ const authSlice = createSlice({
         preflight: (state, action) => {
             try{
                 if(new Date(localStorage.getItem('expireAt')) < new Date()){
-                  state.isAuthenticated = true;
-                  
-                }else{
-                  state.user = JSON.parse(localStorage.getItem('user'));
-                  state.access_token = localStorage.getItem('access_token');
-                  state.expireAt = localStorage.getItem('expireAt');
-                  state.isAuthenticated = Boolean(localStorage.getItem('isAuthenticated'));
-                  
+                    state.isAuthenticated = true;
                 }
+                state.user = JSON.parse(localStorage.getItem('user'));
+                state.access_token = localStorage.getItem('access_token');
+                state.expireAt = localStorage.getItem('expireAt');
               }catch(e){
                 state;
               }
-
+        },
+        checkToken: (state, action) => {
+            if(new Date(localStorage.getItem('expireAt')) < new Date()){
+                console.log("check token is called but returned true")
+                state.isAuthenticated = true;
+            }else{
+                state.isAuthenticated = false;
+            }
         }
 
     }

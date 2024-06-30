@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import InventoryApp from "./pages/InventoryApp";
 import LoginPage from "./pages/LoginPage";
 import Test from "./pages/Test";
+import Error from "./pages/Error"
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { authSlice } from "./features/authSlice";
@@ -63,6 +64,7 @@ function App() {
         <Route path = ":id" element = {<div>new element</div>}></Route>
       </Route>
       <Route path = "/test" element = {<Test/>}></Route>
+      <Route path = "/error" element = {<Error/>}></Route>
     </Routes>
     </>
   )
