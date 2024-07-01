@@ -4,10 +4,15 @@ import InventoryApp from "./pages/InventoryApp";
 import LoginPage from "./pages/LoginPage";
 import Test from "./pages/Test";
 import Error from "./pages/Error"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { authSlice } from "./features/authSlice";
-
+import Profile from "./pages/InventoryApp/Profile";
+import About from "./pages/InventoryApp/About"; 
+import Categories from "./pages/InventoryApp/Categories";
+import Inventory from "./pages/InventoryApp/Inventory";
+import Settings from "./pages/InventoryApp/Settings";
+import Dashboard from "./pages/InventoryApp/Dashboard";
 /*
 {
               user: JSON.parse(localStorage.getItem('user')),
@@ -45,7 +50,7 @@ import { authSlice } from "./features/authSlice";
 
 function App() {
   const dispatch = useDispatch();
-
+  const user = useSelector(state => state.auth);
   useEffect((()=>{
     console.log("Initiating preflight")
     dispatch(authSlice.actions.preflight());
@@ -60,7 +65,19 @@ function App() {
         <Route path = ":access_token" element={<div>accesstoken</div>}></Route>
       </Route>
       <Route path = "/auth" element={<LoginPage/>}></Route>
-      <Route path = "/app" element={<InventoryApp/>}>
+      <Route path = "/app" element={(()=>{
+        if(user.isAuthenticated){
+          return (<InventoryApp/>)
+        }else{
+          return (<Error errorcode = {"Not Authenticated"}/>)
+        }
+      })()}>
+        <Route path = "profile" element = {<Profile/>}></Route>
+        <Route path = "about" element = {<About/>}></Route>
+        <Route path = "category" element = {<Categories/>}></Route>
+        <Route path = "inventory" element = {<Inventory/>}></Route>
+        <Route path = "setting" element = {<Settings/>}></Route>
+        <Route path = "dashboard" element = {<Dashboard/>}></Route>
         <Route path = ":id" element = {<div>new element</div>}></Route>
       </Route>
       <Route path = "/test" element = {<Test/>}></Route>

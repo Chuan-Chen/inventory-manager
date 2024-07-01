@@ -32,7 +32,7 @@ const authSlice = createSlice({
         },
         preflight: (state, action) => {
             try{
-                if(new Date(localStorage.getItem('expireAt')) < new Date()){
+                if(new Date(localStorage.getItem('expireAt')) > new Date()){
                     state.isAuthenticated = true;
                 }
                 state.user = JSON.parse(localStorage.getItem('user'));

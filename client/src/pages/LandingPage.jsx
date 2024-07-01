@@ -22,6 +22,7 @@ const Page = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #e8e9f3;
+    text-wrap: balance;
 `
 
 const Content = styled.div`

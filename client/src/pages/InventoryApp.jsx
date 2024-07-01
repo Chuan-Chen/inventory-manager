@@ -1,5 +1,5 @@
 import "../styles/inventoryapp.css"
-import {Link, Route, Routes, useParams} from "react-router-dom";
+import {Link, Route, Routes, useParams, Outlet} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import MenuBtn from "../components/MenuBtn";
 import Searchbar from "../components/Searchbar";
@@ -106,6 +106,14 @@ function InventoryApp() {
         })()}
 
 
+        {(()=>{
+          if(user.isAuthenticated){
+            return (<div>welcome! {user.user.FirstName || JSON.parse(localStorage.getItem('user')).FirstName} <br></br> Email: {JSON.parse(localStorage.getItem('user')).Email} {id}</div>)
+          }else{
+            return (<div>Not Authorized</div>)
+          }
+        })()}
+
  
    */
   return (
@@ -115,13 +123,7 @@ function InventoryApp() {
       <MenuBtn toggle = {sidebarHandler}></MenuBtn>
       <Sidebar width = {width} id="sidebar" toggle = {sidebarToggle} searchbar_toggle = {searchbarHandler} max_width = "100%" clickHandler = {clickHandler}/>
       <DisplayPanel>
-        {(()=>{
-          if(user.isAuthenticated){
-            return (<div>welcome! {user.user.FirstName || JSON.parse(localStorage.getItem('user')).FirstName} <br></br> Email: {JSON.parse(localStorage.getItem('user')).Email}</div>)
-          }else{
-            return (<div>Not Authorized</div>)
-          }
-        })()}
+      <Outlet />
       </DisplayPanel>
       
       </Page>
