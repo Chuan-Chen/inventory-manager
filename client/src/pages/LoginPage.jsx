@@ -47,7 +47,7 @@ function LoginPage(){
     }
 
     const handleNavi = () => {
-        navi("/app");
+        navi("/app/inventory");
     }
     const reset = () => { 
         setUsername("");

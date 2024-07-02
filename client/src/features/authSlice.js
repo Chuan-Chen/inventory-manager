@@ -29,11 +29,13 @@ const authSlice = createSlice({
             state.user = null;
             state.access_token = null;
             state.isAuthenticated = false;
+            localStorage.setItem('isAuthenticated', state.isAuthenticated);
         },
         preflight: (state, action) => {
             try{
                 if(new Date(localStorage.getItem('expireAt')) > new Date()){
                     state.isAuthenticated = true;
+                    
                 }
                 state.user = JSON.parse(localStorage.getItem('user'));
                 state.access_token = localStorage.getItem('access_token');
@@ -43,11 +45,13 @@ const authSlice = createSlice({
               }
         },
         checkToken: (state, action) => {
-            if(new Date(localStorage.getItem('expireAt')) < new Date()){
+            if(new Date(localStorage.getItem('expireAt')) > new Date()){
                 console.log("check token is called but returned true")
                 state.isAuthenticated = true;
+                localStorage.setItem('isAuthenticated', state.isAuthenticated);
             }else{
                 state.isAuthenticated = false;
+                localStorage.setItem('isAuthenticated', state.isAuthenticated);
             }
         }
 

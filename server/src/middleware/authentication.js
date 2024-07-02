@@ -18,8 +18,9 @@ const generateToken = (req, res, next) => {
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    if(token == null) return res.status(401).json();
-    console.log("verifying user")
+    
+    if(token == null) return res.status(401).json({msg: "null token"});
+    console.log("authentication.js: verifying user token: " + token)
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err) req.authorization = {isAuthorized: false}; 
@@ -30,6 +31,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 function parseJWT (token) {
+    
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 }
 

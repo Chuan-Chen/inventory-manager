@@ -56,9 +56,31 @@ const deleteItem = async(req, res) => {
 
 }
 
+
+const readStream = async(req, res) => {
+    res.set({
+        "Access-Control-Allow-Origin": "http://localhost:5174",
+        "Cache-Control" : "no-cache",
+        "Content-Type": "text/event-stream",
+        "Connection": "keep-alive"
+
+    });
+    
+
+    setInterval(()=>{
+            res.write("data: " + `data from server: ${new Date()}\n\n`);
+    }, 1000)
+       
+
+    
+    
+}
+
+
 module.exports = {
     createItem,
     readItem,
     updateItem,
-    deleteItem
+    deleteItem,
+    readStream,
 }

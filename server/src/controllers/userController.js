@@ -60,7 +60,7 @@ const readUser = async(req, res) => {
                 }
                 const authHeader = req.headers['authorization'];
                 const token = authHeader && authHeader.split(' ')[1];
-                console.log(req.authorization.isAuthorized)
+                console.log(token, "Token")
                 
                 if(req.authorization.isAuthorized) {
                     res.status(200).json({user: userParams, msg: "Successful login via JWT", access_token: token, expireAt: new Date(parseJWT(token).exp * 1000)})

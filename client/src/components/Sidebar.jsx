@@ -88,7 +88,7 @@ export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}
                     <img src = {info}></img>
                 </div>
                 <LinkTo to = {"about"}>
-                    <div id = "sidebar-about-description">About</div>
+                    <div id = "sidebar-about-description">Contact Me</div>
                 </LinkTo>
             </div>
         </div>

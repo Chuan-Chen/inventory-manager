@@ -12,9 +12,10 @@ import { useSelector } from "react-redux";
 const DisplayPanel = styled.div`
   width: 100%;
   height: 100%;
-  display: grid;
-  align-items: center;
-  justify-content: center;
+  overflow: auto;
+  @media only screen and (max-width: 768px) {
+  height: calc(100% - 60px);
+  }
 `
 
 const Page = styled.div`
@@ -125,7 +126,6 @@ function InventoryApp() {
       <DisplayPanel>
       <Outlet />
       </DisplayPanel>
-      
       </Page>
   )
 }

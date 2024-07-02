@@ -59,7 +59,7 @@ function App() {
   
   return (
     <>
-    <Routes>
+    <Routes style = {{filter: "invert(100%)"}}>
       <Route path = "/" element={<LandingPage/>}></Route>
       <Route path = "/oauth" element={<InventoryApp/>}>
         <Route path = ":access_token" element={<div>accesstoken</div>}></Route>
@@ -69,7 +69,7 @@ function App() {
         if(user.isAuthenticated){
           return (<InventoryApp/>)
         }else{
-          return (<Error errorcode = {"Not Authenticated"}/>)
+          return (<Error errorcode = {"Not Authenticated or JWT is expired"}/>)
         }
       })()}>
         <Route path = "profile" element = {<Profile/>}></Route>

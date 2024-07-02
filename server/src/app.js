@@ -11,7 +11,7 @@ const { generateToken } = require('./middleware/authentication');
 
 
 const corsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5174"],
 }
 
 app.use(express.json())
@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(cors(corsOptions));
 
 app.use("/api/oauth", oauthRoutes);
-app.use("/api/item", itemRoutes);
+app.use("/api/item", cors(corsOptions), itemRoutes);
 app.use("/api/user", cors(corsOptions), userRoutes);
 app.use("/api/category", categoryRoutes);
 

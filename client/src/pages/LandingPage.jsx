@@ -76,7 +76,7 @@ function LandingPage(){
         </div>
         {(()=>{
             if(isAuthenticated){
-                return <LinkBtn link = "/app" text = {`Welcome back, ${JSON.parse(localStorage.getItem('user')).FirstName}`} style = {startBtn}></LinkBtn>
+                return <LinkBtn link = "/app/inventory" text = {`Welcome back, ${JSON.parse(localStorage.getItem('user')).FirstName}`} style = {startBtn}></LinkBtn>
             }else{
                 return <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
             }

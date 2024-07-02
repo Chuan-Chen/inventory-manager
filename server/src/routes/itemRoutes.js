@@ -10,5 +10,6 @@ Router.get("/update", authenticateToken, itemController.updateItem);
 Router.post("/read", itemController.readItem);
 Router.get("/delete", itemController.deleteItem);
 
+Router.get("/stream", itemController.readStream);
 
 module.exports = Router;
