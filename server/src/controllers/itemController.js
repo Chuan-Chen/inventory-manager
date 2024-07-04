@@ -1,6 +1,8 @@
 const Item = require('../models/item')
 const User = require('../models/user')
 
+
+
 const createItem = async(req, res) => {
     try{
         const item = new Item({
@@ -67,9 +69,12 @@ const readStream = async(req, res) => {
     });
     
 
-    setInterval(()=>{
-            res.write("data: " + `data from server: ${new Date()}\n\n`);
-    }, 1000)
+    
+
+    setInterval(async ()=>{
+            const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID");
+            res.write("data: " + `${JSON.stringify(result)}\n\n`);
+    }, 5000)
        
 
     

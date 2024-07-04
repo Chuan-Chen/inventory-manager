@@ -4,7 +4,7 @@ const mongoconfig = require('../configs/mongo.config.js');
 
 const connectDB = async () => {
     try {
-      await mongoose.connect(mongoconfig.URI, mongoconfig.Connection_Options);
+      const connection = await mongoose.connect(mongoconfig.URI, mongoconfig.Connection_Options);
       console.log('MongoDB Connected...');
     } catch (err) {
       console.error(err.message);

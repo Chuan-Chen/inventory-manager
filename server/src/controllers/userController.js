@@ -68,7 +68,7 @@ const readUser = async(req, res) => {
                     console.log(req.body.Password)
                     if(hash.validate(req.body.Password, user.Salt, user.Password)){
                         const access_token = jwt.sign(userParams, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
-                        res.status(200).json({user: userParams, msg: "Successful login and created new JWT", access_token: access_token, expireAt: new Date(parseJWT(token).exp * 1000)});
+                        res.status(200).json({user: userParams, msg: "Successful login and created new JWT", access_token: access_token, expireAt: new Date(parseJWT(access_token).exp * 1000)});
                     }else{
                         res.status(203).json({user: null, msg: "Invalid Password or Username and or JWT is expired"})
                     }

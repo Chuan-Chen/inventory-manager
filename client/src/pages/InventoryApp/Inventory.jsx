@@ -55,14 +55,14 @@ const Page = styled.div`
 
 `
 export default function Inventory(){
-    const [data, setData] = useState("");
+    const [data, setData] = useState([]);
 
     const dispatch = useDispatch();
     useEffect(()=>{
       
         const sse = new EventSource('http://localhost:3000/api/item/stream');
         sse.onmessage = (event) => {
-          setData(event.data);
+          setData(JSON.parse(event.data));
         }
       
       dispatch(authSlice.actions.checkToken());
@@ -74,8 +74,16 @@ export default function Inventory(){
 
     return (
         <Page>
-            <div>Inventory</div>
-            {data}
+            {data.map((element) => {
+              console.log(element)
+              return (
+              <div key = {element.ItemID} style = {{backgroundColor: "grey"}}>
+                <div>ItemName: {element.ItemName}</div>
+                <div>Username: {element.Username}</div>
+                <div>ItemBarcode: {element.ItemBarcode}</div>
+                <div>ItemCategory: {element.ItemCategory}</div>
+              </div>)
+            })}
         </Page>
     )
 }
