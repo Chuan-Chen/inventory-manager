@@ -61,7 +61,7 @@ const deleteItem = async(req, res) => {
 
 const readStream = async(req, res) => {
     res.set({
-        "Access-Control-Allow-Origin": "http://localhost:5174",
+        "Access-Control-Allow-Origin": "http://localhost:5173",
         "Cache-Control" : "no-cache",
         "Content-Type": "text/event-stream",
         "Connection": "keep-alive"
@@ -74,7 +74,7 @@ const readStream = async(req, res) => {
     setInterval(async ()=>{
             const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID");
             res.write("data: " + `${JSON.stringify(result)}\n\n`);
-    }, 5000)
+    }, 1000)
        
 
     

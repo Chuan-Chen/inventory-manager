@@ -11,7 +11,7 @@ const { generateToken } = require('./middleware/authentication');
 
 
 const corsOptions = {
-    origin: ["http://localhost:5174"],
+    origin: ["http://localhost:5173"],
 }
 
 app.use(express.json())

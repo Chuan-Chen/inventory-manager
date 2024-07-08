@@ -48,12 +48,66 @@ const Page = styled.div`
     width: 100%;
 
     display: grid;
-    align-items: center;
-    justify-content: center;
+
 
 
 
 `
+
+const Content = styled.div`
+  width: 95%;
+  height: 95%;
+  background-color: #FFFFFF; 
+  border-radius: 4px;
+  align-self: center;
+  justify-self: center;
+  display: grid;
+`
+
+const CreateItemInputBox = styled.input`
+  
+  justify-self: center;
+  height: 30px;
+  width: 300px;
+  box-shadow: 0 0 5px #000;
+  border: none;
+  border-radius: 4px;
+  &:focus{
+    outline: none;
+  }
+
+`
+
+function CreateItem(){
+
+  const [item, setItem] = useState({});
+  const [expanded, setExpanded] = useState(false);
+
+
+  const handleSubmit = (e)=>{
+    if(e.key == "Enter"){
+      console.log("enter is pressed")
+    }
+  }
+
+  
+    if(expanded){
+      return (
+        <div></div>
+      )
+    }else{
+    return(
+      <CreateItemInputBox placeholder="Create an item..." onKeyDown={handleSubmit}>
+
+      </CreateItemInputBox>
+    )
+  }
+
+
+  
+}
+
+
 export default function Inventory(){
     const [data, setData] = useState([]);
 
@@ -72,9 +126,11 @@ export default function Inventory(){
       }
     },[]);
 
-    return (
-        <Page>
-            {data.map((element) => {
+/**
+ 
+
+
+{data.map((element) => {
               console.log(element)
               return (
               <div key = {element.ItemID} style = {{backgroundColor: "grey"}}>
@@ -84,6 +140,14 @@ export default function Inventory(){
                 <div>ItemCategory: {element.ItemCategory}</div>
               </div>)
             })}
+ */
+
+    return (
+        <Page>
+          
+            <Content>
+              <CreateItem></CreateItem>
+            </Content>
         </Page>
     )
 }
