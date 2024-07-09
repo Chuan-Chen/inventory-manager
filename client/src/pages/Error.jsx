@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import logo from "../assets/logo.svg"
+import LinkBtn from "../components/LinkBtn"
 
 
 const ErrorText = styled.div`
@@ -103,7 +104,8 @@ const ErrorText = styled.div`
 
 const Page = styled.div`
 
-    display: grid;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     align-items: center;
@@ -113,13 +115,23 @@ const Page = styled.div`
     font-size: 2em;
     font-weight: bold;
 `
-
+const startBtn = {
+        zIndex: "1",
+        border: "solid 1px black",
+        borderRadius: "6px",
+        width: "fit-content",
+        paddingLeft: "15px",
+        paddingRight: "15px",
+        paddingTop: "5px",
+        paddingBottom: "5px",
+    }
 
 
 export default function Error({errorcode}){
     return (
         <Page>
             <ErrorText>Error : {errorcode}</ErrorText>
+            <LinkBtn link = {"/auth"} text = {"Login"} style = {startBtn}></LinkBtn>
         </Page>
     )
 }

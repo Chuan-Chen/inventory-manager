@@ -48,10 +48,6 @@ const Page = styled.div`
     width: 100%;
 
     display: grid;
-
-
-
-
 `
 
 const Content = styled.div`
@@ -65,23 +61,36 @@ const Content = styled.div`
 `
 
 const CreateItemInputBox = styled.input`
-  
   justify-self: center;
-  height: 30px;
-  width: 300px;
-  box-shadow: 0 0 5px #000;
+  align-self: center;
+  width: 90%;
+  height: 95%;
+  max-height: 25px;
   border: none;
-  border-radius: 4px;
   &:focus{
     outline: none;
   }
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
+`
 
+const CreateItemInputBoxContainer = styled.div`
+  justify-self: center;
+  box-shadow: 0 0 5px #000;
+  border: none;
+  border-radius: 4px;
+  display: grid;
+  height: ${props => props.$isexpanded ?  "150px" : "30px"};
+  transition: height .3s;
+  position: relative;
+  width: 60%;
 `
 
 function CreateItem(){
 
   const [item, setItem] = useState({});
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false); 
 
 
   const handleSubmit = (e)=>{
@@ -90,22 +99,25 @@ function CreateItem(){
     }
   }
 
-  
-    if(expanded){
-      return (
-        <div></div>
-      )
-    }else{
-    return(
-      <CreateItemInputBox placeholder="Create an item..." onKeyDown={handleSubmit}>
-
-      </CreateItemInputBox>
-    )
+  const handleFocus = (e) => {
+    setExpanded(true);
+  }
+  const handleBlur = (e) => {
+    setExpanded(false);
   }
 
 
-  
+    return(
+      <CreateItemInputBoxContainer onFocus={handleFocus} onBlur={handleBlur} $isexpanded = {expanded}>
+        <CreateItemInputBox placeholder="Create an item..." onKeyDown={handleSubmit}></CreateItemInputBox>
+
+      </CreateItemInputBoxContainer>
+      
+    )
 }
+
+  
+
 
 
 export default function Inventory(){
@@ -146,7 +158,9 @@ export default function Inventory(){
         <Page>
           
             <Content>
-              <CreateItem></CreateItem>
+              <CreateItem>
+                
+              </CreateItem>
             </Content>
         </Page>
     )
