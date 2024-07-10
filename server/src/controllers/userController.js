@@ -47,10 +47,18 @@ const createUser = async(req, res) => {
 
 const readUser = async(req, res) => {
     try{
+        console.log({
+            "Username" : req.body.Username,
+            "Email" : req.body.Email,
+            "FirstName" : req.body.FirstName,
+            "LastName" : req.body.LastName,
+            "Password" : req.body.Password
+        })
         if(req.body.Username == "" || req.body.Email == "" || req.body.FirstName == "" || req.body.LastName == "" || req.body.Password == ""){
             res.status(401).json({user: null, msg: "Please provide the required fields", usernameExists: null})
         }else{
             const user = await User.findOne({Username: req.body.Username}, "Username Password Salt Email FirstName LastName");
+            console.log(user)
             if(user){
                 const userParams = {
                     FirstName: user.FirstName,

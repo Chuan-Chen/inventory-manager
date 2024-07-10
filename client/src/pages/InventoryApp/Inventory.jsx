@@ -88,10 +88,16 @@ const CategoryInputBox = styled.input`
   transition: height .3s;
   max-height: 25px;
   width: 50%;
+  &:focus{
+    outline: none;
+    box-shadow: 0 15px 10px -15px #000;
+  }
 `
 
 const CategoryBox = styled.div`
   display: ${props => props.$isexpanded ? "flex" : "none"};
+  align-self: center;
+  justify-self: center;
   overflow: auto;
   flex-direction: row;
   gap: 5px;
@@ -110,21 +116,34 @@ const CreateItemInputBoxContainer = styled.div`
   justify-self: center;
   box-shadow: 0 0 5px #000;
   border: none;
+  
   border-radius: 4px;
   display: grid;
   height: ${props => props.$isexpanded ?  "150px" : "44px"};
   transition: height .3s;
   position: relative;
   width: 60%;
+
 `
+
+const DescriptionInputBox = styled.input`
+  display: ${props => props.$isexpanded ? "flex" : "none"};
+  border: none;
+  align-self: center;
+  justify-self: center;
+  width: 90%;
+  border-bottom: 1px solid black;
+  &:focus{
+    outline: none;
+  }
+`
+
 
 function CreateItem({expanded, handleFocus, handleBlur, addData}){
 
   const [item, setItem] = useState({});
   const [categories, setCategories] = useState([]);
   
-
-
   const handleSubmit = (e)=>{
     if(e.key == "Enter"){
       console.log("enter is pressed", e.target.value);
@@ -139,29 +158,29 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
       setCategories([]);
     }
   }
-
   const handleSubmitCategories = (e) => {
-    if(e.key == "Enter"){
+    if(e.key == "Enter" && e.target.value != ""){
       setCategories([...categories, e.target.value])
       e.target.value = "";
     }
   }
-
   const removeCategoryItem = (e) => {
     console.log(e.key); 
   }
-
     return(
       <CreateItemInputBoxContainer onClick = {handleFocus} $isexpanded = {expanded}>
         <CreateItemInputBox placeholder="Create an item..." onKeyDown={handleSubmit}></CreateItemInputBox>
-        <CategoryBox $isexpanded = {expanded}>
-          Categories: 
-          {categories.map((e, index)=>{
-            return <Category key = {index}>{e} </Category>
-          })}
-        </CategoryBox>
-        <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyDown={handleSubmitCategories}></CategoryInputBox>
-      </CreateItemInputBoxContainer>
+          <DescriptionInputBox $isexpanded = {expanded} placeholder="Enter description...">
+
+          </DescriptionInputBox>
+          <CategoryBox $isexpanded = {expanded}>
+            Categories: 
+            {categories.map((e, index)=>{
+              return <Category key = {index}>{e} </Category>
+            })}
+            <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyDown={handleSubmitCategories}></CategoryInputBox>
+          </CategoryBox>
+        </CreateItemInputBoxContainer>
       
     )
 }
