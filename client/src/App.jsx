@@ -81,7 +81,9 @@ function App() {
         <Route path = ":id" element = {<div>new element</div>}></Route>
       </Route>
       <Route path = "/test" element = {<Test/>}></Route>
-      <Route path = "/error" element = {<Error/>}></Route>
+      <Route path = "/error" element = {<Error/>}>
+        <Route path = ":error"></Route>
+      </Route>
     </Routes>
     </>
   )

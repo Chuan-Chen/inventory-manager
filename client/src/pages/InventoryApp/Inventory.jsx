@@ -48,6 +48,7 @@ const Page = styled.div`
     width: 100%;
 
     display: grid;
+    
 `
 
 const Content = styled.div`
@@ -57,7 +58,9 @@ const Content = styled.div`
   border-radius: 4px;
   align-self: center;
   justify-self: center;
+  align-items: center;
   display: grid;
+
 `
 
 const CreateItemInputBox = styled.input`
@@ -65,78 +68,142 @@ const CreateItemInputBox = styled.input`
   align-self: center;
   width: 90%;
   height: 95%;
-  max-height: 25px;
+  max-height: 23px;
   border: none;
+  
   &:focus{
     outline: none;
+    box-shadow: 0 15px 10px -15px #000;
   }
   @media only screen and (max-width: 768px) {
-    width: 100%;
+    width: 95%;
   }
+
+`
+const CategoryInputBox = styled.input`
+  display: ${props => props.$isexpanded ? "block" : "none"};
+  box-shadow: 0px 15px 10px -15px #000;
+  border: 0px;
+  border-radius: 4px;
+  transition: height .3s;
+  max-height: 25px;
+  width: 50%;
+`
+
+const CategoryBox = styled.div`
+  display: ${props => props.$isexpanded ? "flex" : "none"};
+  overflow: auto;
+  flex-direction: row;
+  gap: 5px;
+  height: 24px;
+`
+
+const Category = styled.div`
+  border-radius: 4px;
+  border: 1px solid black;
+  display: grid;
+  text-align: center;
 `
 
 const CreateItemInputBoxContainer = styled.div`
+  
   justify-self: center;
   box-shadow: 0 0 5px #000;
   border: none;
   border-radius: 4px;
   display: grid;
-  height: ${props => props.$isexpanded ?  "150px" : "30px"};
+  height: ${props => props.$isexpanded ?  "150px" : "44px"};
   transition: height .3s;
   position: relative;
   width: 60%;
 `
 
-function CreateItem(){
+function CreateItem({expanded, handleFocus, handleBlur, addData}){
 
   const [item, setItem] = useState({});
-  const [expanded, setExpanded] = useState(false); 
+  const [categories, setCategories] = useState([]);
+  
 
 
   const handleSubmit = (e)=>{
     if(e.key == "Enter"){
-      console.log("enter is pressed")
+      console.log("enter is pressed", e.target.value);
+      addData({
+        "ItemName" : e.target.value,
+        "ItemID" : "-1",
+        "Username" : "test",
+        "ItemBarcode" : "NA",
+        "ItemCategory" : [...categories]
+      });
+      e.target.value = "";
+      setCategories([]);
     }
   }
 
-  const handleFocus = (e) => {
-    setExpanded(true);
-  }
-  const handleBlur = (e) => {
-    setExpanded(false);
+  const handleSubmitCategories = (e) => {
+    if(e.key == "Enter"){
+      setCategories([...categories, e.target.value])
+      e.target.value = "";
+    }
   }
 
+  const removeCategoryItem = (e) => {
+    console.log(e.key); 
+  }
 
     return(
-      <CreateItemInputBoxContainer onFocus={handleFocus} onBlur={handleBlur} $isexpanded = {expanded}>
+      <CreateItemInputBoxContainer onClick = {handleFocus} $isexpanded = {expanded}>
         <CreateItemInputBox placeholder="Create an item..." onKeyDown={handleSubmit}></CreateItemInputBox>
-
+        <CategoryBox $isexpanded = {expanded}>
+          Categories: 
+          {categories.map((e, index)=>{
+            return <Category key = {index}>{e} </Category>
+          })}
+        </CategoryBox>
+        <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyDown={handleSubmitCategories}></CategoryInputBox>
       </CreateItemInputBoxContainer>
       
     )
 }
 
-  
+  /**
+  const sse = new EventSource('http://localhost:3000/api/item/stream');
+      sse.onmessage = (event) => {
+        //console.log(JSON.parse(event.data))
+        setData(JSON.parse(event.data));
+      }
+    
+    dispatch(authSlice.actions.checkToken());
+    
+    return ()=>{
+      sse.close();  
+    }
+   */
 
 
 
 export default function Inventory(){
+    const [expanded, setExpanded] = useState(false);
     const [data, setData] = useState([]);
 
     const dispatch = useDispatch();
     useEffect(()=>{
       
-        const sse = new EventSource('http://localhost:3000/api/item/stream');
-        sse.onmessage = (event) => {
-          setData(JSON.parse(event.data));
-        }
-      
-      dispatch(authSlice.actions.checkToken());
-      
-      return ()=>{
-        sse.close();  
-      }
+
     },[]);
+    const handleFocus = (e) => {
+      e.stopPropagation()
+      setExpanded(true);
+    }
+    const handleBlur = (e) => {
+      e.stopPropagation()
+      setExpanded(false);
+    }
+
+    const addData = (somedata) => {
+      console.log(somedata);
+      setData([...data, somedata])
+    }
 
 /**
  
@@ -155,12 +222,22 @@ export default function Inventory(){
  */
 
     return (
-        <Page>
+        <Page >
           
-            <Content>
-              <CreateItem>
+            <Content onClick={handleBlur}>
+              <CreateItem expanded = {expanded}  handleBlur = {handleBlur} handleFocus = {handleFocus} addData = {addData}> 
                 
               </CreateItem>
+                {data.map((element) => {
+                
+                return (
+                <div key = {element.ItemID} style = {{backgroundColor: "grey"}}>
+                  <div>ItemName: {element.ItemName}</div>
+                  <div>Username: {element.Username}</div>
+                  <div>ItemBarcode: {element.ItemBarcode}</div>
+                  <div>ItemCategory: {element.ItemCategory}</div>
+                </div>)
+              })}
             </Content>
         </Page>
     )

@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import logo from "../assets/logo.svg"
 import LinkBtn from "../components/LinkBtn"
+import { useParams, Outlet } from "react-router-dom"
 
 
 const ErrorText = styled.div`
@@ -128,10 +129,13 @@ const startBtn = {
 
 
 export default function Error({errorcode}){
-    return (
-        <Page>
-            <ErrorText>Error : {errorcode}</ErrorText>
-            <LinkBtn link = {"/auth"} text = {"Login"} style = {startBtn}></LinkBtn>
-        </Page>
-    )
+        const {error} = useParams();
+        return (
+                <Page>
+                        
+                <ErrorText>Error : {errorcode}{error}</ErrorText>
+                <LinkBtn link = {"/auth"} text = {"Login"} style = {startBtn}></LinkBtn>
+                
+                </Page>
+        )
 }
