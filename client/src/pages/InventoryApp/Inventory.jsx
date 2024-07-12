@@ -138,6 +138,24 @@ const DescriptionInputBox = styled.input`
   }
 `
 
+const SubmitButton = styled.button`
+  display: ${props => props.$isexpanded ? "block" : "none"};
+  width: 30%;
+  height: 30px;
+  align-self: center;
+  justify-self: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 5px #000;
+  border-radius: 10px;
+  user-select: none;
+  &:active{
+    outline: none;
+    box-shadow: 0 15px 10px -15px #000;
+  }
+`
+
 
 function CreateItem({expanded, handleFocus, handleBlur, addData}){
 
@@ -179,7 +197,9 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
               return <Category key = {index}>{e} </Category>
             })}
             <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyDown={handleSubmitCategories}></CategoryInputBox>
+            
           </CategoryBox>
+          <SubmitButton $isexpanded = {expanded} onClick={handleSubmit}>Create Item</SubmitButton>
         </CreateItemInputBoxContainer>
       
     )
