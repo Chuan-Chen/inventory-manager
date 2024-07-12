@@ -1,0 +1,2 @@
+# Intro
+- Inventory Management system. 
