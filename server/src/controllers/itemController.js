@@ -5,13 +5,15 @@ const User = require('../models/user')
 
 const createItem = async(req, res) => {
     try{
+        
         const item = new Item({
             Username: req.body.Username,
             ItemName: req.body.ItemName, 
             ItemImage: req.body.ItemImage,
             ItemBarcode: req.body.ItemBarcode,
-            ItemCateory: req.body.ItemCateory
+            ItemCateory: req.body.ItemCategory
         })
+        item.ItemCategory.push(...req.body.ItemCategory);
         
         const user = await User.findOneAndUpdate({Username: item.Username}, {"$push": { Items: item._id }}, {new: true});
         if(user == null){
@@ -27,6 +29,7 @@ const createItem = async(req, res) => {
 
 const readItem = async(req, res) => {
     try{
+        
         const filter = {
             Username: req.body.Username,
             ItemName: req.body.ItemName, 
@@ -75,9 +78,6 @@ const readStream = async(req, res) => {
             const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID");
             res.write("data: " + `${JSON.stringify(result)}\n\n`);
     }, 1000)
-       
-
-    
     
 }
 
