@@ -52,17 +52,7 @@ const Page = styled.div`
     
 `
 
-const Content = styled.div`
-  width: 95%;
-  height: 95%;
-  background-color: #FFFFFF; 
-  border-radius: 4px;
-  align-self: center;
-  justify-self: center;
-  align-items: center;
-  display: grid;
 
-`
 
 const CreateItemInputBox = styled.input`
   justify-self: center;
@@ -171,19 +161,21 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
 
 
   const handleSubmit = (e)=>{
-
+    console.log(e.target.value)
+    setItem({...item, "ItemName" : e.target.value})
     if(e.key == "Enter"){
       console.log("enter is pressed", e.target.value);
+      setItem({...item, "ItemName" : e.target.value})
       Submit(user.user, user.access_token);
       e.target.value = "";
-      setItem({...item, "ItemName" : e.target.value})
+      
       setCategories([]);
     }
-    setItem(item.ItemName = e.target.value)
+    
   }
 
   const Submit = (user, access_token) => {
-    create(access_token, item);
+    create(access_token, {...item, "Username" : user.Username, "ItemCategory" : [...categories]});
   }
 
   const handleSubmitCategories = (e) => {
@@ -209,7 +201,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
             <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyDown={handleSubmitCategories}></CategoryInputBox>
             
           </CategoryBox>
-          <SubmitButton $isexpanded = {expanded} onClick={handleSubmit}>Create Item</SubmitButton>
+          <SubmitButton $isexpanded = {expanded} onClick={()=>{Submit(user.user, user.access_token)}}>Create Item</SubmitButton>
         </CreateItemInputBoxContainer>
       
     )
@@ -229,18 +221,40 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     }
    */
 
-
+    const Content = styled.div`
+    width: 95%;
+    height: 95%;
+    background-color: #FFFFFF; 
+    border-radius: 4px;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+  
+    `
 
     const ItemCards = styled.div`
-    height: 200px;
-    width: 200px;
     overflow: auto;
     border-radius: 5px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    min-height: 150px;
     align-items: center;
 
     `
+
+    const ItemContainer = styled.div`
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px;
+    margin-bottom: 20px;
+    background-color: #b7b8c0;
+    padding: 20px;
+    border-radius: 10px;
+    `
+
 
 export default function Inventory(){
     const [expanded, setExpanded] = useState(false);
@@ -298,7 +312,8 @@ export default function Inventory(){
               <CreateItem expanded = {expanded}  handleBlur = {handleBlur} handleFocus = {handleFocus} addData = {addData}> 
                 
               </CreateItem>
-                {data.map((element) => {
+              <ItemContainer>
+              {data.map((element) => {
                 
                 return (
                 <ItemCards key = {element.ItemID} style = {{backgroundColor: "grey"}}>
@@ -308,6 +323,7 @@ export default function Inventory(){
                   <div>ItemCategory: {element.ItemCategory}</div>
                 </ItemCards>)
               })}
+              </ItemContainer>
             </Content>
         </Page>
     )
