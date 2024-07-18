@@ -8,6 +8,7 @@ const authSlice = createSlice({
         access_token: null,
         user: {},
         expireAt: null,
+        item: {}
     },
     reducers: {
         login: (state, action) => {
@@ -37,6 +38,7 @@ const authSlice = createSlice({
                     state.isAuthenticated = true;
                     
                 }
+
                 state.user = JSON.parse(localStorage.getItem('user'));
                 state.access_token = localStorage.getItem('access_token');
                 state.expireAt = localStorage.getItem('expireAt');

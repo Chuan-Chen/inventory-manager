@@ -5,7 +5,6 @@ const User = require('../models/user')
 
 const createItem = async(req, res) => {
     try{
-        
         const item = new Item({
             Username: req.body.Username,
             ItemName: req.body.ItemName, 
@@ -16,6 +15,7 @@ const createItem = async(req, res) => {
         item.ItemCategory.push(...req.body.ItemCategory);
         
         const user = await User.findOneAndUpdate({Username: item.Username}, {"$push": { Items: item._id }}, {new: true});
+        console.log(user);
         if(user == null){
             res.status(401).json({item, msg: "User doesn't exist"})
         }else{

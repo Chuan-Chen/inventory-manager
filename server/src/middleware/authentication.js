@@ -21,7 +21,8 @@ const authenticateToken = (req, res, next) => {
     
     if(token == null) return res.status(401).json({msg: "null token"});
     console.log("authentication.js: verifying user token: " + token)
-
+    //console.log(parseJWT(token));
+    
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err) req.authorization = {isAuthorized: false}; 
         else req.authorization = {isAuthorized: true};

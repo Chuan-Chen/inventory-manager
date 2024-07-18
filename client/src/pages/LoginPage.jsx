@@ -90,10 +90,10 @@ function LoginPage(){
                     <LoginBtn style = {{height: "100%", width: "100%"}} onClick={()=>{
                         if(isSignup){
                             //using login dispatch since it would do the same as signup only on return of the response would the information be stored.
-                            Signup(username, password, email, fName, lName).then((res)=>{if(res.user != null){console.log(res); dispatch(authSlice.actions.login(res)); handleNavi();}else{alert(res.msg); console.log(res); setUserExists(true)}}).catch(navi("/error/Problems connecting to server, try again later."));
+                            Signup(username, password, email, fName, lName).then((res)=>{if(res.user != null){console.log(res); dispatch(authSlice.actions.login(res)); handleNavi();}else{navi(`/error/${res.msg}`); setUserExists(true)}}).catch(navi("/error/Problems connecting to server, try again later."));
                             handleUser();
                         }else{
-                            Login(username, password).then((res)=>{if(res.user != null){console.log(res); dispatch(authSlice.actions.login(res)); handleNavi();}else{alert(res.msg)}}).catch(navi("/error/Problems connecting to server, try again later."));
+                            Login(username, password).then((res)=>{if(res.user != null){console.log(res); dispatch(authSlice.actions.login(res)); handleNavi();}else{navi(`/error/${res.msg}`)}}).catch(navi("/error/Problems connecting to server, try again later."));
                         }
                         }}> {isSignup ? "Create Account" : "Login"} </LoginBtn> 
                     <LoginBtn style = {{display: isSignup? "none" : "grid", gridAutoFlow: "column", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", gap: "8px"}} onClick={(e)=>{
