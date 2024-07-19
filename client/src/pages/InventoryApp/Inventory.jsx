@@ -189,9 +189,9 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
   }
     return(
       <CreateItemInputBoxContainer onClick = {handleFocus} $isexpanded = {expanded}>
-        <CreateItemInputBox placeholder="Create an item..." onKeyDown={handleSubmit}></CreateItemInputBox>
+        <CreateItemInputBox placeholder="Create an item..." onKeyUp={handleSubmit}></CreateItemInputBox>
           <DescriptionInputBox $isexpanded = {expanded} placeholder="Enter description...">
-
+          
           </DescriptionInputBox>
           <CategoryBox $isexpanded = {expanded}>
             Categories: 
