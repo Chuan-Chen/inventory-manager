@@ -258,10 +258,11 @@ export default function About(){
                         <div>
                             <t>Based in</t>
                             <address>New York</address>
-                            <address>Queens</address>
+                            <address>United States</address>
                         </div>
                         <div>
                             <e>Contact</e>
+                            <e1>Chuan Chen</e1>
                             <e1>chuan.chen.info@gmail.com</e1>
                             <e1>(917)605-6373</e1>
                         </div>

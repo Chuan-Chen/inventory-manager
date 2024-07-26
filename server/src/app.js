@@ -7,6 +7,8 @@ const itemRoutes = require("./routes/itemRoutes");
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const oauthRoutes = require("./routes/oauthRoutes");
+const chatbotRoutes = require("./routes/chatbotRoutes")
+const searchRoutes = require("./routes/searchRoutes")
 const { generateToken } = require('./middleware/authentication');
 
 
@@ -22,6 +24,8 @@ app.use("/api/oauth", oauthRoutes);
 app.use("/api/item", cors(corsOptions), itemRoutes);
 app.use("/api/user", cors(corsOptions), userRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/ai", chatbotRoutes)
+app.use("/api/search", searchRoutes)
 
 
 

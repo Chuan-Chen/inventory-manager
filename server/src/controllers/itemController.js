@@ -37,6 +37,7 @@ const readItem = async(req, res) => {
             ItemBarcode: req.body.ItemBarcode,
             ItemCateory: req.body.ItemCateory
         }
+
         const result = await Item.find({
             "$or" : [
                 {Username: filter.Username},
@@ -46,7 +47,7 @@ const readItem = async(req, res) => {
                 {ItemCateory: filter.ItemCateory}
             ]
         });
-        console.log(result)
+
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){
         res.status(400).json({result: filter, msg: "Search Unsuccessful"});
@@ -70,9 +71,6 @@ const readStream = async(req, res) => {
         "Connection": "keep-alive"
 
     });
-    
-
-    
 
     setInterval(async ()=>{
             const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID");
