@@ -7,8 +7,8 @@ const authSlice = createSlice({
         isAuthenticated: false,
         access_token: null,
         user: {},
+        items: [],
         expireAt: null,
-        item: {}
     },
     reducers: {
         login: (state, action) => {
@@ -55,10 +55,29 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 localStorage.setItem('isAuthenticated', state.isAuthenticated);
             }
+        },
+        loadItems: (state, action) => {
+            state.items = [action.payload];
+            console.log(action.payload)
         }
-
+    },
+    extraReducers: (builder) => {
+        
     }
 })
+
+const saveItem = () => async (dispatch, getState) => {
+    const items = getState().items;
+    const result = await fetch("http://localhost:3000/api/item/create", {
+        method: "post"
+    })
+}
+
+export const getItems = () => async (dispatch, getState) => {
+    const items = await fetch("http://localhost:3000/api/item/read").then( res => res.json());
+    dispatch(authSlice.actions.loadItems(items))
+}
+
 
 const authStore = configureStore({
     reducer: {
