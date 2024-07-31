@@ -11,14 +11,16 @@ export default function Test() {
     
     const dispatch = useDispatch();
 
-    const items = useSelector(state => state.auth.items);
+    const items = useSelector(state => state.auth);
 
-
+    useEffect(()=>{
+     console.log(items)   
+    }, [items])
     
     return (
         <div>
             <button onClick={()=>{dispatch(getItems())}}>Load Items</button>
-            {items}
+            {}
         </div>
     )
 
