@@ -48,7 +48,7 @@ const authSlice = createSlice({
         },
         checkToken: (state, action) => {
             if(new Date(localStorage.getItem('expireAt')) > new Date()){
-                console.log("check token is called but returned true")
+                //console.log("check token is called but returned true")
                 state.isAuthenticated = true;
                 localStorage.setItem('isAuthenticated', state.isAuthenticated);
             }else{
@@ -62,21 +62,10 @@ const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        
+
     }
 })
 
-const saveItem = () => async (dispatch, getState) => {
-    const items = getState().items;
-    const result = await fetch("http://localhost:3000/api/item/create", {
-        method: "post"
-    })
-}
-
-export const getItems = () => async (dispatch, getState) => {
-    const items = await fetch("http://localhost:3000/api/item/read").then( res => res.json());
-    dispatch(authSlice.actions.loadItems(items))
-}
 
 
 const authStore = configureStore({
