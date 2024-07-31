@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import authStore from "../features/authSlice";
-import { authSlice } from "../features/authSlice";
+import { authSlice, getItems } from "../features/authSlice";
 import { Login } from "../components/AuthFunctions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,7 +17,7 @@ export default function Test() {
     
     return (
         <div>
-            <button onClick={()=>{}}>Load Items</button>
+            <button onClick={()=>{dispatch(getItems())}}>Load Items</button>
             {items}
         </div>
     )

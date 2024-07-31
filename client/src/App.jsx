@@ -84,6 +84,7 @@ function App() {
       <Route path = "/error" element = {<Error/>}>
         <Route path = ":error"></Route>
       </Route>
+      <Route path = "/*" element = {<Error errorcode={"Invalid Path"} redirectLink={"/"} redirectLinkText={"Landing page"}/>}></Route>
     </Routes>
     </>
   )
