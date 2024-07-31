@@ -34,6 +34,7 @@ const authSlice = createSlice({
         },
         preflight: (state, action) => {
             try{
+                
                 if(new Date(localStorage.getItem('expireAt')) > new Date()){
                     state.isAuthenticated = true;
                     
@@ -57,9 +58,7 @@ const authSlice = createSlice({
             }
         },
         loadItems: (state, action) => {
-
-            console.log(action.payload)
-            
+            state.items = [...action.payload.result]
         }
     }
 })
