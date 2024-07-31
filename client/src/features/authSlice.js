@@ -57,12 +57,10 @@ const authSlice = createSlice({
             }
         },
         loadItems: (state, action) => {
-            state.items = [action.payload];
-            console.log(action.payload)
-        }
-    },
-    extraReducers: (builder) => {
 
+            console.log(action.payload)
+            
+        }
     }
 })
 
@@ -74,6 +72,16 @@ const authStore = configureStore({
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
+
+
+
+export const getItems = () => async dispatch => {
+    
+    const items = await fetch("http://localhost:3000/api/item/read", {
+        method: "POST"
+    }).then(res => res.json());
+    dispatch(authSlice.actions.loadItems(items));
+}
 
 
 

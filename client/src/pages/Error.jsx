@@ -128,13 +128,13 @@ const startBtn = {
     }
 
 
-export default function Error({errorcode}){
+export default function Error({errorcode, redirectLink, redirectLinkText}){
         const {error} = useParams();
         return (
                 <Page>
                         
                 <ErrorText>Error : {errorcode}{error}</ErrorText>
-                <LinkBtn link = {"/auth"} text = {"Login"} style = {startBtn}></LinkBtn>
+                <LinkBtn link = {redirectLink ? redirectLink : "/auth"} text = {redirectLinkText ? redirectLinkText : "Login"} style = {startBtn}></LinkBtn>
                 
                 </Page>
         )
