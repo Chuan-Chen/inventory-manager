@@ -3,7 +3,8 @@ import logo from "../assets/logo.svg"
 import shelf from "../assets/shelf2.svg"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
-import { authSlice } from "../features/authSlice"
+import { authSlice, getItems } from "../features/authSlice"
+import { useEffect } from "react"
 
 const page = {
     height: "100%",
@@ -64,6 +65,8 @@ const startBtn = {
 function LandingPage(){
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+
 
     return (
     <Page>

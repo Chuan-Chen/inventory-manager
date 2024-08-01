@@ -11,16 +11,25 @@ export default function Test() {
     
     const dispatch = useDispatch();
 
-    const items = useSelector(state => state.auth);
+    const items = useSelector(state => state.auth.items);
 
-    useEffect(()=>{
-     console.log(items)   
-    }, [items])
     
     return (
         <div>
             <button onClick={()=>{dispatch(getItems())}}>Load Items</button>
-            {}
+            <div style = {{display: "grid", gap: "10px"}}>
+            {items.map((element) => {
+                
+                return (
+                <div key = {element.ItemID} style = {{backgroundColor: "grey"}}>
+                  <div>ItemName: {element.ItemName}</div>
+                  <div>Username: {element.Username}</div>
+                  <div>ItemBarcode: {element.ItemBarcode}</div>
+                  <div>ItemCategory: {element.ItemCategory}</div>
+                </div>)
+              })}
+            </div>
+            
         </div>
     )
 

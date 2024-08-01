@@ -54,6 +54,19 @@ const readItem = async(req, res) => {
     }
 }
 
+
+const readAllItems = async(req, res) => {
+    try{
+        const result = await Item.find({});
+        res.status(200).json({result, msg: "Search Successful"});
+    }catch(err){
+        res.status(400).json({result: filter, msg: "Search Unsuccessful"});
+    }
+}
+
+
+
+
 const updateItem = async(req, res) => {
 
 }
@@ -86,4 +99,5 @@ module.exports = {
     updateItem,
     deleteItem,
     readStream,
+    readAllItems,
 }

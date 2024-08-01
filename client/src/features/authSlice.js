@@ -73,12 +73,9 @@ const authStore = configureStore({
 });
 
 
-
 export const getItems = () => async dispatch => {
     
-    const items = await fetch("http://localhost:3000/api/item/read", {
-        method: "POST"
-    }).then(res => res.json());
+    const items = await fetch("http://localhost:3000/api/item/read").then(res => res.json());
     dispatch(authSlice.actions.loadItems(items));
 }
 
