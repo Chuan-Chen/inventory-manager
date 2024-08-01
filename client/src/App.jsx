@@ -6,7 +6,7 @@ import Test from "./pages/Test";
 import Error from "./pages/Error"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { authSlice } from "./features/authSlice";
+import { authSlice, getItems } from "./features/authSlice";
 import Profile from "./pages/InventoryApp/Profile";
 import About from "./pages/InventoryApp/About"; 
 import Categories from "./pages/InventoryApp/Categories";
@@ -54,6 +54,7 @@ function App() {
   useEffect((()=>{
     console.log("Initiating preflight")
     dispatch(authSlice.actions.preflight());
+    dispatch(getItems());
   }),[]);
 
   

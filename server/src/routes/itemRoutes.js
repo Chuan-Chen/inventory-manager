@@ -8,6 +8,7 @@ Router.get("/update", authenticateToken, itemController.updateItem);
 
 //read items without auth
 Router.post("/read", itemController.readItem);
+Router.get("/read", itemController.readAllItems);
 Router.get("/delete", itemController.deleteItem);
 
 Router.get("/stream", itemController.readStream);
