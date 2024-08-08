@@ -13,6 +13,7 @@ import Categories from "./pages/InventoryApp/Categories";
 import Inventory from "./pages/InventoryApp/Inventory";
 import Settings from "./pages/InventoryApp/Settings";
 import Dashboard from "./pages/InventoryApp/Dashboard";
+import Products from "./pages/Products";
 /*
 {
               user: JSON.parse(localStorage.getItem('user')),
@@ -55,7 +56,7 @@ function App() {
     console.log("Initiating preflight")
     dispatch(authSlice.actions.preflight());
     dispatch(getItems());
-  }),[]);
+  }),[dispatch]);
 
   
   return (
@@ -84,6 +85,9 @@ function App() {
       <Route path = "/test" element = {<Test/>}></Route>
       <Route path = "/error" element = {<Error/>}>
         <Route path = ":error"></Route>
+      </Route>
+      <Route path = "/products" element = {<Products/>}>
+        <Route path = ":user"></Route>
       </Route>
       <Route path = "/*" element = {<Error errorcode={"Invalid Path"} redirectLink={"/"} redirectLinkText={"Landing page"}/>}></Route>
     </Routes>

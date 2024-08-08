@@ -25,7 +25,10 @@ const itemSchema = new Schema(
         },
         ItemCategory: [
             
-        ]
+        ],
+        ItemAmount: {
+            type: Number
+        }
     }
 )
 itemSchema.plugin(AutoIncrement, {inc_field: 'ItemID'});

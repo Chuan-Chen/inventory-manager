@@ -1,0 +1,67 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import styled from "styled-components"
+
+const Variables = {
+    pagecolor: "#e8e9f3",
+    itemcardcolor: "",
+}
+
+const Page = styled.div`
+    height: 100%;
+    width: 100%;
+    background-color: ${Variables.pagecolor};
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+`
+
+const Cards = styled.div`
+    background-color: ${Variables.itemcardcolor};
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px grey;
+`
+
+const CardsInner = styled.div`
+    margin: 10px;
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    display: grid;
+`
+
+function ItemCards({ItemName, ItemDescription, Username, ItemBarcode, ItemCategory, ItemID}){
+    return (
+        <Cards>
+            <CardsInner>
+                <div></div>
+            </CardsInner>
+        </Cards>
+    )
+}
+
+export default function Products(){
+    const [status, setStatus] = useState(false);
+    const [items, setItems] = useState([]);
+    const {user} = useParams();
+
+    const fetchItem = async () => {
+        const items = fetch("http://localhost:3000/api/item/read").then(res => res.json())
+        console.log(items)
+        return items;
+    }
+
+    useEffect(()=> {
+        fetchItem()
+        .then((data) => {setItems(data); setStatus(true)});
+        
+    }, []);
+
+    return (
+        <Page>
+            {status ? <ItemCards></ItemCards> : "Loading..."}
+        </Page>
+    )
+}

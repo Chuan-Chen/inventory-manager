@@ -29,7 +29,7 @@ const createItem = async(req, res) => {
 
 const readItem = async(req, res) => {
     try{
-        
+            
         const filter = {
             Username: req.body.Username,
             ItemName: req.body.ItemName, 

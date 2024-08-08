@@ -1,15 +1,18 @@
 const express = require('express');
+
 const app = express();
 const cors = require("cors");
 const dotenv = require('dotenv');
-dotenv.config();
 const itemRoutes = require("./routes/itemRoutes");
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const oauthRoutes = require("./routes/oauthRoutes");
 const chatbotRoutes = require("./routes/chatbotRoutes")
 const searchRoutes = require("./routes/searchRoutes")
+const imageRoutes = require("./routes/imageRoutes")
 const { generateToken } = require('./middleware/authentication');
+dotenv.config();
+
 
 
 const corsOptions = {
@@ -26,6 +29,8 @@ app.use("/api/user", cors(corsOptions), userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/ai", chatbotRoutes)
 app.use("/api/search", searchRoutes)
+app.use("/api/image", imageRoutes);
+app.use("/images", express.static("images"));
 
 
 
