@@ -1,12 +1,10 @@
 const dotenv = require("dotenv")
 const server = require("./src/app");
-const connectDB = require('./src/services/mongo');
-
-dotenv.config()
-const PORT = process.env.PORT;
-
+const connectDB = require("./src/services/mongo");
+const preflight = require("./src/services/preflight");
 connectDB();
+preflight();
 
-server.listen(PORT, ()=>{
-    console.log(`listening on http://localhost:${PORT}`)
+server.listen(process.env.PORT, ()=>{
+    console.log(`listening on http://localhost:${process.env.PORT}`)
 })
