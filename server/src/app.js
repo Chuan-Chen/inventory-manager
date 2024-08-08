@@ -30,7 +30,6 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/ai", chatbotRoutes)
 app.use("/api/search", searchRoutes)
 app.use("/api/image", imageRoutes);
-app.use("/images", express.static("images"));
 
 
 
