@@ -107,7 +107,7 @@ const Loading = styled.div`
 }
     height: fit-content;
     width: fit-content;
-    background-color: grey;
+    background-color: #b7b8c0;
     animation: jello-horizontal 1.2s linear infinite both;
     border-radius: 5px;
     padding: 10px;
@@ -142,7 +142,6 @@ export default function Products(){
     useEffect(()=> {
         fetchItem()
         .then((data) => {setItems(data); setStatus(true)});
-        
     }, []);
 
     return (
