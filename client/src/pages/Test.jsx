@@ -4,6 +4,7 @@ import authStore from "../features/authSlice";
 import { authSlice, getItems } from "../features/authSlice";
 import { Login } from "../components/AuthFunctions";
 import { useDispatch, useSelector } from "react-redux";
+import FileUpload from "../components/FileUpload";
 
 export default function Test() {
     
@@ -29,6 +30,10 @@ export default function Test() {
                 </div>)
               })}
             </div>
+
+            <FileUpload>
+              
+            </FileUpload>
             
         </div>
     )
