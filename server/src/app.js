@@ -29,7 +29,7 @@ app.use("/api/user", cors(corsOptions), userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/ai", chatbotRoutes)
 app.use("/api/search", searchRoutes)
-app.use("/api/image", imageRoutes);
+app.use("/api/image", cors(corsOptions), imageRoutes);
 
 
 

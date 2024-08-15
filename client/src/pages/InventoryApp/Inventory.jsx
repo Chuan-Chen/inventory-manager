@@ -111,11 +111,11 @@ const CreateItemInputBoxContainer = styled.div`
   
   border-radius: 4px;
   display: grid;
-  height: ${props => props.$isexpanded ?  "150px" : "44px"};
+  height: ${props => props.$isexpanded ?  "fit-content" : "44px"};
   transition: height .3s;
   position: relative;
   width: 60%;
-
+  padding: ${props => props.$isexpanded ?  "15px" : "none"};
 `
 
 const DescriptionInputBox = styled.input`
@@ -149,12 +149,14 @@ const SubmitButton = styled.button`
 `
 
 const Container = styled.div`
-  display: ${props => props.$isexpanded ? "block" : "none"};
+  display: ${props => props.$isexpanded ? "grid" : "none"};
+  gap: 15px;
 `
 
 
 function CreateItem({expanded, handleFocus, handleBlur, addData}){
   const [categories, setCategories] = useState([]);
+  const [currentCategoryText, setCurrentCategoryText] = useState("");
   const [item, setItem] = useState({
     "Username" : "",
     "ItemName" : "",
@@ -163,7 +165,11 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     "ItemCategory" : []
   });
   const user = useSelector(state => state.auth);
-
+  // pending, fulfilled, rejected are the three states
+  const [imageURL, setimageURL] = useState({
+    "state" : "pending",
+    "url" : ""
+  });
 
   const handleSubmit = (e)=>{
     console.log(e.target.value)
@@ -184,9 +190,17 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
   }
 
   const handleSubmitCategories = (e) => {
+    setCurrentCategoryText(e.target.value);
     if(e.key == "Enter" && e.target.value != ""){
       setCategories([...categories, e.target.value])
       e.target.value = "";
+    }
+  }
+
+  const handleCategoriesAdd = () => {
+    if(currentCategoryText != ""){
+      setCategories([...categories, currentCategoryText])
+      setCurrentCategoryText("");
     }
   }
   const removeCategoryItem = (e) => {
@@ -203,12 +217,13 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
             Categories: 
             {categories.map((e, index)=>{
               return <Category key = {index}>{e} </Category>
-            })}
-            <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyDown={handleSubmitCategories}></CategoryInputBox>
-            
+            })}``
+            <div style = {{display: "flex", flexDirection: "row"}}>
+            <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyUp={handleSubmitCategories}></CategoryInputBox><button onClick={handleCategoriesAdd}>Add</button>
+            </div>
+                        
           </CategoryBox>
-          <FileUpload>
-
+          <FileUpload setimageURL={setimageURL}>
           </FileUpload>
           <SubmitButton $isexpanded = {expanded} onClick={()=>{Submit(user.user, user.access_token)}}>Create Item</SubmitButton>
         
