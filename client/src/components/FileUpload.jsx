@@ -39,8 +39,9 @@ const upload = async (file) => {
 
     const response = await fetch("http://localhost:3000/api/image/upload", options);
     const data = await response.json();
-
     console.log(data);
+    return data;
+    
 }
 
 export default function FileUpload({setimageURL}){
