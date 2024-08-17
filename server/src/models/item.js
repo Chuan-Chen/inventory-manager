@@ -16,9 +16,7 @@ const itemSchema = new Schema(
             type: String,
         },
         ItemImage: {
-            url: {
-                type: String,
-            }
+            type: String,
         },
         ItemBarcode: {
             type: String,

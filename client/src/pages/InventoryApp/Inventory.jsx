@@ -167,16 +167,20 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
   const user = useSelector(state => state.auth);
   // pending, fulfilled, rejected are the three states
   const [imageURL, setimageURL] = useState({
-    "state" : "pending",
+    "status" : "pending",
     "url" : ""
   });
 
+  const handleImage = (status, url) => {
+    setimageURL({"status" : status, "url" : url})
+  }
+
   const handleSubmit = (e)=>{
     console.log(e.target.value)
-    setItem({...item, "ItemName" : e.target.value})
+    setItem({...item, "ItemName" : e.target.value, "ItemImage" : imageURL.url})
     if(e.key == "Enter"){
       console.log("enter is pressed", e.target.value);
-      setItem({...item, "ItemName" : e.target.value})
+      //setItem({...item, "ItemName" : e.target.value, })
       Submit(user.user, user.access_token);
       e.target.value = "";
       
@@ -186,7 +190,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
   }
 
   const Submit = (user, access_token) => {
-    create(access_token, {...item, "Username" : user.Username, "ItemCategory" : [...categories]});
+    create(access_token, {...item, "Username" : user.Username, "ItemCategory" : [...categories], "ItemImage" : imageURL.url});
   }
 
   const handleSubmitCategories = (e) => {
@@ -223,7 +227,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
             </div>
                         
           </CategoryBox>
-          <FileUpload setimageURL={setimageURL}>
+          <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
           </FileUpload>
           <SubmitButton $isexpanded = {expanded} onClick={()=>{Submit(user.user, user.access_token)}}>Create Item</SubmitButton>
         
@@ -346,6 +350,7 @@ export default function Inventory(){
                   <div>Username: {element.Username}</div>
                   <div>ItemBarcode: {element.ItemBarcode}</div>
                   <div>ItemCategory: {element.ItemCategory}</div>
+                  <img src = {element.ItemImage} height={"40px"} alt = "itemimage"></img>
                 </ItemCards>)
               })}
               </ItemContainer>
