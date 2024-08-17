@@ -60,7 +60,7 @@ const readAllItems = async(req, res) => {
         const result = await Item.find({});
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){
-        res.status(400).json({result: filter, msg: "Search Unsuccessful"});
+        res.status(400).json({result: "", msg: "Search Unsuccessful"});
     }
 }
 
