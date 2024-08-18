@@ -221,7 +221,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
             Categories: 
             {categories.map((e, index)=>{
               return <Category key = {index}>{e} </Category>
-            })}``
+            })}
             <div style = {{display: "flex", flexDirection: "row"}}>
             <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyUp={handleSubmitCategories}></CategoryInputBox><button onClick={handleCategoriesAdd}>Add</button>
             </div>
@@ -350,7 +350,7 @@ export default function Inventory(){
                   <div>Username: {element.Username}</div>
                   <div>ItemBarcode: {element.ItemBarcode}</div>
                   <div>ItemCategory: {element.ItemCategory}</div>
-                  <img src = {element.ItemImage} height={"40px"} alt = "itemimage"></img>
+                  <img src = {element.ItemImage} height={"50px"} alt = "itemimage"></img>
                 </ItemCards>)
               })}
               </ItemContainer>
