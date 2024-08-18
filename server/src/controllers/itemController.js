@@ -86,7 +86,7 @@ const readStream = async(req, res) => {
     });
 
     setInterval(async ()=>{
-            const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID");
+            const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID ItemImage");
             res.write("data: " + `${JSON.stringify(result)}\n\n`);
     }, 1000)
     
