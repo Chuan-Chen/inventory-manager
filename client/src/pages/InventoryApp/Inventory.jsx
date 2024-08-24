@@ -108,7 +108,7 @@ const CreateItemInputBoxContainer = styled.div`
   justify-self: center;
   box-shadow: 0 0 5px #000;
   border: none;
-  
+  gap: 10px;
   border-radius: 4px;
   display: grid;
   height: ${props => props.$isexpanded ?  "fit-content" : "44px"};
@@ -270,7 +270,12 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     display: grid;
     min-height: 150px;
     align-items: center;
+    padding: 15px;
+    `
 
+    const ItemCardsContainer = styled.div`
+      height: 100%;
+      width: 100%;
     `
 
     const ItemContainer = styled.div`
@@ -297,7 +302,8 @@ export default function Inventory(){
         //console.log(JSON.parse(event.data))
         setData(JSON.parse(event.data));
       }
-    
+
+
     dispatch(authSlice.actions.checkToken());
     
     return ()=>{
@@ -345,14 +351,16 @@ export default function Inventory(){
               <ItemContainer>
               {data.map((element) => {
                 return (
-                <ItemCards key = {element.ItemID} style = {{backgroundColor: "grey"}}>
-                  <div>ItemName: {element.ItemName}</div>
-                  <div>Username: {element.Username}</div>
-                  <div>ItemBarcode: {element.ItemBarcode}</div>
-                  <div>ItemCategory: {element.ItemCategory}</div>
-                  <img src = {element.ItemImage} height={"50px"} alt = "itemimage"></img>
-                </ItemCards>)
-              })}
+                  <ItemCardsContainer key = {element.ItemID}>
+                    <ItemCards key = {element.ItemID} style = {{backgroundColor: "grey"}}>
+                    <div>ItemName: {element.ItemName}</div>
+                    <div>Username: {element.Username}</div>
+                    <div>ItemBarcode: {element.ItemBarcode}</div>
+                    <div>ItemCategory: {element.ItemCategory}</div>
+                    <img src = {element.ItemImage} height={"50px"} alt = "itemimage"></img>
+                    </ItemCards>
+                  </ItemCardsContainer>
+              )})}
               </ItemContainer>
             </Content>
         </Page>
