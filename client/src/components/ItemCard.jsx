@@ -78,27 +78,19 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
                     </div>
                 </CardSection>
                 <CardSection>
-                    <div>
-                        <div>Username:</div>
-                        <div>{Username}</div>
-                    </div>
-                </CardSection>
-                <CardSection>
-                    <div>
-                        <div>ItemID:</div>
-                        
-                    </div>
-                </CardSection>
-                <CardSection>
-                    <div className="ItemAmount" >ItemAmount: {ItemAmount}</div>
+                    <div className="ItemAmount">ItemAmount: {ItemAmount}</div>
                 </CardSection> 
                 </div>
-                
-                <div style = {{alignSelf: "end", display: "grid", gridAutoFlow: "row", color: "grey", fontSize: ".6em", }}>
-                    <div style = {{justifySelf: "start", display: "grid", gridAutoFlow: "column", gap: "5px", overflow: "scroll", width: "90%", overflowY: "hidden"}} className="ItemCategory">Tags: {ItemCategory.map((i, element)=>{
-                        return <div style = {{border: "1px solid grey", borderRadius: "3px", padding: "2px"}} key = {i}>{ItemCategory[element]}</div>
+                <div style = {{alignSelf: "end", display: "grid", gridAutoFlow: "row", color: "grey", fontSize: ".6em"}}>
+                    <div style = {{justifySelf: "start", display: "grid", gap: "5px", width: "100%", gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))"}} className="ItemCategory">
+                        <div style = {{borderRadius: "3px", padding: "2px"}} >Tags:</div> {ItemCategory.map((i, element)=>{
+                        return <div style = {{border: "1px solid grey", borderRadius: "3px", padding: "2px", textOverflow: "ellipsis"}} key = {i}>{ItemCategory[element]}</div>
                     })}</div>
-                    <div style = {{justifySelf: "end"}}>ItemID: {ItemID}</div>
+                    <div style = {{display: "grid", gridAutoFlow: "column"}}>
+                    <div style = {{justifySelf: "start"}}>ItemID: {ItemID}</div>
+                    <div style = {{justifySelf: "end"}}>Username: {Username}</div>
+                    </div>
+                    
                 </div>
             </ItemCards>
         </ItemCardsContainer>

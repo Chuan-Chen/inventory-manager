@@ -54,12 +54,15 @@ export default function Test() {
               
             </FileUpload>
 
-            <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {["1test", "2test", "3test", "4test", "5test"]} Username = {"test"} ItemAmount={0} ItemID={1}>
+            <div style = {{display: "grid", gridAutoFlow: "column"}}>
+            <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", "5test"]} Username = {"test"} ItemAmount={0} ItemID={1}>
             
             </ItemCard>  
             <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {[]} Username = {"test"} ItemAmount={0}>
             
             </ItemCard> 
+            </div>
+      
         </div>
     )
 
