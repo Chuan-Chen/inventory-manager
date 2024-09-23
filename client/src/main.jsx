@@ -9,7 +9,7 @@ import authStore from './features/authSlice.js';
 ReactDOM.createRoot(document.getElementById('root')).render(
 
     <Provider store = {authStore}>
-      <BrowserRouter>
+      <BrowserRouter basename='/absproxy/5173/'>
         <App />
       </BrowserRouter>
     </Provider>
