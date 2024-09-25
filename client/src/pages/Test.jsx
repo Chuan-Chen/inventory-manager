@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import FileUpload from "../components/FileUpload";
 import styled from "styled-components";
 import ItemCard from "../components/ItemCard";
+<<<<<<< HEAD
 import api from "../features/api";
+=======
+>>>>>>> 2bf3bf43a441b2c7f18a6c64f4e7f564825f97cb
 
 const ItemCards = styled.div`
 overflow: auto;

@@ -3,7 +3,10 @@ import styled from "styled-components"
 import fulfilled from "../assets/checkmark.svg";
 import pending from "../assets/pending.svg";
 import rejected from "../assets/failed.svg"
+<<<<<<< HEAD
 import api from "../features/api";
+=======
+>>>>>>> 2bf3bf43a441b2c7f18a6c64f4e7f564825f97cb
 
 
 const Container = styled.div`
@@ -41,8 +44,13 @@ const upload = async (file) => {
     };
 
     console.log(options)
+<<<<<<< HEAD
 //"http://localhost:3000/api/image/upload"
     const response = await fetch(api.API_ENDPOINT_REMOTE + "/api/image/upload", options);
+=======
+
+    const response = await fetch("http://localhost:3000/api/image/upload", options);
+>>>>>>> 2bf3bf43a441b2c7f18a6c64f4e7f564825f97cb
     const data = await response.json();
     console.log(data);
     return data;
