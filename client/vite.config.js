@@ -7,6 +7,8 @@ export default defineConfig({
   base: "/absproxy/5173/",
   server: {
     hmr: {
+      protocol: "http",
+      path: "/absproxy/5173/",
       clientPort: 3030,
     }
   }

@@ -5,11 +5,12 @@ import App from './App.jsx';
 import './styles/index.css';
 import {Provider} from 'react-redux';
 import authStore from './features/authSlice.js';
+import api from './features/api.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
     <Provider store = {authStore}>
-      <BrowserRouter basename='/absproxy/5173/'>
+      <BrowserRouter basename={api.BASE}>
         <App />
       </BrowserRouter>
     </Provider>

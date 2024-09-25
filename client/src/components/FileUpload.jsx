@@ -3,6 +3,7 @@ import styled from "styled-components"
 import fulfilled from "../assets/checkmark.svg";
 import pending from "../assets/pending.svg";
 import rejected from "../assets/failed.svg"
+import api from "../features/api";
 
 
 const Container = styled.div`
@@ -40,8 +41,8 @@ const upload = async (file) => {
     };
 
     console.log(options)
-
-    const response = await fetch("http://localhost:3000/api/image/upload", options);
+//"http://localhost:3000/api/image/upload"
+    const response = await fetch(api.API_ENDPOINT_REMOTE + "/api/image/upload", options);
     const data = await response.json();
     console.log(data);
     return data;

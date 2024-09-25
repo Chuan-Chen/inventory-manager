@@ -78,11 +78,10 @@ const deleteItem = async(req, res) => {
 
 const readStream = async(req, res) => {
     res.set({
-        "Access-Control-Allow-Origin": "http://localhost:5173",
+        //"Access-Control-Allow-Origin": "http://localhost:5173",
         "Cache-Control" : "no-cache",
         "Content-Type": "text/event-stream",
         "Connection": "keep-alive"
-
     });
 
     setInterval(async ()=>{

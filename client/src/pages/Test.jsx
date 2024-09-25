@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FileUpload from "../components/FileUpload";
 import styled from "styled-components";
 import ItemCard from "../components/ItemCard";
+import api from "../features/api";
 
 const ItemCards = styled.div`
 overflow: auto;
@@ -31,6 +32,18 @@ export default function Test() {
 
     const items = useSelector(state => state.auth.items);
 
+
+    useEffect(()=>{
+      //'http://localhost:3000/api/item/stream'
+      async function test(){
+        const response = await fetch("https://code.nauhc.dev/proxy/3000/api/item/read");
+        console.log(await response.json());
+      }
+
+      test();
+      
+  })
+
     /*
             {items.map((element) => {
                 
@@ -49,20 +62,30 @@ export default function Test() {
 
           
 
+            {items.map((element) => {
+                
+                return (
+                <div key = {element.ItemID} style = {{backgroundColor: "grey"}}>
+                  <div>ItemName: {element.ItemName}</div>
+                  <div>Username: {element.Username}</div>
+                  <div>ItemBarcode: {element.ItemBarcode}</div>
+                  <div>ItemCategory: {element.ItemCategory}</div>
+                </div>)
+              })}
 
             <FileUpload>
               
             </FileUpload>
 
             <div style = {{display: "grid", gridAutoFlow: "column"}}>
-            <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", "5test"]} Username = {"test"} ItemAmount={0} ItemID={1}>
+            <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", ""]} Username = {"test"} ItemAmount={0} ItemID={1}>
             
             </ItemCard>  
             <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {[]} Username = {"test"} ItemAmount={0}>
             
             </ItemCard> 
             </div>
-      
+            
         </div>
     )
 

@@ -1,4 +1,4 @@
-
+import api from "../features/api";
 
 async function create(access_token, item){
     
@@ -21,8 +21,8 @@ async function create(access_token, item){
     };
 
     console.log(options)
-
-    const response = await fetch("http://localhost:3000/api/item/create", options);
+    //"http://localhost:3000/api/item/create"
+    const response = await fetch(api.API_ENDPOINT_REMOTE + "/api/item/create", options);
     const data = await response.json();
 
     console.log(data);

@@ -1,5 +1,6 @@
 import authStore from "../features/authSlice";
 import { authSlice } from "../features/authSlice";
+import api from "../features/api";
 
 
 const Login = async (Username, Password)=> {
@@ -18,7 +19,8 @@ const Login = async (Username, Password)=> {
         body: JSON.stringify(param),
         
     };
-    const response = await fetch("http://localhost:3000/api/user/read", options);
+    //http://localhost:3000/api/user/read
+    const response = await fetch(api.API_ENDPOINT_REMOTE + "/api/user/read", options);
     const data1 = await response.json();
 
     console.log(data1)
@@ -43,7 +45,8 @@ const Signup = async (Username, Password, Email, FirstName, LastName) => {
         },
         body: JSON.stringify(param),
     };
-    const response = await fetch("http://localhost:3000/api/user/create", options);
+    //"http://localhost:3000/api/user/create"
+    const response = await fetch(api.API_ENDPOINT_REMOTE + "/api/user/create", options);
     const data = await response.json();
     localStorage.setItem('user', JSON.stringify(data));
     if(data.access_token){
@@ -63,7 +66,7 @@ const SignupWithGithub = async () => {
             "client_id" : "Ov23li89YEGmiemPiS1t",
         }
     }
-
+    //
     const response = await fetch(`https://github.com/login/oauth/authorize`, options);
     console.log(await response.json())
     return await response.json();

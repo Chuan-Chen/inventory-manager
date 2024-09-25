@@ -1,5 +1,6 @@
 import {createSlice, configureStore, Tuple, createAsyncThunk } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
+import api from './api';
 
 const authSlice = createSlice({
     name: "auth",
@@ -75,7 +76,8 @@ const authStore = configureStore({
 
 export const getItems = () => async dispatch => {
     
-    const items = await fetch("http://localhost:3000/api/item/read").then(res => res.json());
+    //http://localhost:3000/api/item/read"
+    const items = await fetch( "http://127.0.0.1/api/item/read").then(res => res.json());
     dispatch(authSlice.actions.loadItems(items));
 }
 

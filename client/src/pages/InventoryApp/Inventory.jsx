@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react";
-import { authSlice } from "../../features/authSlice";
+import { authSlice, getItems } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { create } from "../../utils/Item";
 import FileUpload from "../../components/FileUpload";
@@ -290,6 +290,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     border-radius: 10px;
     `
 
+import api from "../../features/api";
 
 export default function Inventory(){
     const [expanded, setExpanded] = useState(false);
@@ -297,9 +298,10 @@ export default function Inventory(){
 
     const dispatch = useDispatch();
     useEffect(()=>{
-      const sse = new EventSource('http://localhost:3000/api/item/stream');
+      //'http://localhost:3000/api/item/stream'
+      const sse = new EventSource(api.API_ENDPOINT_REMOTE + "/api/item/stream");
       sse.onmessage = (event) => {
-        //console.log(JSON.parse(event.data))
+        console.log(JSON.parse(event.data))
         setData(JSON.parse(event.data));
       }
 
@@ -348,6 +350,7 @@ export default function Inventory(){
               <CreateItem expanded = {expanded}  handleBlur = {handleBlur} handleFocus = {handleFocus} addData = {addData}> 
                 
               </CreateItem>
+              
               <ItemContainer>
               {data.map((element) => {
                 return (
