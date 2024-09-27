@@ -10,6 +10,7 @@ const Container = styled.div`
     width: fit-content;
     align-self: center;
     justify-self: center;
+    
 `
 
 const Label = styled.label`

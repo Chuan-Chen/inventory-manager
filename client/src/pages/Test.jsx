@@ -55,10 +55,10 @@ export default function Test() {
             </FileUpload>
 
             <div style = {{display: "grid", gridAutoFlow: "column"}}>
-            <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", "5test"]} Username = {"test"} ItemAmount={0} ItemID={1}>
+            <ItemCard ItemName = {"test"} ItemImage = {"https://static01.nyt.com/images/2021/02/17/dining/17tootired-grilled-cheese/17tootired-grilled-cheese-articleLarge.jpg?quality=75&auto=webp&disable=upscale"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", "5test", "dafsdf", "dafdfa", "dfadsf", "asdfasfda", "afsdf"]} Username = {"test"} ItemAmount={0} ItemID={1} ItemBarcode={1123410298}>
             
             </ItemCard>  
-            <ItemCard ItemName = {"test"} ItemImage = {"test"} ItemCategory = {[]} Username = {"test"} ItemAmount={0}>
+            <ItemCard ItemName = {"test"} ItemImage = {"https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"} ItemCategory = {[]} Username = {"test"} ItemAmount={0} ItemBarcode={124123}>
             
             </ItemCard> 
             </div>

@@ -105,14 +105,13 @@ const ErrorText = styled.div`
 
 const Page = styled.div`
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    
     height: 100%;
     width: 100%;
-    align-items: center;
     justify-content: center;
     background-color: #e8e9f3;
-    transition: font-size 4em;
+    transition: font-size;
     font-size: 2em;
     font-weight: bold;
 `
@@ -133,8 +132,8 @@ export default function Error({errorcode, redirectLink, redirectLinkText}){
         return (
                 <Page>
                         
-                <ErrorText>Error : {errorcode}{error}</ErrorText>
-                <LinkBtn link = {redirectLink ? redirectLink : "/auth"} text = {redirectLinkText ? redirectLinkText : "Login"} style = {startBtn}></LinkBtn>
+                <ErrorText style = {{alignSelf: "end", justifySelf: "center", margin: "60px"}}>Error : {errorcode}{error}</ErrorText>
+                <LinkBtn link = {redirectLink ? redirectLink : "/auth"} text = {redirectLinkText ? redirectLinkText : "Login"} style = {{...startBtn, alignSelf: "start", justifySelf: "center"}}></LinkBtn>
                 
                 </Page>
         )
