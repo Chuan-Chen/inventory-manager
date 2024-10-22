@@ -16,12 +16,9 @@ const Login = async (Username, Password)=> {
             "authorization" : "Bearer " + localStorage.getItem('access_token'),
         },
         body: JSON.stringify(param),
-        
     };
     const response = await fetch("http://localhost:3000/api/user/read", options);
     const data1 = await response.json();
-
-    console.log(data1)
 
     return data1;
 }
@@ -74,4 +71,30 @@ const getauthTokenGithub = async () => {
     
 }
 
-export {Login, Signup, SignupWithGithub, getauthTokenGithub}
+
+
+const updateUser = async (Username, Email, FirstName, LastName, ProfilePicture) => {
+
+    const param = {
+        "Username": Username,
+        "Email" : Email,
+        "FirstName" : FirstName,
+        "LastName" : LastName,
+        "ProfilePicture": ProfilePicture
+    };
+    console.log(param);
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "authorization" : "Bearer " + localStorage.getItem('access_token'),
+        },
+        body: JSON.stringify(param),
+    };
+    const response = await fetch("http://localhost:3000/api/user/update", options);
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
+export {Login, Signup, SignupWithGithub, getauthTokenGithub, updateUser}

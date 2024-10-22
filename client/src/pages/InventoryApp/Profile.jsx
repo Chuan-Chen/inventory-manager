@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { authSlice } from "../../features/authSlice";
 import { useDispatch } from "react-redux";
+import FileUpload from "../../components/FileUpload";
+import { updateUser } from "../../components/AuthFunctions.jsx";
 
 const Page = styled.div`
 /* ----------------------------------------------
@@ -67,7 +69,7 @@ const ProfileCard = styled.div`
 
 `
 
-const ProfilePicture = styled.div`
+const ProfilePicture = styled.img`
   border-radius: 100%;
   background-color: black;
   width: 200px;
@@ -81,8 +83,26 @@ export default function Profile(){
 
     const user = useSelector(state => state.auth);
     const dispatch = useDispatch();
+
+
+
+    const [imageURL, setimageURL] = useState({
+      "status" : "pending",
+      "url" : ""
+    });
+
+    const handleImage = (status, url) => {
+      setimageURL({"status" : status, "url" : url})
+    }
+
+    const ImageHandler = () =>{
+      updateUser(user.user.Username, user.user.Email, user.user.FirstName, user.user.LastName, imageURL.url);
+    }
+
     useEffect(()=>{
       dispatch(authSlice.actions.checkToken());
+      
+      //dispatch(authSlice.actions.updateUser());
     },[]);
 
     //<div>welcome! {user.user.FirstName || JSON.parse(localStorage.getItem('user')).FirstName} <br></br> Email: {JSON.parse(localStorage.getItem('user')).Email}</div>
@@ -92,11 +112,18 @@ export default function Profile(){
             <div style = {{backgroundColor: "#b7b8c0", height: "40%", width: "100%"}}></div>
             
             <ProfileCard>
-            <ProfilePicture></ProfilePicture>
-            <div>
+
+            <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
+            </FileUpload>
+            <ProfilePicture src = {user.user.ProfilePicture}>
+            </ProfilePicture>
+            
+            <div style = {{display: "grid", justifyContent: "center"}}>
               <div>Name: {user.user.FirstName}</div>
               <div>Email: {JSON.parse(localStorage.getItem('user')).Email}</div>
+              
             </div>
+            
             </ProfileCard>
         </Page>
     )

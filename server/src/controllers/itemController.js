@@ -1,5 +1,5 @@
-const Item = require('../models/item')
-const User = require('../models/user')
+const {Item} = require('../models/item')
+const {User} = require('../models/user')
 
 
 
@@ -10,16 +10,18 @@ const createItem = async(req, res) => {
             ItemName: req.body.ItemName, 
             ItemImage: req.body.ItemImage,
             ItemBarcode: req.body.ItemBarcode,
-            ItemCateory: req.body.ItemCategory
+            ItemCateory: req.body.ItemCategory,
+            View: 0
         })
         item.ItemCategory.push(...req.body.ItemCategory);
         
         const user = await User.findOneAndUpdate({Username: item.Username}, {"$push": { Items: item._id }}, {new: true});
+        await User.findOneAndUpdate({Username: item.Username}, {"$inc": {TotalItemsCreated: 1}})
         console.log(user);
-        if(user == null){
+        if(user == null){d
             res.status(401).json({item, msg: "User doesn't exist"})
         }else{
-            item.save();
+            item.save();TotalItemsCreated
             res.status(200).json({item, msg: "Item added successfully"});
         }
     }catch(err){
@@ -84,11 +86,12 @@ const readStream = async(req, res) => {
         "Connection": "keep-alive"
 
     });
+    //console.log(req.params.Username)
 
     setInterval(async ()=>{
-            const result = await Item.find({}, "_id Username ItemName ItemBarcode ItemCategory ItemID ItemImage");
+            const result = await Item.find({Username: `${req.params.Username}`}, "_id Username ItemName ItemBarcode ItemCategory ItemID ItemImage");
             res.write("data: " + `${JSON.stringify(result)}\n\n`);
-    }, 1000)
+    }, 100)
     
 }
 

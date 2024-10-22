@@ -87,7 +87,7 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
             <ItemCards>
                 <div style = {{display: "grid", gap: "10px"}}>
                 <CardSection style = {{display: "grid"}}>
-                    <img style ={{alignSelf: "center", justifySelf: "center", borderRadius: "5px", minHeight: "150px", maxHeight: "170px", height: "100%", width: "100%", objectFit: "contain"}} src = {ItemImage} alt = "ItemImage"/>
+                    <img style ={{alignSelf: "center", justifySelf: "center", borderRadius: "5px", minHeight: "150px", maxHeight: "170px", height: "100%", width: "100%", objectFit: "cover"}} src = {ItemImage} alt = "ItemImage"/>
                 </CardSection>
                 <CardSection>   
                     <div>

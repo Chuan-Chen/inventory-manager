@@ -315,10 +315,11 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
 export default function Inventory(){
     const [expanded, setExpanded] = useState(false);
     const [data, setData] = useState([]);
-
+    const [rendered, setRendered] = useState(false);
+    const user = useSelector(state => state.auth);
     const dispatch = useDispatch();
     useEffect(()=>{
-      const sse = new EventSource('http://localhost:3000/api/item/stream');
+      const sse = new EventSource(`http://localhost:3000/api/item/stream/${user.user.Username}`);
       sse.onmessage = (event) => {
         //console.log(JSON.parse(event.data))
         setData(JSON.parse(event.data));
@@ -378,13 +379,14 @@ export default function Inventory(){
                 
                 </CreateItem>
                 <Content onClick={handleBlur}>
-    
-                  <ItemContainer>
-                  {data.map((element) => {
+                <div style = {{height: "100%", width: "100%", display: data.length > 0 ? "block" : "none"}}>
+                <ItemContainer>
+                  {data.map((element, index) => {
                     return (
                     <ItemCard key = {element.ItemID} ItemCategory={element.ItemCategory} ItemImage={element.ItemImage} ItemAmount={element.ItemAmount ? element.ItemAmount : 0} Username = {element.Username} ItemID = {element.ItemID} ItemName={element.ItemName ? element.ItemName : "placeholder"} ItemBarcode={element.ItemBarcode ? element.ItemBarcode : "0000"}></ItemCard>
                   )})}
                   </ItemContainer>
+                </div>
                 </Content>
         </Page>
     )

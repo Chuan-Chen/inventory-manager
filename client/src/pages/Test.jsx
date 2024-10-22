@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FileUpload from "../components/FileUpload";
 import styled from "styled-components";
 import ItemCard from "../components/ItemCard";
+import DialogScreen from "../components/DialogScreen";
 
 const ItemCards = styled.div`
 overflow: auto;
@@ -47,7 +48,7 @@ export default function Test() {
         <div>
             <button onClick={()=>{dispatch(getItems())}}>Load Items</button>
 
-          
+
 
 
             <FileUpload>
@@ -61,7 +62,10 @@ export default function Test() {
             <ItemCard ItemName = {"test"} ItemImage = {"https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"} ItemCategory = {[]} Username = {"test"} ItemAmount={0} ItemBarcode={124123}>
             
             </ItemCard> 
+            
             </div>
+
+            <DialogScreen buttonText={"test"}></DialogScreen>
       
         </div>
     )

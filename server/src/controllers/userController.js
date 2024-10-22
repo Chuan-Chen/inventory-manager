@@ -1,5 +1,5 @@
 const { generateToken, parseJWT } = require('../middleware/authentication');
-const User = require('../models/user')
+const {User} = require('../models/user')
 const hash = require("../services/hash")
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
@@ -17,7 +17,9 @@ const createUser = async(req, res) => {
                 Email: req.body.Email,
                 FirstName: req.body.FirstName,
                 LastName: req.body.LastName,
-                Salt: auth.Salt
+                Salt: auth.Salt,
+                TotalItemsCreated: 0,
+                ProfilePicture: "",
             }
 
             const userParametersAccessToken = {
@@ -57,7 +59,7 @@ const readUser = async(req, res) => {
         if(req.body.Username == "" || req.body.Email == "" || req.body.FirstName == "" || req.body.LastName == "" || req.body.Password == ""){
             res.status(401).json({user: null, msg: "Please provide the required fields", usernameExists: null})
         }else{
-            const user = await User.findOne({Username: req.body.Username}, "Username Password Salt Email FirstName LastName");
+            const user = await User.findOne({Username: req.body.Username}, "Username Password Salt Email FirstName LastName ProfilePicture");
             console.log(user)
             if(user){
                 const userParams = {
@@ -65,6 +67,7 @@ const readUser = async(req, res) => {
                     LastName: user.LastName,
                     Email: user.Email,
                     Username: user.Username,
+                    ProfilePicture: user.ProfilePicture,
                 }
                 const authHeader = req.headers['authorization'];
                 const token = authHeader && authHeader.split(' ')[1];
@@ -95,9 +98,41 @@ const readUser = async(req, res) => {
 
 const updateUser = async(req, res) => {
     try{
-
+        if(req.body.Username == "" || req.body.Email == "" || req.body.FirstName == "" || req.body.LastName == "" || req.body.Password == ""){
+            res.status(401).json({user: null, msg: "Please provide the required fields", usernameExists: null})
+        }else{
+            const user = await User.findOneAndUpdate({Username: req.body.Username}, {ProfilePicture: req.body.ProfilePicture});
+            console.log(user)
+            if(user){
+                const userParams = {
+                    FirstName: user.FirstName,
+                    LastName: user.LastName,
+                    Email: user.Email,
+                    Username: user.Username,
+                    ProfilePicture: user.ProfilePicture,
+                }
+                const authHeader = req.headers['authorization'];
+                const token = authHeader && authHeader.split(' ')[1];
+                console.log(token, "Token")
+                
+                if(req.authorization.isAuthorized) {
+                    res.status(200).json({user: userParams, msg: "Successful login via JWT and updated profile", access_token: token, expireAt: new Date(parseJWT(token).exp * 1000)})
+                }else{
+                    //console.log(req.body.Password)
+                    if(hash.validate(req.body.Password, user.Salt, user.Password)){
+                        const access_token = jwt.sign(userParams, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
+                        res.status(200).json({user: userParams, msg: "Successful login and created new JWT", access_token: access_token, expireAt: new Date(parseJWT(access_token).exp * 1000)});
+                    }else{
+                        res.status(203).json({user: null, msg: "Invalid Password or Username and or JWT is expired"})
+                    }
+                }
+            }else{
+                res.status(203).json({user: null, msg: "Invalid Password or Username"})
+            }
+        }
     }catch(e){
-        
+        console.log(e);
+        res.status(401).json({user: null, msg: "Invalid user", err: JSON.stringify(e)})
     }
 }
 

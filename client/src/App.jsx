@@ -11,7 +11,6 @@ import Profile from "./pages/InventoryApp/Profile";
 import About from "./pages/InventoryApp/About"; 
 import Categories from "./pages/InventoryApp/Categories";
 import Inventory from "./pages/InventoryApp/Inventory";
-import Settings from "./pages/InventoryApp/Settings";
 import Dashboard from "./pages/InventoryApp/Dashboard";
 import Products from "./pages/Products";
 /*
@@ -78,7 +77,6 @@ function App() {
         <Route path = "about" element = {<About/>}></Route>
         <Route path = "category" element = {<Categories/>}></Route>
         <Route path = "inventory" element = {<Inventory/>}></Route>
-        <Route path = "setting" element = {<Settings/>}></Route>
         <Route path = "dashboard" element = {<Dashboard/>}></Route>
         <Route path = ":id" element = {<div>new element</div>}></Route>
       </Route>

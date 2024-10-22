@@ -1,4 +1,7 @@
 const { Schema, model: Model } = require("mongoose");
+const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 
 const userSchema = new Schema(
   {
@@ -27,18 +30,28 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    ProfilePicture: {
+      type: String
+    },
     Items: [
 
     ],
     Categories: [
 
-    ]
+    ],
+    TotalItemsCreated: {
+      type: Number,
+      required: true
+    },
+    UserID: {
+      type: Number
+    }
   },
   // to include createdAt and updatedAt fields automatically
   { timestamps: true }
 );
 
-
+userSchema.plugin(AutoIncrement, {id: "Users", inc_field: 'UserID'});
 const User = new Model("User", userSchema);
 
-module.exports = User;
+module.exports = {User, userSchema};

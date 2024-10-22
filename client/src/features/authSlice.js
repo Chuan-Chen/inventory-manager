@@ -30,7 +30,7 @@ const authSlice = createSlice({
             state.user = null;
             state.access_token = null;
             state.isAuthenticated = false;
-            localStorage.setItem('isAuthenticated', state.isAuthenticated);
+            //localStorage.setItem('isAuthenticated', state.isAuthenticated);
         },
         preflight: (state, action) => {
             try{
@@ -59,6 +59,10 @@ const authSlice = createSlice({
         },
         loadItems: (state, action) => {
             state.items = [...action.payload.result]
+        },
+        updateUser: (state, action) => {
+            const {user} = action.payload;
+            state.user = user;
         }
     }
 })

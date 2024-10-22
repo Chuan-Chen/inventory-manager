@@ -1,6 +1,8 @@
 const {Schema, model: Model} = require('mongoose');
 const mongoose = require('mongoose');
+const {userSchema} = require("./user.js");
 const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 const itemSchema = new Schema(
     {   
         ItemID: {
@@ -26,12 +28,17 @@ const itemSchema = new Schema(
         ],
         ItemAmount: {
             type: Number
+        },
+        Views: {
+            type: Number
         }
     }
 )
-itemSchema.plugin(AutoIncrement, {inc_field: 'ItemID'});
+
+itemSchema.plugin(AutoIncrement, {id: "Items", inc_field: 'ItemID'});
+
 const Item = new Model("Item", itemSchema);
 
 
 
-module.exports = Item;
+module.exports = {Item, itemSchema};

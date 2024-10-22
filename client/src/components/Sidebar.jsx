@@ -1,16 +1,20 @@
 import "../styles/sidebar.css"
 import category from "../assets/category.svg"
 import shelves from "../assets/shelves.svg"
-import settings from "../assets/settings.svg"
+import logout from "../assets/logout.svg"
 import search from "../assets/search.svg"
 import logo from "../assets/logo.svg"
 import info from "../assets/info.svg"
 import home from "../assets/home.svg"
 import profile from "../assets/person.svg"
-import {Link} from "react-router-dom"
+import {Link, redirect} from "react-router-dom"
 import menu from "../assets/menu.svg"
 import menu_open from "../assets/menu_open.svg";
 import styled from "styled-components"
+import { authSlice } from "../features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {  useNavigate } from "react-router-dom";
+
 
 
 const LinkTo = styled(Link)`
@@ -27,6 +31,9 @@ const LinkTo = styled(Link)`
 //<div id = "sidebar-parent" style = {{visibility: toggle ? "visible" : "hidden", width: toggle ? max_width : "0%", fontSize: toggle ? "1em" : "0em"}}>
 
 export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}){
+
+    const dispatch = useDispatch();
+
 
     return (
             <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%")}}>
@@ -73,12 +80,14 @@ export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}
                     <div id = "sidebar-items-description">Categories</div>
                 </div>
                 </LinkTo>
-                <LinkTo to ={"setting"}>
-                <div id = "sidebar-items" onClick={(e)=>{clickHandler(e)}}>
+                <LinkTo to = {"/auth"} onClick={()=>{
+                    dispatch(authSlice.actions.logout());
+                }}>
+                <div id = "sidebar-items">
                     <div id = 'sidebar-item-logo'>
-                        <img src = {settings}></img>
+                        <img src = {logout}></img>
                     </div>
-                    <div id = "sidebar-items-description">Setting</div>
+                    <div id = "sidebar-items-description">Logout</div>
                 </div>
                 </LinkTo>
             </div>

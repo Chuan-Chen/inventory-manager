@@ -55,7 +55,7 @@
 #sidebar-container{
     height: 100%;
     display: grid;
-    grid-template-rows: .5fr .5fr .5fr .5fr .5fr .5fr 5fr;
+    grid-template-rows: .5fr .5fr .5fr .5fr .5fr .5fr 2fr;
     justify-items: center;
     align-items: center;
     gap: 10px;
