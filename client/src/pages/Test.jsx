@@ -8,6 +8,7 @@ import FileUpload from "../components/FileUpload";
 import styled from "styled-components";
 import ItemCard from "../components/ItemCard";
 import DialogScreen from "../components/DialogScreen";
+import EditProfile from "../components/EditProfile";
 
 const ItemCards = styled.div`
 overflow: auto;
@@ -23,6 +24,11 @@ const ItemCardsContainer = styled.div`
   width: 100%;
 `
 
+const EditButton = styled.button`
+    width: fit-content;
+    height: fit-content;
+    display: ${props => !props.$toggle ? "block" : "none"};
+`
 
 export default function Test() {
     
@@ -31,10 +37,8 @@ export default function Test() {
     const dispatch = useDispatch();
 
     const items = useSelector(state => state.auth.items);
-
-    /*
+            /*
             {items.map((element) => {
-                
                 return (
                 <div key = {element.ItemID} style = {{backgroundColor: "grey"}}>
                   <div>ItemName: {element.ItemName}</div>
@@ -43,32 +47,25 @@ export default function Test() {
                   <div>ItemCategory: {element.ItemCategory}</div>
                 </div>)
               })}
-    */
-    return (
-        <div>
-            <button onClick={()=>{dispatch(getItems())}}>Load Items</button>
-
-
-
-
+              */
+              /*
+<button onClick={()=>{dispatch(getItems())}}>Load Items</button>
             <FileUpload>
-              
             </FileUpload>
-
             <div style = {{display: "grid", gridAutoFlow: "column"}}>
             <ItemCard ItemName = {"test"} ItemImage = {"https://static01.nyt.com/images/2021/02/17/dining/17tootired-grilled-cheese/17tootired-grilled-cheese-articleLarge.jpg?quality=75&auto=webp&disable=upscale"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", "5test", "dafsdf", "dafdfa", "dfadsf", "asdfasfda", "afsdf"]} Username = {"test"} ItemAmount={0} ItemID={1} ItemBarcode={1123410298}>
-            
             </ItemCard>  
             <ItemCard ItemName = {"test"} ItemImage = {"https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"} ItemCategory = {[]} Username = {"test"} ItemAmount={0} ItemBarcode={124123}>
-            
-            </ItemCard> 
-            
+            </ItemCard>
             </div>
-
-            <DialogScreen buttonText={"test"}></DialogScreen>
+            */
+    return (
+        <div>
+            
+            <DialogScreen>
+              <EditProfile></EditProfile>
+            </DialogScreen>
       
         </div>
     )
-
-
 }

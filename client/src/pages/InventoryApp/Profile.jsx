@@ -5,6 +5,8 @@ import { authSlice } from "../../features/authSlice";
 import { useDispatch } from "react-redux";
 import FileUpload from "../../components/FileUpload";
 import { updateUser } from "../../components/AuthFunctions.jsx";
+import DialogScreen from "../../components/DialogScreen.jsx";
+import EditProfile from "../../components/EditProfile.jsx";
 
 const Page = styled.div`
 /* ----------------------------------------------
@@ -53,6 +55,7 @@ const Page = styled.div`
 
     display: grid;
 
+
 `
 
 const ProfileCard = styled.div`
@@ -71,13 +74,21 @@ const ProfileCard = styled.div`
 
 const ProfilePicture = styled.img`
   border-radius: 100%;
-  background-color: black;
+  border: 1px solid white;
+  background-color: white;
   width: 200px;
   height: 200px;
   align-self: center;
   justify-self: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);s
 `
+
+const EditButton = styled.button`
+    width: fit-content;
+    height: fit-content;
+    display: ${props => !props.$toggle ? "block" : "none"};
+`
+
 
 export default function Profile(){
 
@@ -91,9 +102,7 @@ export default function Profile(){
       "url" : ""
     });
 
-    const handleImage = (status, url) => {
-      setimageURL({"status" : status, "url" : url})
-    }
+
 
     const ImageHandler = () =>{
       updateUser(user.user.Username, user.user.Email, user.user.FirstName, user.user.LastName, imageURL.url);
@@ -110,13 +119,17 @@ export default function Profile(){
     return (
         <Page>
             <div style = {{backgroundColor: "#b7b8c0", height: "40%", width: "100%"}}></div>
+
             
             <ProfileCard>
-
-            <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
-            </FileUpload>
+            <div style = {{alignSelf: "center", justifySelf: "center"}}>
+            <DialogScreen Button = {<EditButton>Edit</EditButton>}>
+              <EditProfile></EditProfile>
+            </DialogScreen>
             <ProfilePicture src = {user.user.ProfilePicture}>
             </ProfilePicture>
+            </div>
+
             
             <div style = {{display: "grid", justifyContent: "center"}}>
               <div>Name: {user.user.FirstName}</div>
