@@ -49,9 +49,9 @@ const upload = async (file) => {
     
 }
 
-export default function FileUpload({handleImage, imageStatus, imageURL}){
+export default function FileUpload({handleImage, imageStatus, imageURL, buttonText}){
 
-    const [fileName, setfileName] = useState("Upload a File");
+    const [fileName, setfileName] = useState(buttonText ? buttonText : "Upload a File");
     const HandleFile = (e) => {
         let value = (e.target.value).split("\\");
         setfileName(value[value.length-1] ? value[value.length-1] : "Upload File");

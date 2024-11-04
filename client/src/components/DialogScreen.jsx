@@ -38,11 +38,14 @@ const Page = styled.div`
             transform: translateZ(0);
     opacity: 1;
   }
-}
-
-
-    height: 100vh;
-    width: 100vw;
+}   
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background: white;
     z-index: 10;
     display: ${props => props.$toggle ? "grid" : "none"};
     align-items: center;
@@ -59,6 +62,10 @@ const EditButton = styled.button`
 `
 
 
+/**
+  Button needs to a Styled-component since it needs the $toggle prop within it to use to activate and deactivate
+ */
+
 export default function DialogScreen({buttonText, children, Button}){
     const [toggle, setToggle] = useState(false)
     const handleScreenToggle = () => {
@@ -67,11 +74,11 @@ export default function DialogScreen({buttonText, children, Button}){
     //<Button onClick={handleScreenToggle} $toggle = {!toggle}>{buttonText}</Button> 
     //clones the children element and adds a new prop called handlescreentoggle
     const Screen = React.cloneElement(children, {handleScreenToggle: handleScreenToggle});
-    const Temp = Button ? React.cloneElement(Button, {$toggle: toggle, onClick: handleScreenToggle}) : <EditButton $toggle = {toggle} handleScreenToggle = {handleScreenToggle}>{buttonText}</EditButton>;
+    const Temp = React.cloneElement(Button, {$toggle: toggle, onClick: handleScreenToggle});
     
     return (
         <>
-            {Temp}
+        {Temp}
             <Page $toggle = {toggle}>
                 {Screen}
             </Page>

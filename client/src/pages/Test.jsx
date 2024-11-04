@@ -62,7 +62,7 @@ export default function Test() {
     return (
         <div>
             
-            <DialogScreen>
+            <DialogScreen Button = {<EditButton>Edit</EditButton>}>
               <EditProfile></EditProfile>
             </DialogScreen>
       

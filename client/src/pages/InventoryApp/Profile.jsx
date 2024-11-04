@@ -70,11 +70,19 @@ const ProfileCard = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: grid;
 
+  @media(max-width: 800px){
+    height: 100%;
+    width: 100%;
+    border-radius: 0px;
+    background-color: #e8e9f3;
+  }
+
+
 `
 
 const ProfilePicture = styled.img`
   border-radius: 100%;
-  border: 1px solid white;
+  border: 0px solid white;
   background-color: white;
   width: 200px;
   height: 200px;
@@ -87,8 +95,23 @@ const EditButton = styled.button`
     width: fit-content;
     height: fit-content;
     display: ${props => !props.$toggle ? "block" : "none"};
+    position: absolute;
+    place-self: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+    
+
 `
 
+/**
+     &:hover{
+      backdrop-filter: blur(10px);
+    }
+ */
 
 export default function Profile(){
 
@@ -120,9 +143,11 @@ export default function Profile(){
         <Page>
             <div style = {{backgroundColor: "#b7b8c0", height: "40%", width: "100%"}}></div>
 
-            
+
             <ProfileCard>
-            <div style = {{alignSelf: "center", justifySelf: "center"}}>
+
+            <div style = {{alignSelf: "center", justifySelf: "center", display:"grid"}}>
+            
             <DialogScreen Button = {<EditButton>Edit</EditButton>}>
               <EditProfile></EditProfile>
             </DialogScreen>
@@ -134,7 +159,6 @@ export default function Profile(){
             <div style = {{display: "grid", justifyContent: "center"}}>
               <div>Name: {user.user.FirstName}</div>
               <div>Email: {JSON.parse(localStorage.getItem('user')).Email}</div>
-              
             </div>
             
             </ProfileCard>

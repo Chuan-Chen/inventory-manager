@@ -93,6 +93,8 @@
     height: 50px;
     border-radius: 6px;
     cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 #sidebar-divider{
     height: 1px;
