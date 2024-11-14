@@ -50,9 +50,7 @@ const Page = styled.div`
 `
 
 const CloseButton = styled.button`
-    position: absolute;
-    top: 5px;
-    right: 5px;
+
 `
 
 const SaveButton = styled.button`
@@ -83,7 +81,7 @@ export default function EditProfile({handleScreenToggle}){
     return (
         <Page>
 
-            <CloseButton onClick={handleScreenToggle}>x</CloseButton>
+            <CloseButton onClick={handleScreenToggle}>Back</CloseButton>
             <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
             </FileUpload>
             <img alt = "Profile Picture" src = {user.user.ProfilePicture}></img>

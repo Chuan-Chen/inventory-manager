@@ -11,6 +11,7 @@ const chatbotRoutes = require("./routes/chatbotRoutes")
 const searchRoutes = require("./routes/searchRoutes")
 const imageRoutes = require("./routes/imageRoutes")
 const statsRoutes = require("./routes/statsRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const { generateToken } = require('./middleware/authentication');
 dotenv.config();
 
@@ -32,7 +33,7 @@ app.use("/api/ai", chatbotRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/image", cors(corsOptions), imageRoutes);
 app.use("/api/stats", statsRoutes);
-
+app.use("/api/contact", contactRoutes)
 
 
 app.use("/", (req, res)=>{
