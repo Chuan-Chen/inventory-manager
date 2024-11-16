@@ -21,14 +21,6 @@ justify-content: center;
 
 */
 const CloseButton = styled.button`
-    position: absolute;
-    top: 5px;
-    right: 5px;
-      background: none;
-  border-radius: 4px;
-  border: 1px solid black;
-  font-weight: bold;
-  cursor: pointer;
 `
 
 const SaveButton = styled.button`
@@ -62,25 +54,25 @@ export default function EditProfile({handleScreenToggle}){
       }
 
     return (
-        <Page>
-          
-          <CloseButton onClick={handleScreenToggle}>x</CloseButton>
+      <Page>
+        
+        <CloseButton onClick={handleScreenToggle}>x</CloseButton>
 
-
-            <div>
-            <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage} buttonText={"Upload Profile Image"}>
-            </FileUpload>
-            <div>First: {user.user.FirstName}</div>
-            <div>Last: {user.user.LastName}</div>
-            </div>
-            
-            <SaveButton onClick={()=>{
-                    handleScreenToggle();
-                    saveFunc();
-                    }}>
-                        Save
-          </SaveButton>
+          <CloseButton onClick={handleScreenToggle}>Back</CloseButton>
+          <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
+          </FileUpload>
+          <div>
+          <div>First: {user.user.FirstName}</div>
+          <div>Last: {user.user.LastName}</div>
+          </div>
           
-        </Page>
-    )
+          <SaveButton onClick={()=>{
+                  handleScreenToggle();
+                  saveFunc();
+                  }}>
+                      Save
+        </SaveButton>
+        
+      </Page>
+  )
 }

@@ -92,18 +92,10 @@ const ProfilePicture = styled.img`
 `
 
 const EditButton = styled.button`
+    position: absolute;
     width: fit-content;
     height: fit-content;
     display: ${props => !props.$toggle ? "block" : "none"};
-    position: absolute;
-    place-self: center;
-    border: none;
-    background: none;
-    cursor: pointer;
-    height: 200px;
-    width: 200px;
-    border-radius: 100%;
-    
 
 `
 
@@ -145,14 +137,16 @@ export default function Profile(){
 
 
             <ProfileCard>
+            <div style = {{alignSelf: "center", justifySelf: "center"}}>
 
-            <div style = {{alignSelf: "center", justifySelf: "center", display:"grid"}}>
-            
+            <div style = {{height: "100%", width: "100%"}}>
             <DialogScreen Button = {<EditButton>Edit</EditButton>}>
               <EditProfile></EditProfile>
             </DialogScreen>
             <ProfilePicture src = {user.user.ProfilePicture}>
             </ProfilePicture>
+            </div>
+
             </div>
 
             
