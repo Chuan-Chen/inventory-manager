@@ -1,11 +1,11 @@
 const Router = require('express').Router();
-const sendMail = require("../services/nodemail")
+const {sendMail} = require("../middleware/nodemail")
 
 
 const email = async (req, res) => {
     try{
         const result = await sendMail(req, res);
-        console.log(result);
+        console.log(await result);
 
     }catch(err){
         console.log(err);
