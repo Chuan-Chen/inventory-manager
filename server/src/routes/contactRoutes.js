@@ -4,8 +4,7 @@ const {sendMail} = require("../middleware/nodemail")
 
 const email = async (req, res) => {
     try{
-        const result = await sendMail(req, res);
-        console.log(await result);
+        res.status(200).json(req.emailResult)
 
     }catch(err){
         console.log(err);
@@ -13,7 +12,7 @@ const email = async (req, res) => {
 }
 
 //Crud
-Router.post("/email", email);
+Router.post("/email", sendMail, email);
 
 //Router.get("/file:filename" , express.static("/images"));
 //cRud

@@ -66,6 +66,7 @@ function App() {
         <Route path = ":access_token" element={<div>accesstoken</div>}></Route>
       </Route>
       <Route path = "/auth" element={<LoginPage/>}></Route>
+      <Route path = "/contact-me" element={<About/>}></Route>
       <Route path = "/app" element={(()=>{
         if(user.isAuthenticated){
           return (<InventoryApp/>)

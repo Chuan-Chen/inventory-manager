@@ -15,28 +15,42 @@ const transporter = nodemailer.createTransport({
 })
 
 
-const sendMail = async (req, res) => {
+const mailList = ["chuan7901@gmail.com", "chuan.chen.info@gmail.com"]
 
-    const mailOption = {
-        from: {
-            name: "Inventory-App Contacts",
-            address: "inventory@management.com"
-        },
-        to: "chuan7901@gmail.com",
-        subject: "testing",
-        html: "<div>hi this is from some test</div>",
-    }
-    
-    transporter.sendMail(mailOption, (error, info) => {
-        if(error){
-            console.log(error);
-        }else{
-            console.log(info.response);
-            return new Promise((resolve,reject) => {
-                resolve({response: info.response})
-            })
+const sendMail = async (req, res, next) => {
+
+    try{
+        const mailOption = {
+            from: {
+                name: `Inventory-App(${req.body.email.from})`,
+                address: "inventory@management.com"
+            },
+            to: mailList,
+            subject: req.body.email.subject,
+            html: `
+            <div>This email is auto generated sent from Inventory Management App. </div>
+            <br></br>
+            <div>from: ${req.body.email.from}</div>
+            <div>message: ${req.body.email.body}</div>
+            `,
         }
-    })
+        
+        transporter.sendMail(mailOption, (error, info) => {
+            if(error){
+                console.log(error);
+                next();
+            }else{
+                console.log(info.response);
+                req.emailResult = info.response;
+                next();
+            }
+             
+        })
+    }catch(err){
+        res.json({msg: err})
+    }
+
+
 }
 
 

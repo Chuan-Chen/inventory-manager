@@ -48,7 +48,7 @@ const Page = styled.div`
 	-webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 
-    height: 100%;
+ 
     width: 100%;
 
     display: grid;
