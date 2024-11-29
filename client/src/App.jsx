@@ -67,6 +67,7 @@ function App() {
       </Route>
       <Route path = "/auth" element={<LoginPage/>}></Route>
       <Route path = "/contact-me" element={<About/>}></Route>
+      <Route path = "/stats" element = {<Dashboard/>}></Route>
       <Route path = "/app" element={(()=>{
         if(user.isAuthenticated){
           return (<InventoryApp/>)

@@ -29,4 +29,4 @@ categorySchema.plugin(AutoIncrement, {inc_field: 'CategoryID'});
 const Category = new Model("Category", categorySchema);
 
 
-module.exports = Category;
+module.exports = {Category, categorySchema};
