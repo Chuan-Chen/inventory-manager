@@ -32,7 +32,8 @@ const itemSchema = new Schema(
         Views: {
             type: Number
         }
-    }
+    },
+    { timestamps: true }
 )
 
 itemSchema.plugin(AutoIncrement, {id: "Items", inc_field: 'ItemID'});
