@@ -84,7 +84,7 @@ function App() {
       </Route>
       <Route path = "/test" element = {<Test/>}></Route>
       <Route path = "/error" element = {<Error/>}>
-        <Route path = ":error"></Route>
+        <Route path = ":error" element = {<Error/>}></Route>
       </Route>
       <Route path = "/products" element = {<Products/>}>
         <Route path = ":user"></Route>

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 
 async function create(access_token, item){
@@ -10,10 +11,14 @@ async function create(access_token, item){
         "ItemCategory" : [...item.ItemCategory]
     }
     
+=======
+async function create(Access_Token, User = {"Username" : "", "ItemName" : "", "ItemImage" : "", "ItemBarcode": "", "ItemCategory" : []}){
+>>>>>>> Stashed changes
     const options = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+<<<<<<< Updated upstream
             "authorization" : "Bearer " + access_token,
         },
         body: JSON.stringify(param),
@@ -27,6 +32,16 @@ async function create(access_token, item){
 
     console.log(data);
 
+=======
+            "authorization" : "Bearer " + localStorage.getItem('access_token'),
+        },
+        body: JSON.stringify(User),
+        
+    };
+    const response = await fetch("http://localhost:3000/api/user/read", options);
+    const data = await response.json();
+
+>>>>>>> Stashed changes
     return data;
 }
 
@@ -45,5 +60,9 @@ async function read(){
 }
 
 
+<<<<<<< Updated upstream
 
 export {create, modify, del, read}
+=======
+export {create}
+>>>>>>> Stashed changes
