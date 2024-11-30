@@ -39,6 +39,9 @@ const userSchema = new Schema(
     Categories: [
 
     ],
+    AIMessages: [
+      
+    ],
     TotalItemsCreated: {
       type: Number,
       required: true

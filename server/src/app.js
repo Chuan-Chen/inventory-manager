@@ -36,6 +36,7 @@ app.use("/api/stats", statsRoutes);
 app.use("/api/contact", contactRoutes)
 
 
+
 app.use("/", (req, res)=>{
     res.send(`Backend Null`)
 });
