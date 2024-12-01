@@ -1,10 +1,12 @@
-const {User} = require('../models/user')
+const {User, userSchema} = require('../models/user')
 const {Item} = require('../models/item')
 
 const AIChat = async (req, res) => {
     try{
+        const user = await User.findOne({Username: req.body.Username}, "AIMessages");
+        const items = await Item.find({Username: req.body.Username}, "Username ItemName ItemImage ItemBarcode ItemCategory createdAt updatedAt ItemID")
 
-        //const user = await User.findOne({Username: "123"}, "AIMessages").json();
+        console.log(JSON.stringify(items))
 
         const options = {
             "method" : "POST",
@@ -12,9 +14,13 @@ const AIChat = async (req, res) => {
                 "Content-Type": "application/json",
             },
             "body" : JSON.stringify({
-                "model" : "neural-chat:latest",
+                "model" : "llama3:latest",
                 "messages" : [
-          //          {...user.AIMessages},
+                    {
+                        "role" : "system",
+                        "content" : JSON.stringify(items)
+                    }, 
+                    ...user.AIMessages,
                     {...req.body.message}
                 ],
                 "stream" : false
@@ -26,7 +32,7 @@ const AIChat = async (req, res) => {
         //await User.findOneAndUpdate({Username: "123"}, {"$push": {AIMessages: {...req.body.messages}, AIMessages: {...await chat.json().messages}}});
 
         const result = await chat.json();
-        await User.findOneAndUpdate({Username: "123"}, {"$push": {AIMessages: {"$each" : [{...req.body.message}, {...result.message}]}}});
+        await User.findOneAndUpdate({Username: "123"}, {"$push": {AIMessages: {...req.body.message}}});
         
         res.status(200).json({...result})
     }catch(err) {
@@ -39,6 +45,15 @@ const AIChat = async (req, res) => {
 
 }
 
+
+const Test = async(req, res) => {
+    const user = await User.findOne({Username: "123"}, "AIMessages");
+
+    res.json(user.AIMessages)
+}
+
+
 module.exports = {
-    AIChat
+    AIChat,
+    Test
 }

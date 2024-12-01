@@ -6,6 +6,7 @@ import search from "../assets/search.svg"
 import logo from "../assets/logo.svg"
 import info from "../assets/info.svg"
 import home from "../assets/home.svg"
+import chat from "../assets/chat.svg"
 import profile from "../assets/person.svg"
 import {Link, redirect} from "react-router-dom"
 import menu from "../assets/menu.svg"
@@ -33,7 +34,16 @@ const LinkTo = styled(Link)`
 export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}){
 
     const dispatch = useDispatch();
-
+    /** 
+    <LinkTo to = {"category"}>
+    <div id = "sidebar-items" onClick={(e)=>{clickHandler(e)}}>
+        <div id = 'sidebar-item-logo'>
+            <img src = {category}></img>
+        </div>
+        <div id = "sidebar-items-description">Categories</div>
+    </div>
+    </LinkTo>
+    */
 
     return (
             <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%")}}>
@@ -72,12 +82,13 @@ export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}
                     <div id = "sidebar-items-description">Inventory</div>
                 </div>
                 </LinkTo>
-                <LinkTo to = {"category"}>
+
+                <LinkTo to = {"chat"}>
                 <div id = "sidebar-items" onClick={(e)=>{clickHandler(e)}}>
                     <div id = 'sidebar-item-logo'>
-                        <img src = {category}></img>
+                        <img src = {chat}></img>
                     </div>
-                    <div id = "sidebar-items-description">Categories</div>
+                    <div id = "sidebar-items-description">Smart Archive</div>
                 </div>
                 </LinkTo>
                 <LinkTo to = {"/auth"} onClick={()=>{

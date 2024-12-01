@@ -12,6 +12,7 @@ import About from "./pages/InventoryApp/About";
 import Categories from "./pages/InventoryApp/Categories";
 import Inventory from "./pages/InventoryApp/Inventory";
 import Dashboard from "./pages/InventoryApp/Dashboard";
+import AIChat from "./pages/InventoryApp/AIChat";
 import Products from "./pages/Products";
 /*
 {
@@ -80,6 +81,7 @@ function App() {
         <Route path = "category" element = {<Categories/>}></Route>
         <Route path = "inventory" element = {<Inventory/>}></Route>
         <Route path = "dashboard" element = {<Dashboard/>}></Route>
+        <Route path = "chat" element = {<AIChat/>}></Route>
         <Route path = ":id" element = {<div>new element</div>}></Route>
       </Route>
       <Route path = "/test" element = {<Test/>}></Route>

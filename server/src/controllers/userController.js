@@ -60,7 +60,7 @@ const readUser = async(req, res) => {
             res.status(401).json({user: null, msg: "Please provide the required fields", usernameExists: null})
         }else{
             const user = await User.findOne({Username: req.body.Username}, "Username Password Salt Email FirstName LastName ProfilePicture");
-            console.log(user)
+            //console.log(user)
             if(user){
                 const userParams = {
                     FirstName: user.FirstName,
@@ -71,12 +71,12 @@ const readUser = async(req, res) => {
                 }
                 const authHeader = req.headers['authorization'];
                 const token = authHeader && authHeader.split(' ')[1];
-                console.log(token, "Token")
+                //console.log(token, "Token")
                 
                 if(req.authorization.isAuthorized) {
                     res.status(200).json({user: userParams, msg: "Successful login via JWT", access_token: token, expireAt: new Date(parseJWT(token).exp * 1000)})
                 }else{
-                    console.log(req.body.Password)
+                    
                     if(hash.validate(req.body.Password, user.Salt, user.Password)){
                         const access_token = jwt.sign(userParams, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
                         res.status(200).json({user: userParams, msg: "Successful login and created new JWT", access_token: access_token, expireAt: new Date(parseJWT(access_token).exp * 1000)});

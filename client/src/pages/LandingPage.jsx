@@ -5,6 +5,16 @@ import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { authSlice, getItems } from "../features/authSlice"
 import { useEffect } from "react"
+import {Link} from "react-router-dom";
+
+
+const Container = styled.div`
+    height: 100%;
+    width: 100%;
+
+
+`
+
 
 const page = {
     height: "100%",
@@ -23,7 +33,7 @@ const Page = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #e8e9f3;
-    text-wrap: balance;
+    place-self: center;
 `
 
 const Content = styled.div`
@@ -48,6 +58,11 @@ const Content = styled.div`
     display: grid;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: 500px) {
+    gap: 100px;
+    place-self: center;
+    width: 100%;
+    }
 `
 
 const startBtn = {
@@ -59,7 +74,41 @@ const startBtn = {
     paddingRight: "15px",
     paddingTop: "5px",
     paddingBottom: "5px",
+
 }
+
+const ContactBtn = styled(Link)`
+
+
+    font-size: .9em;
+    text-decoration: none;
+    color: inherit;
+    user-select: none;
+    text-shadow: black 1px 0 10px;
+    border-radius: 4px;
+    padding: 2px;
+    &:hover {
+        box-shadow: 0 0 5px gray;
+    }
+`
+
+const Footer = styled.div`
+
+    width: 100%;
+    height: 50px;
+    background: #b7b8c0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+`
+
+const ShelfyContainer = styled.div`
+    font-weight: bold;
+    font-size: 40px;
+    @media only screen and (max-width: 500px) {
+        text-align: center;
+    }
+`
 
 //<img src = {shelf} width = "600px" style = {{position: "absolute", display: 'grid', alignSelf: "center", justifySelf: 'center', zIndex: "0"}}></img>
 function LandingPage(){
@@ -69,24 +118,31 @@ function LandingPage(){
 
 
     return (
-    <Page>
-        <Content>
-        <div style={{zIndex: "1"}}>
-            <div>
-                <div style = {{fontWeight: "bold", fontSize: "40px"}}>Shelfy<img height = "16px" src = {logo}></img></div>
-                <div>The Inventory mangement service you deserve<img height = "5px" src = {logo}></img></div>
+    <Container>
+        <Page>
+            <Content>
+            <div style={{zIndex: "1"}}>
+                <div>
+                    <ShelfyContainer>Shelfy<img height = "16px" src = {logo}></img></ShelfyContainer>
+                    <ShelfyContainer style = {{fontWeight: "300",fontSize: "16px"}}>The Inventory mangement service you deserve<img height = "5px" src = {logo}></img></ShelfyContainer>
+                </div>
             </div>
-        </div>
-        {(()=>{
-            if(isAuthenticated){
-                return <LinkBtn link = "/app/inventory" text = {`Welcome back, ${JSON.parse(localStorage.getItem('user')).FirstName}`} style = {startBtn}></LinkBtn>
-            }else{
-                return <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
-            }
-        })()}
-        </Content>
+            {(()=>{
+                if(isAuthenticated){
+                    return <LinkBtn link = "/app/inventory" text = {`Welcome back, ${JSON.parse(localStorage.getItem('user')).FirstName}`} style = {startBtn}></LinkBtn>
+                }else{
+                    return <LinkBtn link = "/auth" text = "Get Started" style = {startBtn}></LinkBtn>
+                }
+            })()}
+            </Content>
         
-    </Page>
+        </Page>
+        <Footer>
+            <ContactBtn to={"/contact-me"}>Contact Me</ContactBtn>
+            
+        </Footer>
+    </Container>
+    
     )
 }
 

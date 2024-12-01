@@ -16,12 +16,27 @@ const createItem = async(req, res) => {
         item.ItemCategory.push(...req.body.ItemCategory);
         
         const user = await User.findOneAndUpdate({Username: item.Username}, {"$push": { Items: item._id }}, {new: true});
-        await User.findOneAndUpdate({Username: item.Username}, {"$inc": {TotalItemsCreated: 1}})
-        console.log(user);
-        if(user == null){d
+        await User.bulkWrite([
+            {
+                updateOne: {
+                    filter: {Username: item.Username},
+                    update: {"$inc": {TotalItemsCreated: 1}}
+                }
+            },
+            {
+                updateOne: {
+                    filter: {Username: item.Username},
+                    update: {"$push" : {AIMessages: {"role" : "system", "content" : JSON.stringify(item)}}}
+                }
+            }
+        ])
+
+        //await User.findOneAndUpdate({Username: item.Username}, {"$inc": {TotalItemsCreated: 1}})
+        //console.log(user);
+        if(user == null){
             res.status(401).json({item, msg: "User doesn't exist"})
         }else{
-            item.save();TotalItemsCreated
+            item.save();//TotalItemsCreated
             res.status(200).json({item, msg: "Item added successfully"});
         }
     }catch(err){

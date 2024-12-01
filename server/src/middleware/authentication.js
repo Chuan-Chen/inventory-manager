@@ -18,9 +18,16 @@ const generateToken = (req, res, next) => {
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    
+    const parsedToken = parseJWT(token);
+
     if(token == null) return res.status(401).json({msg: "null token"});
-    console.log("authentication.js: verifying user token: " + token)
+    console.log(token);
+    if((req.body.Username != parsedToken.Username || req.body.LastName != parsedToken.LastName || req.body.Email != parsedToken.Email) && req.authorization == false) {
+        console.log(parsedToken)
+        console.log(req.body)
+        return res.status(401).json({msg: "Not Authorized contact admin."})
+    }
+    //console.log("authentication.js: verifying user token: " + token)
     //console.log(parseJWT(token));
     
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

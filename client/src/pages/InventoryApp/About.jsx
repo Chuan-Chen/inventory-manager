@@ -5,6 +5,8 @@ import linkedin from "../../assets/linkedin-svgrepo-com.svg"
 import portfolio from "../../assets/portfolio-case-business-suitcase-svgrepo-com.svg"
 import { useDispatch } from "react-redux";
 import { authSlice } from "../../features/authSlice";
+import {Link} from "react-router-dom";
+import LinkBtn from "../../components/LinkBtn";
 
 const Page = styled.div`
 /* ----------------------------------------------
@@ -381,6 +383,14 @@ const Social = styled.div`
       }
 `
 
+const backBtn = {
+  position: "absolute",
+  top: "10px",
+  left: "10px",
+  borderRadius: "5px",
+  border: "black 1px solid",
+  padding: "5px",
+}
 
 export default function About(){
 
@@ -391,7 +401,7 @@ export default function About(){
 
     return (
         <Page>
-
+            <LinkBtn link = "/" text = "Back" style = {backBtn}></LinkBtn>
             <RightWrapper>
                 <RightWrapperInner>
                     <div style = {{gridArea: "header", fontSize: '3rem', fontWeight: 'bold', display: 'grid', alignSelf:'center', justifySelf: 'center', borderBottom: '1px solid  #babab6', padding: "20px"}}>  Contact Me </div> 

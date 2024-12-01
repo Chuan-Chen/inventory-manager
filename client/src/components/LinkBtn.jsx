@@ -6,6 +6,9 @@ const Btn = styled(Link)`
     text-decoration: none;
     color: inherit;
     user-select: none;
+    @media only screen and (max-width: 500px) {
+        place-self: center;
+    }
     &:hover {
         box-shadow: 0 0 5px gray;
     }
