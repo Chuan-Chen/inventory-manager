@@ -6,54 +6,24 @@ import { useDispatch, useSelector } from "react-redux"
 import { authSlice, getItems } from "../features/authSlice"
 import { useEffect } from "react"
 import {Link} from "react-router-dom";
-
+import Global from "../styles/Global"
 
 const Container = styled.div`
     height: 100%;
     width: 100%;
-
-
 `
-
-
-const page = {
-    height: "100%",
-    width: "100%",
-    display: "grid",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#e8e9f3"
-}
-
 const Page = styled.div`
-
     height: 100%;
     width: 100%;
     display: grid;
     justify-content: center;
     align-items: center;
-    background-color: #e8e9f3;
+    background-color: ${Global.Styles.BackgroundColor};
     place-self: center;
 `
 
 const Content = styled.div`
-    @keyframes tracking-in-expand-fwd-top {
-            0% {
-                letter-spacing: -0.5em;
-                -webkit-transform: translateZ(-700px) translateY(-500px);
-                        transform: translateZ(-700px) translateY(-500px);
-                opacity: 0;
-            }
-            40% {
-                opacity: 0.6;
-            }
-            100% {
-                -webkit-transform: translateZ(0) translateY(0);
-                        transform: translateZ(0) translateY(0);
-                opacity: 1;
-            }
-        }
-    animation: tracking-in-expand-fwd-top 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    ${Global.Animations.TrackingInFwdTop}
     width: 500px;
     display: grid;
     justify-content: center;
@@ -74,7 +44,6 @@ const startBtn = {
     paddingRight: "15px",
     paddingTop: "5px",
     paddingBottom: "5px",
-
 }
 
 const ContactBtn = styled(Link)`
@@ -82,11 +51,12 @@ const ContactBtn = styled(Link)`
 
     font-size: .9em;
     text-decoration: none;
-    color: inherit;
+    color: white;
     user-select: none;
-    text-shadow: black 1px 0 10px;
+    text-shadow: white 1px 0 10px;
     border-radius: 4px;
     padding: 2px;
+
     &:hover {
         box-shadow: 0 0 5px gray;
     }
@@ -96,7 +66,7 @@ const Footer = styled.div`
 
     width: 100%;
     height: 50px;
-    background: #b7b8c0;
+    background: #484d51;
     display: grid;
     align-items: center;
     justify-content: center;

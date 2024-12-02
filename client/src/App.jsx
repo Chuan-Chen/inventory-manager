@@ -77,7 +77,9 @@ function App() {
         }
       })()}>
         <Route path = "profile" element = {<Profile/>}></Route>
-        <Route path = "about" element = {<About/>}></Route>
+        <Route path = "about" element = {<About/>}>
+          <Route path = ":id" element = {<About/>}></Route>
+        </Route>
         <Route path = "category" element = {<Categories/>}></Route>
         <Route path = "inventory" element = {<Inventory/>}></Route>
         <Route path = "dashboard" element = {<Dashboard/>}></Route>

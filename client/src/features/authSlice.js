@@ -34,12 +34,10 @@ const authSlice = createSlice({
         },
         preflight: (state, action) => {
             try{
-                
-                if(new Date(localStorage.getItem('expireAt')) > new Date()){
+                //need to fix preflights to make sure all tokens are checked.
+                if(new Date(localStorage.getItem('expireAt')) > new Date() || new Date(state.expireAt) > new Date()){
                     state.isAuthenticated = true;
-                    
                 }
-
                 state.user = JSON.parse(localStorage.getItem('user'));
                 state.access_token = localStorage.getItem('access_token');
                 state.expireAt = localStorage.getItem('expireAt');
