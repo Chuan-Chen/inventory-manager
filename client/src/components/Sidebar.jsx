@@ -46,7 +46,7 @@ export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}
     */
 
     return (
-            <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%")}}>
+            <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%"), borderTopRightRadius: '20px', borderBottomRightRadius: "20px"}}>
             <div id = "logo">
                 <img src = {logo} height = "100%" width = "20%"></img>
                 <div id = "sidebar-logo-description">Shelfy</div>

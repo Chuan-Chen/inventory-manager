@@ -19,6 +19,7 @@ const DisplayPanel = styled.div`
 `
 
 const Page = styled.div`
+    ${Global.Scrollbar}
     ${Global.Animations.TextFocusIn}
     background-color: #e8e9f3;
     height: 100%;

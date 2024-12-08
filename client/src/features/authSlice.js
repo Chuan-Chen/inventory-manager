@@ -39,6 +39,7 @@ const authSlice = createSlice({
                     state.isAuthenticated = true;
                 }
                 state.user = JSON.parse(localStorage.getItem('user'));
+                state.user.ProfilePicture = localStorage.getItem("ProfilePicture")
                 state.access_token = localStorage.getItem('access_token');
                 state.expireAt = localStorage.getItem('expireAt');
               }catch(e){
@@ -59,8 +60,9 @@ const authSlice = createSlice({
             state.items = [...action.payload.result]
         },
         updateUser: (state, action) => {
-            const {user} = action.payload;
-            state.user = user;
+            state.user.ProfilePicture = action.payload;
+            localStorage.setItem("ProfilePicture", action.payload)
+            //state.user = user;
         }
     }
 })

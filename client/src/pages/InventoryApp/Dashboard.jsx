@@ -5,10 +5,8 @@ import { useDispatch } from "react-redux";
 import Chart from 'chart.js/auto';
 import Global from "../../styles/Global";
 const Page = styled.div`
-    ${Global.Animations.SlideInTop}
-    height: 100%;
-    width: 100%;
-    
+    ${Global.Animations.SlideInTop};
+    width: 400px;
     display: grid;
     align-items: center;
     justify-content: center;
@@ -40,7 +38,7 @@ export default function Dashboard(){
 
   useEffect(()=>{
     dispatch(authSlice.actions.checkToken());
-    if(chartCount == 0){
+
       new Chart(document.getElementById('chart1'), {
         type: 'bar',
         data: {
@@ -59,16 +57,11 @@ export default function Dashboard(){
           }
         }
       });
-    }
-
-
   },[])
     return (
         <Page>
-          <button onClick={next}>next</button>
-          <button onClick={previous}>previous</button>
-            {chartCount}
-            {graph[chartCount]}
+          <canvas id = {"chart1"}></canvas>
+
         </Page>
     )
 }

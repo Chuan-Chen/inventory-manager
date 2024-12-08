@@ -11,6 +11,7 @@ import Global from "../styles/Global"
 const Container = styled.div`
     height: 100%;
     width: 100%;
+    ${Global.Scrollbar}
 `
 const Page = styled.div`
     height: 100%;
@@ -20,6 +21,7 @@ const Page = styled.div`
     align-items: center;
     background-color: ${Global.Styles.BackgroundColor};
     place-self: center;
+    ${Global.Scrollbar}
 `
 
 const Content = styled.div`

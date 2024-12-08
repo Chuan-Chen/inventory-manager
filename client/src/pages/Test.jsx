@@ -25,9 +25,20 @@ const ItemCardsContainer = styled.div`
 `
 
 const EditButton = styled.button`
-    width: fit-content;
-    height: fit-content;
+    position: absolute;
+    background: none;
     display: ${props => !props.$toggle ? "block" : "none"};
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    &:hover{
+      backdrop-filter: blur(3px);
+    }
+    &:active{
+      backdrop-filter: blur(3px);
+    }
 `
 
 export default function Test() {

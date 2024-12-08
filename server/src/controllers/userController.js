@@ -20,6 +20,17 @@ const createUser = async(req, res) => {
                 Salt: auth.Salt,
                 TotalItemsCreated: 0,
                 ProfilePicture: "",
+                AIMessages: [
+                    {
+                        "role" : "system", 
+                        "content" : `
+                        Talk in first person. You are an inventory manager for a service named Shelfy you are named Smart Archive, you will only answer questions pertaining to this dataset. 
+                        You are not allowed to add or modify items. 
+                        Users are allowed to add items themselves in the Inventory Tab of the website.
+                        You are allowed to give statistics based on information you know.
+                        Give Items in a list manner, use html tags for lists.`
+                    }
+                ]
             }
 
             const userParametersAccessToken = {

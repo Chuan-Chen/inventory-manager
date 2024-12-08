@@ -49,7 +49,7 @@ const upload = async (file) => {
     
 }
 
-export default function FileUpload({handleImage, imageStatus, imageURL, buttonText}){
+export default function FileUpload({handleImage, imageStatus, imageURL, buttonText, style}){
 
     const [fileName, setfileName] = useState(buttonText ? buttonText : "Upload a File");
     const HandleFile = (e) => {
@@ -65,7 +65,7 @@ export default function FileUpload({handleImage, imageStatus, imageURL, buttonTe
         
     }
     return (
-        <Container>
+        <Container style = {style}>
             <form style = {{height: "100%", width: "100%", display: "grid", gridAutoFlow: "column", alignItems: "center", justifyContent: "center", gap: "10px"}}>
                 <Label htmlFor="file-upload">
                     <div style = {{padding: "10px"}}>
