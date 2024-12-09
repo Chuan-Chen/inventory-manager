@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const {User} = require('../models/user')
+const hash = require("../services/hash")
 require('dotenv').config();
 
 const generateToken = (req, res, next) => {
@@ -14,21 +16,20 @@ const generateToken = (req, res, next) => {
     next();
 };
 
-
-const authenticateToken = (req, res, next) => {
+const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+    if(token == null){
+        return res.status(401).json({msg: "Not Authorized contact admin or enter correct JWT"})
+    }
     const parsedToken = parseJWT(token);
-
+    console.log(parsedToken)
     if(token == null) return res.status(401).json({msg: "null token"});
-    console.log(token);
     if((req.body.Username != parsedToken.Username || req.body.LastName != parsedToken.LastName || req.body.Email != parsedToken.Email) && req.authorization == false) {
         console.log(parsedToken)
         console.log(req.body)
         return res.status(401).json({msg: "Not Authorized contact admin."})
     }
-    //console.log("authentication.js: verifying user token: " + token)
-    //console.log(parseJWT(token));
     
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err) req.authorization = {isAuthorized: false}; 
@@ -39,7 +40,6 @@ const authenticateToken = (req, res, next) => {
 };
 
 function parseJWT (token) {
-    
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 }
 

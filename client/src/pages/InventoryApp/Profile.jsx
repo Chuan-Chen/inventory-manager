@@ -135,8 +135,6 @@ const GlobalStats = styled.div`
 `
 
 
-
-
 /**
      &:hover{
       backdrop-filter: blur(10px);

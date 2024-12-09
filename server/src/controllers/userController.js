@@ -67,6 +67,8 @@ const readUser = async(req, res) => {
             "LastName" : req.body.LastName,
             "Password" : req.body.Password
         })
+
+        //check this logic
         if(req.body.Username == "" || req.body.Email == "" || req.body.FirstName == "" || req.body.LastName == "" || req.body.Password == ""){
             res.status(401).json({user: null, msg: "Please provide the required fields", usernameExists: null})
         }else{
