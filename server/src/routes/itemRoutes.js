@@ -11,6 +11,6 @@ Router.post("/read", itemController.readItem);
 Router.get("/read", itemController.readAllItems);
 Router.get("/delete", itemController.deleteItem);
 
-Router.get("/stream/:Username", itemController.readStream);
+Router.get("/stream/:Username" ,itemController.readStream);
 
 module.exports = Router;

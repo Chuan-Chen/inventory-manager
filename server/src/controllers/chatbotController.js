@@ -26,8 +26,8 @@ const AIChat = async (req, res) => {
                 "stream" : false
             })
         }
-        console.log(options) 
-        const chat = await fetch('http://192.168.1.172:11434/api/chat', options);
+        console.log(`${process.env.LLM_URI}/api/chat`) 
+        const chat = await fetch(`http://${process.env.LLM_URI}/api/chat`, options);
 
         //await User.findOneAndUpdate({Username: "123"}, {"$push": {AIMessages: {...req.body.messages}, AIMessages: {...await chat.json().messages}}});
 

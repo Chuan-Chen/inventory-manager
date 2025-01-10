@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import authStore from "../features/authSlice";
 import { authSlice, getItems } from "../features/authSlice";
-import { Login } from "../components/AuthFunctions";
+import { Login } from "../features/AuthFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import FileUpload from "../components/FileUpload";
 import styled from "styled-components";
@@ -76,7 +76,15 @@ export default function Test() {
             <DialogScreen Button = {<EditButton>Edit</EditButton>}>
               <EditProfile></EditProfile>
             </DialogScreen>
-      
+            <button onClick={()=>{dispatch(getItems())}}>Load Items</button>
+            <FileUpload>
+            </FileUpload>
+            <div style = {{display: "grid", gridAutoFlow: "column"}}>
+            <ItemCard ItemName = {"test"} ItemImage = {"https://static01.nyt.com/images/2021/02/17/dining/17tootired-grilled-cheese/17tootired-grilled-cheese-articleLarge.jpg?quality=75&auto=webp&disable=upscale"} ItemCategory = {["1tesasdfdfst", "2test", "3test", "4test", "5test", "5test", "dafsdf", "dafdfa", "dfadsf", "asdfasfda", "afsdf"]} Username = {"test"} ItemAmount={0} ItemID={1} ItemBarcode={1123410298}>
+            </ItemCard>  
+            <ItemCard ItemName = {"test"} ItemImage = {"https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"} ItemCategory = {[]} Username = {"test"} ItemAmount={0} ItemBarcode={124123}>
+            </ItemCard>
+            </div>
         </div>
     )
 }

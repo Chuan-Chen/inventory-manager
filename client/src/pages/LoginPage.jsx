@@ -7,7 +7,7 @@ import GithubLogo from "../assets/github-mark.svg"
 import {LoginBtn} from "../components/StyledComponents"
 import DownArrow from "../assets/down_arrow.svg"
 import styled from "styled-components";
-import { Login, Signup, SignupWithGithub } from "../components/AuthFunctions";
+import { Login, Signup, SignupWithGithub } from "../features/AuthFunctions";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authSlice } from "../features/authSlice";
@@ -17,18 +17,35 @@ const Page = styled.div`
     ${Global.Animations.SlideInTop}
     height: 500px;
     width: 450px;
-    box-shadow: 0 0 4px black;
-    border-radius: 5px;
+    box-shadow: 0 0 4px white;
+    border-radius: 7px;
     display: grid;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: #9ba5ac;
     position: relative;
-
+    transition: all 1s ease-out;
     @media (max-width: 450px){
         width: 100vw;
         height: 100vh;
     }
+
+    &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+          transition: all 1s ease-out;
+    }
+    .LogoImg {
+        transition: all 1s ease-out;  
+    }
+    &:hover .LogoImg {
+        transition: all 1s ease-out;
+        filter: invert(99%) sepia(70%) saturate(280%) hue-rotate(263deg) brightness(114%) contrast(101%);   
+    }
+          
+    
 `
 
 function LoginPage(){
@@ -67,14 +84,14 @@ function LoginPage(){
     //current issue [ ] cannot reset input fields
 
     return (
-        <div style = {{height: '100%', width: '100%', display: 'grid', alignItems: "center", justifyContent: "center", backgroundColor: "#e8e9f3"}}>
+        <div style = {{height: '100%', width: '100%', display: 'grid', alignItems: "center", justifyContent: "center", backgroundColor: "#c9d6df"}}>
             <Page>
                 <div style = {{position: "absolute", top: "19px", left: "19px", display: "grid", gridAutoFlow: "column", justifyContent: "center", alignItems: "center"}}>
-                    <img src = {Back}></img>
+                    <img src = {Back} className="LogoImg"></img>
                     {isSignup ? <LinkBtn text = "Login" style = {{width: "fit-content", borderRadius: "4px"}} onClick = {handleSignup}></LinkBtn> : <LinkBtn link = "/" text = "Back" style = {{width: "fit-content", borderRadius: "4px"}}></LinkBtn>}
                 </div>
                 <div style = {{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "end", height: "100%", width: "100%"}}>
-                    <img src = {Logo} style = {{height: "80px"}}></img>
+                    <img src = {Logo} style = {{height: "80px"}} className="LogoImg"></img>
                     <div>Shelfy</div>
                 </div>
                 <div style = {{height: "1px", width: "100%", alignSelf: "end", backgroundColor: "lightgray"}}></div>
@@ -110,8 +127,8 @@ function LoginPage(){
                         }}><img src = {GithubLogo} height={"20px"}></img><div>Login with Github</div></LoginBtn>
                 </div>
                 <div style = {{display: isSignup ? "none" : "grid", alignItems: "center", justifyContent: "center", gap: "2px"}}>
-                    <LinkBtn text = "Sign Up" style = {{borderRadius: "5px", backgroundColor: "#f0f0f0", padding: '5px', textAlign: "center"}} onClick = {handleSignup}></LinkBtn>
-                    <div style = {{fontSize: ".7em", textAlign: 'center', display: "grid", gridAutoFlow: "column", alignItems: "center", justifyContent: "center", gap: "5px"}}>Create account here<img src = {DownArrow} height={"15px"} style = {{transform: "rotate(180deg)"}}></img></div>
+                    <LinkBtn text = "Sign Up" style = {{borderRadius: "5px", backgroundColor: "#f0f0f0", padding: '5px', textAlign: "center", color: "black"}} onClick = {handleSignup}></LinkBtn>
+                    <div style = {{fontSize: ".7em", textAlign: 'center', display: "grid", gridAutoFlow: "column", alignItems: "center", justifyContent: "center", gap: "5px"}}>Create account here<img src = {DownArrow} height={"15px"} style = {{transform: "rotate(180deg)"}} className="LogoImg"></img></div>
                 </div>
             </Page>
             

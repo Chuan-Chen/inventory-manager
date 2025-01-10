@@ -71,12 +71,14 @@ export default function Products(){
 
     useEffect(()=> {
         fetchItem()
-        .then((data) => {setItems(data); setStatus(true)});
+        .then((data) => {setItems([data.result]); setStatus(true)});
     }, []);
 
     return (
         <Page>
-            {status ? <ItemCards></ItemCards> : (<Loading>Loading...</Loading>)}
+            {status ? items.map((element, index) => {
+                return <ItemCards key = {index}>{element.ItemID}</ItemCards>
+            }) : (<Loading>Loading...</Loading>)}
         </Page>
     )
 }

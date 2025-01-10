@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useEffect, useState } from "react";
 import github from "../../assets/github-circle-svgrepo-com.svg"
 import linkedin from "../../assets/linkedin-svgrepo-com.svg"
-import portfolio from "../../assets/portfolio-case-business-suitcase-svgrepo-com.svg"
+import portfolio from "../../assets/portfolio.svg"
 import { useDispatch } from "react-redux";
 import { authSlice } from "../../features/authSlice";
 import {Link, useParams} from "react-router-dom";

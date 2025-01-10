@@ -2,6 +2,9 @@ import LinkBtn from "../components/LinkBtn"
 import logo from "../assets/logo.svg"
 import shelf from "../assets/shelf2.svg"
 import styled from "styled-components"
+import Github from "../assets/github-circle-svgrepo-com.svg"
+import PortfolioIcon from "../assets/portfolio.svg"
+import Mail from "../assets/mail.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { authSlice, getItems } from "../features/authSlice"
 import { useEffect } from "react"
@@ -58,20 +61,75 @@ const ContactBtn = styled(Link)`
     text-shadow: white 1px 0 10px;
     border-radius: 4px;
     padding: 2px;
-
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 3px;
+    justify-content: center;
     &:hover {
-        box-shadow: 0 0 5px gray;
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+          transition: all .5s ease-out;
     }
 `
 
 const Footer = styled.div`
-
+    grid-auto-flow: column;
     width: 100%;
     height: 50px;
     background: #484d51;
     display: grid;
     align-items: center;
+    gap: 3px;
     justify-content: center;
+`
+
+const FooterGithub = styled.a`
+
+    font-size: .9em;
+    text-decoration: none;
+    color: white;
+    user-select: none;
+    text-shadow: white 1px 0 10px;
+    border-radius: 4px;
+    padding: 2px;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    &:hover {
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+          transition: all .5s ease-out;
+    }
+
+`
+
+const FooterUser = styled.a`
+    font-size: .9em;
+    text-decoration: none;
+    color: white;
+    user-select: none;
+    text-shadow: white 1px 0 10px;
+    border-radius: 4px;
+    padding: 2px;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 3px;
+    justify-content: center;
+    &:hover {
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+          transition: all .5s ease-out;
+    }
 `
 
 const ShelfyContainer = styled.div`
@@ -110,7 +168,11 @@ function LandingPage(){
         
         </Page>
         <Footer>
-            <ContactBtn to={"/contact-me"}>Contact Me</ContactBtn>
+            <FooterUser href = "https://self.nauhc.dev" target="_blank"><img src = {PortfolioIcon} height = "16px" style = {{filter: "invert(100%)"}}></img>Chuan Chen</FooterUser>
+            <div style = {{color: "#c9d6df"}}>&#8226;</div>
+            <FooterGithub href = "https://github.com/Chuan-Chen" target="_blank"> <img src = {Github} height = "16px" style = {{filter: "invert(100%)"}}></img> Github</FooterGithub>
+            <div style = {{color: "#c9d6df"}}>&#8226;</div>
+            <ContactBtn to={"/contact-me"}> <img src = {Mail} height = "16px" style = {{filter: "invert(100%)"}}></img>Contact Me</ContactBtn>
             
         </Footer>
     </Container>

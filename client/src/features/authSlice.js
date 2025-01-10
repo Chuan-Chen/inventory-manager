@@ -1,5 +1,6 @@
 import {createSlice, configureStore, Tuple, createAsyncThunk } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
+import API from './api';
 
 const authSlice = createSlice({
     name: "auth",
@@ -57,7 +58,7 @@ const authSlice = createSlice({
             }
         },
         loadItems: (state, action) => {
-            state.items = [...action.payload.result]
+            state.items = [...action.payload]
         },
         updateUser: (state, action) => {
             state.user.ProfilePicture = action.payload;
@@ -77,12 +78,29 @@ const authStore = configureStore({
 });
 
 
-export const getItems = () => async dispatch => {
-    
-    const items = await fetch("http://localhost:3000/api/item/read").then(res => res.json());
-    dispatch(authSlice.actions.loadItems(items));
+export const getItems = (Username) => async dispatch => {
+        const param = {
+            Username: Username
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(param),
+        }
+        const url = API.SERVER + "/api/item/read"
+        const items = await fetch(url, options);
+        const parsedData = await items.json();
+        console.log(parsedData)
+        dispatch(authSlice.actions.loadItems(await parsedData.result));
 }
 
+export const getAllItems = () => async dispatch => {
+    const items = await fetch("http://localhost:3000/api/item/read");
+    const parsedData = await items.json();
+    dispatch(authSlice.actions.loadItems(await parsedData.result));
+}
 
 
 export {authSlice}

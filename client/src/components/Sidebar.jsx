@@ -46,13 +46,13 @@ export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}
     */
 
     return (
-            <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%"), borderTopRightRadius: '20px', borderBottomRightRadius: "20px"}}>
+            <div id="sidebar" style = {{visibility: toggle ? "visible" : "hidden", fontSize: toggle ? "1em" : "0em", width: !toggle ? '0%' : (width <= "768" ? "100%" : "20%")}}>
             <div id = "logo">
                 <img src = {logo} height = "100%" width = "20%"></img>
                 <div id = "sidebar-logo-description">Shelfy</div>
             </div>
             <div id = "sidebar-container">
-                <div id = "searchArea" alt = "Search..">
+                <div id = "searchArea" alt = "Search.." onClick={searchbar_toggle}>
                     <div id = "sidebar-item-logo">
                         <img id = "sidebar-search-icon" src = {search} onClick={searchbar_toggle}></img>
                     </div>
@@ -66,14 +66,14 @@ export default function Sidebar({toggle, searchbar_toggle , clickHandler, width}
                     <div id = "sidebar-items-description">Profile</div>
                 </div>
                 </LinkTo>
-                <LinkTo to={"dashboard"}>
+                {width > "768" ? "" : <LinkTo to={"dashboard"}>
                 <div id = "sidebar-items" onClick={(e)=>{clickHandler(e)}}>
                     <div id = 'sidebar-item-logo'>
                         <img src = {home}></img>
                     </div>
                     <div id = "sidebar-items-description">Dashboard</div>
                 </div>
-                </LinkTo>
+                </LinkTo>}
                 <LinkTo to = {"inventory"}>
                 <div id = "sidebar-items" onClick={(e)=>{clickHandler(e)}}>
                     <div id = 'sidebar-item-logo'>

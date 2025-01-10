@@ -5,7 +5,7 @@ const {Category} = require('../models/category')
 
 const getUserStats = async(req, res) => {
     try{
-      const user = await User.findOne({Username: req.body.Username}, "Username FirstName LastName CreatedAt");
+      const user = await User.findOne({Username: req.body.Username}, "Username FirstName LastName createdAt");
       const ItemCount = await Item.countDocuments({Username: req.body.Username});
       const ItemAggregate = await Item.aggregate([
           {
@@ -15,7 +15,7 @@ const getUserStats = async(req, res) => {
           },
           {
             $project: {
-              // Extract the year and month from the "createdAt" field (assumed field)
+              // Extract the year and month from the "createdAt" field
               year: { $year: "$createdAt" },
               month: { $month: "$createdAt" }
             }
@@ -25,6 +25,9 @@ const getUserStats = async(req, res) => {
               _id: { year: "$year", month: "$month" }, // Group by year and month
               itemCount: { $sum: 1 } // Count the number of users in each group
             }
+          },
+          {
+            $sort: { "_id": 1 }
           },
           {
             $group: {
@@ -38,7 +41,7 @@ const getUserStats = async(req, res) => {
             }
           },
           {
-            $sort: { "_id": -1 } // Sort the result by year in descending order
+            $sort: { "_id": 1, "months.month" : 1 } // Sort the result by year in descending order
           }
         ])
       res.status(200).json({data: {User: user, Items: {TotalItems: ItemCount, ItemsCreatedByDate: ItemAggregate}}})
@@ -67,6 +70,9 @@ const getAllStats = async(req, res) =>{
               }
             },
             {
+              $sort: { "_id": 1 }
+            },
+            {
               $group: {
                 _id: "$_id.year", // Group by year
                 months: {
@@ -78,7 +84,7 @@ const getAllStats = async(req, res) =>{
               }
             },
             {
-              $sort: { "_id": -1 } // Sort the result by year in descending order
+              $sort: { "_id": 1, "months.month" : 1 }
             }
           ])
 
@@ -99,6 +105,9 @@ const getAllStats = async(req, res) =>{
               }
             },
             {
+              $sort: { "_id": 1 }
+            },
+            {
               $group: {
                 _id: "$_id.year", // Group by year
                 months: {
@@ -110,7 +119,7 @@ const getAllStats = async(req, res) =>{
               }
             },
             {
-              $sort: { "_id": -1 } // Sort the result by year in descending order
+              $sort: { "_id": 1, "months.month" : 1 }
             }
           ])
         const CategoryCount = await Category.countDocuments({});

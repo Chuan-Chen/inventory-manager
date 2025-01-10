@@ -13,8 +13,8 @@ const imageRoutes = require("./routes/imageRoutes")
 const statsRoutes = require("./routes/statsRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const { generateToken } = require('./middleware/authentication');
+const {connections} = require("./middleware/connections")
 dotenv.config();
-
 
 
 const corsOptions = {

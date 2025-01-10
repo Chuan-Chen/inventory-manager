@@ -12,6 +12,7 @@ const LoginBtn = styled.button`
     justify-self: center;
     cursor: pointer;
     &:hover{
+        
         box-shadow: 0 0 4px black;
     }
 `

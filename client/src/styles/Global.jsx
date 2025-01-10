@@ -2,7 +2,8 @@
 const Global = {
     Styles: {
         BackgroundColor: "#c9d6df",
-        AccentColor: "#cbc5ea",
+        AccentColor: "#e8e9f3",
+        SecondaryAccentColor: "#e8e9f3"
     },
     Animations: {
         SlideInTop: `

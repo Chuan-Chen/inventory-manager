@@ -31,6 +31,7 @@ const ItemCardsContainer = styled.div`
     max-width: 300px;
     align-self: center;
     justify-self: center;
+    transition: all .5s ease-out;
 `
 
 
@@ -78,7 +79,9 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
     useEffect(()=>{
         JsBarcode(`#${date+ItemID}`, ItemBarcode, {
             height: 30,
-            background: ""    
+            background: "",
+            format: "CODE128",
+            displayValue: false
         });
     });
 

@@ -21,7 +21,7 @@ const DisplayPanel = styled.div`
 const Page = styled.div`
     ${Global.Scrollbar}
     ${Global.Animations.TextFocusIn}
-    background-color: #e8e9f3;
+    background-color: ${Global.Styles.BackgroundColor};
     height: 100%;
     width: 100%;
     display: flex;
@@ -90,7 +90,7 @@ function InventoryApp() {
       <DisplayPanel>
       <Outlet />
       </DisplayPanel>
-      </Page>
+    </Page>
   )
 }
 

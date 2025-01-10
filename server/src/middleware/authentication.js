@@ -19,9 +19,10 @@ const generateToken = (req, res, next) => {
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    if(token == null){
+    if(token === null || token == undefined){
         return res.status(401).json({msg: "Not Authorized contact admin or enter correct JWT"})
     }
+    console.log(token);
     const parsedToken = parseJWT(token);
     console.log(parsedToken)
     if(token == null) return res.status(401).json({msg: "null token"});

@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { authSlice } from "../../features/authSlice";
 import { useDispatch } from "react-redux";
 import FileUpload from "../../components/FileUpload";
-import { updateUser } from "../../components/AuthFunctions.jsx";
 import DialogScreen from "../../components/DialogScreen.jsx";
 import EditProfile from "../../components/EditProfile.jsx";
 import Global from "../../styles/Global.jsx";
 import close from "../../assets/close.svg";
 import edit from "../../assets/edit.svg";
-import Dashboard from "./Dashboard.jsx"
+import Dashboard from "../../components/Dashboard.jsx"
+import UserDashboard from "../../components/UserDashboard.jsx";
+import {updateUser} from "../../features/AuthFunctions.js"
 
 const Page = styled.div`
     ${Global.Animations.SlideInTop}
@@ -164,6 +165,7 @@ export default function Profile(){
       console.log(status, url)
       if(status == "fulfilled"){
         uploadHandler();
+        updateUser(user.user.Username, user.user.Email, user.user.FirstName, user.user.LastName, imageURL.url, user.access_token)
         dispatch(authSlice.actions.updateUser(url));
       }
 
@@ -183,7 +185,7 @@ export default function Profile(){
 
     return (
         <Page>
-            <div style = {{background: "linear-gradient(45deg, #c9d6df, #cbc5ea)", height: "40%", width: "100%", zIndex: '-1'}}></div>
+            <div style = {{background: "linear-gradient(0deg, #c9d6df, #cbc5ea)", height: "40%", width: "100%", zIndex: '-1'}}></div>
             <ProfileContainer>
             <ProfileSection>
             <div style = {{alignSelf: "center", justifySelf: "center"}}>
@@ -206,8 +208,11 @@ export default function Profile(){
             </div>
             </ProfileSection>
             <GlobalStats>
+              
+              <Dashboard type = "user"></Dashboard>
             </GlobalStats>
             <UserStats>
+              <UserDashboard type = "user"></UserDashboard>
             </UserStats>
             </ProfileContainer>
         </Page>

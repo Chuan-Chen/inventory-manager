@@ -1,7 +1,10 @@
 const {Item} = require('../models/item')
 const {User} = require('../models/user')
+const { createHash } = require('crypto');
 
-
+function hash(string) {
+  return createHash('sha256').update(string).digest('hex');
+}
 
 const createItem = async(req, res) => {
     try{
@@ -9,10 +12,10 @@ const createItem = async(req, res) => {
             Username: req.body.Username,
             ItemName: req.body.ItemName, 
             ItemImage: req.body.ItemImage,
-            ItemBarcode: req.body.ItemBarcode,
+            ItemBarcode: hash(Username + ItemName),
             ItemCateory: req.body.ItemCategory,
-            View: 0
-        })
+            Views: 0
+        })  
         item.ItemCategory.push(...req.body.ItemCategory);
         
         const user = await User.findOneAndUpdate({Username: item.Username}, {"$push": { Items: item._id }}, {new: true});
@@ -67,6 +70,13 @@ const readItem = async(req, res) => {
 
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){
+        const filter = {
+            Username: req.body.Username,
+            ItemName: req.body.ItemName, 
+            ItemImage: req.body.ItemImage,
+            ItemBarcode: req.body.ItemBarcode,
+            ItemCateory: req.body.ItemCateory
+        }
         res.status(400).json({result: filter, msg: "Search Unsuccessful"});
     }
 }
@@ -102,7 +112,10 @@ const readStream = async(req, res) => {
 
     });
     //console.log(req.params.Username)
-
+    res.socket.on('close', function () {
+        res.end();
+        //...
+    });
     setInterval(async ()=>{
             const result = await Item.find({Username: `${req.params.Username}`}, "_id Username ItemName ItemBarcode ItemCategory ItemID ItemImage");
             res.write("data: " + `${JSON.stringify(result)}\n\n`);

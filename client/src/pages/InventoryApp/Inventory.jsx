@@ -1,12 +1,14 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react";
-import { authSlice } from "../../features/authSlice";
+import { authSlice, getItems } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { create } from "../../utils/Item";
 
 import FileUpload from "../../components/FileUpload";
 import ItemCard from "../../components/ItemCard";
 import Global from "../../styles/Global";
+import { FetchUserItem } from "../../features/Item";
+import API from "../../features/api";
 const Page = styled.div`
     ${Global.Animations.SlideInTop}
     width: 100%;
@@ -70,7 +72,7 @@ const Category = styled.div`
 `
 
 const CreateItemInputBoxContainer = styled.div`
-  
+  background-color: ${Global.Styles.SecondaryAccentColor};
   justify-self: center;
   box-shadow: 0 0 5px #000;
   border: none;
@@ -78,7 +80,8 @@ const CreateItemInputBoxContainer = styled.div`
   border-radius: 4px;
   display: grid;
   height: ${props => props.$isexpanded ?  "fit-content" : "44px"};
-  transition: height .3s;
+  opacity: 1;
+  transition: all .3s ease-out;
   position: relative;
   width: 90%;
   padding: ${props => props.$isexpanded ?  "15px" : "none"};
@@ -115,13 +118,30 @@ const SubmitButton = styled.button`
     outline: none;
     box-shadow: 0 15px 10px -15px #000;
   }
+      background-color: #fcfbff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2em;
+      display: grid;
+      justify-content: center;
+      font-family: 'Martian Mono', monospace;
+      align-items: center;
+      cursor: pointer;  
+      align-self: center;
+      box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
+      transition: background-color 0.3s linear;
+      &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+      }
 `
 
 const Container = styled.div`
   display: ${props => props.$isexpanded ? "grid" : "none"};
   gap: 15px;
 `
-
 
 function CreateItem({expanded, handleFocus, handleBlur, addData}){
   const [categories, setCategories] = useState([]);
@@ -139,7 +159,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     "status" : "pending",
     "url" : ""
   });
-
+  const dispatch = useDispatch();
   const handleImage = (status, url) => {
     setimageURL({"status" : status, "url" : url})
   }
@@ -160,6 +180,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
 
   const Submit = (user, access_token) => {
     create(access_token, {...item, "Username" : user.Username, "ItemCategory" : [...categories], "ItemImage" : imageURL.url});
+    dispatch(getItems(access_token, user.Username))
   }
 
   const handleSubmitCategories = (e) => {
@@ -176,9 +197,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
       setCurrentCategoryText("");
     }
   }
-  const removeCategoryItem = (e) => {
-    console.log(e.key); 
-  }
+
     return(
       <CreateItemInputBoxContainer onClick = {handleFocus} $isexpanded = {expanded}>
         <CreateItemInputBox placeholder="Create an item..." onKeyUp={handleSubmit}></CreateItemInputBox>
@@ -192,7 +211,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
             Category: 
             <div style = {{display: "flex", flexDirection: "row"}}>
             <CategoryInputBox $isexpanded = {expanded} placeholder="Enter categories..." onKeyUp={handleSubmitCategories}></CategoryInputBox>
-            <button onClick={handleCategoriesAdd}>Add</button>
+            <button onClick={handleCategoriesAdd} style = {{background: "none", border: "1px solid black", borderRadius: "4px"}}>Add</button>
             </div>          
           </CategoryBox>
           
@@ -263,35 +282,87 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     gap: 40px;
     margin: 20px;
     margin-bottom: 20px;
-    background-color: #b7b8c0;
+    background-color: ${Global.Styles.BackgroundColor};
     padding: 20px;
     border-radius: 10px;
     `
 
 
+/**
+      const sse = new EventSource(`http://localhost:3000/api/item/stream/${user.user.Username}`);
+        sse.onmessage = (event) => {
+          //console.log(JSON.parse(event.data))
+          setData(JSON.parse(event.data));
+        }
+  
+        sse.onerror = (err) => {
+          console.log("sse fialed")
+          console.error("EventSource failed:", err);
+        };
+    return ()=>{
+      //sse.close();  
+    }
+*/
 
+/**
+         if(user.items){
+          setData(user.items);
+        }else{
+          dispatch(getItems(user.access_token, user.user.Username))
+        }
+        dispatch(authSlice.actions.checkToken())
+ */
 
 export default function Inventory(){
     const [expanded, setExpanded] = useState(false);
     const [data, setData] = useState([]);
     const [rendered, setRendered] = useState(false);
+    const [err, setErr] = useState(false);
     const user = useSelector(state => state.auth);
     const dispatch = useDispatch();
     useEffect(()=>{
-      const sse = new EventSource(`http://localhost:3000/api/item/stream/${user.user.Username}`);
+      if(user.items){
+        setData(user.items);
+      }else{
+        dispatch(getItems(user.access_token, user.user.Username))
+      }
+      dispatch(authSlice.actions.checkToken())
+    },[user.items]);
+
+
+    const SSE = () => {
+      const sse = new EventSource(`${API.SERVER}/api/item/stream/${user.user.Username}`);
       sse.onmessage = (event) => {
         //console.log(JSON.parse(event.data))
         setData(JSON.parse(event.data));
       }
-
-
-    dispatch(authSlice.actions.checkToken());
-    
-    return ()=>{
-      sse.close();  
+      sse.onerror = (err) => {
+        console.error(err)
+        setErr(true);
+        sse.close();
+      }
+      return sse;
     }
 
-    },[]);
+    const fetchitem = async (Username) => {
+      const param = {
+        Username: Username
+      }
+      const options = {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(param),
+      }
+      const url = API.SERVER + "/api/item/read"
+      const items = await fetch(url, options);
+      const parsedData = await items.json();
+      console.log(parsedData)
+      setData(parsedData.result)
+      //dispatch(authSlice.actions.loadItems(await parsedData.result));
+    }
+    
     const handleFocus = (e) => {
       e.stopPropagation()
       setExpanded(true);
@@ -340,10 +411,10 @@ export default function Inventory(){
                 <Content onClick={handleBlur}>
                 <div style = {{height: "100%", width: "100%", display: data.length > 0 ? "block" : "none"}}>
                 <ItemContainer>
-                  {data.map((element, index) => {
+                  {data ? data.map((element, index) => {
                     return (
                     <ItemCard key = {element.ItemID} ItemCategory={element.ItemCategory} ItemImage={element.ItemImage} ItemAmount={element.ItemAmount ? element.ItemAmount : 0} Username = {element.Username} ItemID = {element.ItemID} ItemName={element.ItemName ? element.ItemName : "placeholder"} ItemBarcode={element.ItemBarcode ? element.ItemBarcode : "0000"}></ItemCard>
-                  )})}
+                  )}) : "Loading"}
                   </ItemContainer>
                 </div>
                 </Content>
