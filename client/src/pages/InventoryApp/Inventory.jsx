@@ -323,6 +323,7 @@ export default function Inventory(){
     useEffect(()=>{
       if(user.items){
         setData(user.items);
+        
       }else{
         dispatch(getItems(user.access_token, user.user.Username))
       }
@@ -413,7 +414,7 @@ export default function Inventory(){
                 <ItemContainer>
                   {data ? data.map((element, index) => {
                     return (
-                    <ItemCard key = {element.ItemID} ItemCategory={element.ItemCategory} ItemImage={element.ItemImage} ItemAmount={element.ItemAmount ? element.ItemAmount : 0} Username = {element.Username} ItemID = {element.ItemID} ItemName={element.ItemName ? element.ItemName : "placeholder"} ItemBarcode={element.ItemBarcode ? element.ItemBarcode : "0000"}></ItemCard>
+                    <ItemCard key = {element.ItemID} ItemCategory={element.ItemCategory} ItemImage={element.ItemImage} ItemAmount={element.ItemAmount ? element.ItemAmount : 0} Username = {element.Username} ItemID = {element.ItemID} ItemName={element.ItemName ? element.ItemName : "placeholder"} ItemBarcode={element.ItemBarcode ? window.location.href + "/" + element.ItemBarcode : "0000"}></ItemCard>
                   )}) : "Loading"}
                   </ItemContainer>
                 </div>

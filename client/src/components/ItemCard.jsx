@@ -1,8 +1,8 @@
 import JsBarcode from "jsbarcode"
 import { useState, useEffect } from "react"
 import styled from "styled-components"
-
-
+import { QRCode } from 'react-qrcode-logo';
+import Logo from "../assets/logo.svg"
 const Item = styled.div`
 
 
@@ -18,7 +18,7 @@ width: 90%;
 
 display: grid;
 overflow-x: hidden;
-
+transition: all .5s ease-out;
 `
 
 const ItemCardsContainer = styled.div`
@@ -65,7 +65,7 @@ const SaveButton = styled.button`
 
 export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCategory, ItemAmount, ItemBarcode}){
 
-    const [date, setDate] = useState("some");
+    const [date, setDate] = useState("tag");
 
     const [Item, setItem] = useState({
         "ItemName" : ItemName,
@@ -76,17 +76,26 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
         "ItemAmount" : ItemAmount
     })
 
+    const [qrdisplay, setQrdisplay] = useState(false);
+
     useEffect(()=>{
+        console.log(ItemBarcode);
+        /** 
         JsBarcode(`#${date+ItemID}`, ItemBarcode, {
             height: 30,
             background: "",
             format: "CODE128",
-            displayValue: false
+            displayValue: true
         });
+        */
+        
     });
 
     return (
         <ItemCardsContainer onClick={()=>{}}>
+            {qrdisplay ? 
+            <div style = {{display: qrdisplay ? "flex" : "none", position: "relative", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", flexDirection: "column", cursor: "pointer", transition: "all .5s ease-out"}} onClick={()=>{setQrdisplay(!qrdisplay)}}><QRCode value = {ItemBarcode} bgColor="#e5e4e2" logoImage={Logo} removeQrCodeBehindLogo = {true}></QRCode> <div style = {{fontSize: ".8rem", fontWeight: "bold"}}>click to close</div></div>
+            : 
             <ItemCards>
                 <div style = {{display: "grid", gap: "10px"}}>
                 <CardSection style = {{display: "grid"}}>
@@ -101,7 +110,9 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
                     <div className="ItemAmount">Quantity: {ItemAmount}</div>
                 </CardSection> 
                 <CardSection style = {{display: "grid"}}>
-                    <img id={date+ItemID} style = {{alignSelf: "center", justifySelf: "center"}} alt = {ItemBarcode}></img>
+                    <button style = {{display: !qrdisplay ? "block" : "none", cursor: "pointer", }} onClick={()=>{setQrdisplay(!qrdisplay)}}>QRcode</button>
+                    
+                    
                 </CardSection>
                 </div>
                 <div style = {{alignSelf: "end", display: "grid", gridAutoFlow: "row", color: "grey", fontSize: ".6em"}}>
@@ -115,7 +126,11 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
                     </div>
                     
                 </div>
-            </ItemCards>
+            </ItemCards>}
+            
         </ItemCardsContainer>
     )
 }
+
+//    <img id={date+ItemID} style = {{alignSelf: "center", justifySelf: "center", height: "100%", width: "100%", objectFit: "cover"}} alt = {ItemBarcode}></img>
+                

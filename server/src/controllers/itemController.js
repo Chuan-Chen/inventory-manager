@@ -6,13 +6,15 @@ function hash(string) {
   return createHash('sha256').update(string).digest('hex');
 }
 
+
+
 const createItem = async(req, res) => {
     try{
         const item = new Item({
             Username: req.body.Username,
             ItemName: req.body.ItemName, 
             ItemImage: req.body.ItemImage,
-            ItemBarcode: hash(Username + ItemName),
+            ItemBarcode: hash(req.body.Username + req.body.ItemName + new Date()),
             ItemCateory: req.body.ItemCategory,
             Views: 0
         })  

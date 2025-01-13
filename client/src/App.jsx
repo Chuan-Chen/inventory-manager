@@ -15,6 +15,7 @@ import Dashboard from "./components/Dashboard";
 import AIChat from "./pages/InventoryApp/AIChat";
 import Products from "./pages/Products";
 import UserDashboard from "./components/UserDashboard";
+import ItemDetails from "./pages/ItemDetailsPage";
 /*
 {
               user: JSON.parse(localStorage.getItem('user')),
@@ -93,6 +94,9 @@ function App() {
       </Route>
       <Route path = "/products" element = {<Products/>}>
         <Route path = ":user"></Route>
+      </Route>
+      <Route path = "/item" element = {<ItemDetails/>}>
+        <Route path = ":id"></Route>
       </Route>
       <Route path = "/*" element = {<Error errorcode={"Invalid Path"} redirectLink={"/"} redirectLinkText={"Landing page"}/>}></Route>
     </Routes>
