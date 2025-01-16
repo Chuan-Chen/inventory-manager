@@ -7,7 +7,8 @@ async function create(access_token, item){
         "ItemName" : item.ItemName,
         "ItemImage" : item.ItemImage,
         "ItemBarcode" : item.ItemBarcode,
-        "ItemCategory" : [...item.ItemCategory]
+        "ItemCategory" : [...item.ItemCategory],
+        "ItemDescription" : item.ItemDescription
     }
     
     const options = {

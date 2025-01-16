@@ -16,6 +16,7 @@ const createItem = async(req, res) => {
             ItemImage: req.body.ItemImage,
             ItemBarcode: hash(req.body.Username + req.body.ItemName + new Date()),
             ItemCateory: req.body.ItemCategory,
+            ItemDescription: req.body.ItemDescription,
             Views: 0
         })  
         item.ItemCategory.push(...req.body.ItemCategory);
@@ -84,6 +85,19 @@ const readItem = async(req, res) => {
 }
 
 
+const readBarcode = async(req, res) => {
+    try{
+        const filter = {
+            ItemBarcode: req.body.ItemBarcode
+        }
+        const result = await Item.find({ItemBarcode: filter.ItemBarcode});
+        res.status(200).json({result, msg: "Search Successful"});
+    }catch(err){
+        const filter = {ItemBarcode: req.body.ItemBarcode}
+        res.status(400).json({result: filter, msg: "Search Unsuccessful"});
+    }
+}
+
 const readAllItems = async(req, res) => {
     try{
         const result = await Item.find({});
@@ -133,4 +147,5 @@ module.exports = {
     deleteItem,
     readStream,
     readAllItems,
+    readBarcode
 }

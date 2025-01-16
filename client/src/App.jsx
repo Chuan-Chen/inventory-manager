@@ -92,12 +92,8 @@ function App() {
       <Route path = "/error" element = {<Error/>}>
         <Route path = ":error" element = {<Error/>}></Route>
       </Route>
-      <Route path = "/products" element = {<Products/>}>
-        <Route path = ":user"></Route>
-      </Route>
-      <Route path = "/item" element = {<ItemDetails/>}>
-        <Route path = ":id"></Route>
-      </Route>
+      <Route path = "/products:user" element = {<Products/>}></Route>
+      <Route path = "/item/:id" element = {<ItemDetails/>}></Route>
       <Route path = "/*" element = {<Error errorcode={"Invalid Path"} redirectLink={"/"} redirectLinkText={"Landing page"}/>}></Route>
     </Routes>
     </>

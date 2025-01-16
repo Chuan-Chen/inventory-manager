@@ -29,6 +29,9 @@ const itemSchema = new Schema(
         ItemAmount: {
             type: Number
         },
+        ItemDescription: {
+            type: String
+        },
         Views: {
             type: Number
         }

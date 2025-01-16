@@ -151,7 +151,8 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     "ItemName" : "",
     "ItemImage" : "",
     "ItemBarcode" : "",
-    "ItemCategory" : []
+    "ItemCategory" : [],
+    "ItemDescription" : ""
   });
   const user = useSelector(state => state.auth);
   // pending, fulfilled, rejected are the three states
@@ -168,7 +169,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     console.log(e.target.value)
     setItem({...item, "ItemName" : e.target.value, "ItemImage" : imageURL.url})
     if(e.key == "Enter"){
-      console.log("enter is pressed", e.target.value);
+      //console.log("enter is pressed", e.target.value);
       //setItem({...item, "ItemName" : e.target.value, })
       Submit(user.user, user.access_token);
       e.target.value = "";
@@ -176,6 +177,11 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
       setCategories([]);
     }
     
+  }
+
+  const updateDescription = (e) => {
+    setItem({...item, "ItemDescription" : e.target.value});
+    console.log(item)
   }
 
   const Submit = (user, access_token) => {
@@ -202,7 +208,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
       <CreateItemInputBoxContainer onClick = {handleFocus} $isexpanded = {expanded}>
         <CreateItemInputBox placeholder="Create an item..." onKeyUp={handleSubmit}></CreateItemInputBox>
           <Container $isexpanded = {expanded}>
-          <DescriptionInputBox $isexpanded = {expanded} placeholder="Enter description...">
+          <DescriptionInputBox $isexpanded = {expanded} placeholder="Enter description..." onKeyUp={updateDescription}>
           
           </DescriptionInputBox>
 

@@ -1,5 +1,5 @@
 import JsBarcode from "jsbarcode"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { QRCode } from 'react-qrcode-logo';
 import Logo from "../assets/logo.svg"
@@ -63,10 +63,59 @@ const SaveButton = styled.button`
 
 `
 
+
+const ViewDetailsBtn = styled.a`
+    text-decoration: none;
+    color: black;
+    &:visited{
+        color: inherit
+    }
+        background-color: #fcfbff;
+      border: none;
+      border-radius: 4px;
+      font-size: .9em;
+      display: grid;
+      justify-content: center;
+      font-family: 'Martian Mono', monospace;
+      align-items: center;
+      cursor: pointer;  
+      align-self: center;
+      box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
+      transition: background-color 0.3s linear;
+      &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+      }
+
+`
+
+const QRcodeBtn = styled.button`
+    background-color: #fcfbff;
+      border: none;
+      border-radius: 4px;
+      font-size: .9em;
+      display: grid;
+      justify-content: center;
+      font-family: 'Martian Mono', monospace;
+      align-items: center;
+      cursor: pointer;  
+      align-self: center;
+      box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
+      transition: background-color 0.3s linear;
+      &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+      }
+`
+
 export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCategory, ItemAmount, ItemBarcode}){
 
     const [date, setDate] = useState("tag");
-
+    const qrcoderef = useRef(null);
     const [Item, setItem] = useState({
         "ItemName" : ItemName,
         "ItemImage" : ItemImage,
@@ -79,7 +128,6 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
     const [qrdisplay, setQrdisplay] = useState(false);
 
     useEffect(()=>{
-        console.log(ItemBarcode);
         /** 
         JsBarcode(`#${date+ItemID}`, ItemBarcode, {
             height: 30,
@@ -91,10 +139,16 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
         
     });
 
+    const downloadQR = () => {
+        if(qrcoderef.current){
+            qrcoderef.current.download('png', ItemBarcode)
+        }
+    }
+
     return (
-        <ItemCardsContainer onClick={()=>{}}>
+        <ItemCardsContainer onClick={()=>{console.log("clicked")}}>
             {qrdisplay ? 
-            <div style = {{display: qrdisplay ? "flex" : "none", position: "relative", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", flexDirection: "column", cursor: "pointer", transition: "all .5s ease-out"}} onClick={()=>{setQrdisplay(!qrdisplay)}}><QRCode value = {ItemBarcode} bgColor="#e5e4e2" logoImage={Logo} removeQrCodeBehindLogo = {true}></QRCode> <div style = {{fontSize: ".8rem", fontWeight: "bold"}}>click to close</div></div>
+            <div style = {{display: qrdisplay ? "flex" : "none", position: "relative", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", flexDirection: "column", cursor: "pointer", transition: "all .5s ease-out"}} onClick={()=>{setQrdisplay(!qrdisplay)}}><QRCode ref = {qrcoderef} value = {ItemBarcode.replace("/app/inventory/", "/item/")} bgColor="#e5e4e2" logoImage={Logo} removeQrCodeBehindLogo = {true}></QRCode> <div style = {{fontSize: ".8rem", fontWeight: "bold"}}>click to close</div><button onClick={downloadQR}>Download</button></div>
             : 
             <ItemCards>
                 <div style = {{display: "grid", gap: "10px"}}>
@@ -110,8 +164,8 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
                     <div className="ItemAmount">Quantity: {ItemAmount}</div>
                 </CardSection> 
                 <CardSection style = {{display: "grid"}}>
-                    <button style = {{display: !qrdisplay ? "block" : "none", cursor: "pointer", }} onClick={()=>{setQrdisplay(!qrdisplay)}}>QRcode</button>
-                    
+                    <QRcodeBtn onClick={()=>{setQrdisplay(!qrdisplay)}}>QRcode</QRcodeBtn>
+                    <ViewDetailsBtn href={ItemBarcode.replace("/app/inventory/", "/item/")}>View Details</ViewDetailsBtn>
                     
                 </CardSection>
                 </div>
