@@ -34,6 +34,9 @@ const itemSchema = new Schema(
         },
         Views: {
             type: Number
+        },
+        Cost: {
+            type: Number
         }
     },
     { timestamps: true }

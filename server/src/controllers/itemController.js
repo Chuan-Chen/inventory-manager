@@ -17,6 +17,7 @@ const createItem = async(req, res) => {
             ItemBarcode: hash(req.body.Username + req.body.ItemName + new Date()),
             ItemCateory: req.body.ItemCategory,
             ItemDescription: req.body.ItemDescription,
+            ItemAmount: req.body.ItemAmount,
             Views: 0
         })  
         item.ItemCategory.push(...req.body.ItemCategory);
@@ -58,7 +59,9 @@ const readItem = async(req, res) => {
             ItemName: req.body.ItemName, 
             ItemImage: req.body.ItemImage,
             ItemBarcode: req.body.ItemBarcode,
-            ItemCateory: req.body.ItemCateory
+            ItemCateory: req.body.ItemCateory,
+            ItemAmount: req.body.ItemAmount,
+            ItemDescription: req.body.ItemDescription
         }
 
         const result = await Item.find({
@@ -67,9 +70,11 @@ const readItem = async(req, res) => {
                 {ItemName: filter.ItemName},
                 {ItemImage: filter.ItemImage}, 
                 {ItemBarcode: filter.ItemBarcode}, 
-                {ItemCateory: filter.ItemCateory}
+                {ItemCateory: filter.ItemCateory},
+                {ItemAmount: filter.ItemAmount},
+                {ItemDescription: filter.ItemDescription}
             ]
-        });
+        }, {_id: 0, __v: 0});
 
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){
@@ -78,7 +83,9 @@ const readItem = async(req, res) => {
             ItemName: req.body.ItemName, 
             ItemImage: req.body.ItemImage,
             ItemBarcode: req.body.ItemBarcode,
-            ItemCateory: req.body.ItemCateory
+            ItemCateory: req.body.ItemCateory,
+            ItemAmount: req.body.ItemAmount,
+            ItemDescription: req.body.ItemDescription
         }
         res.status(400).json({result: filter, msg: "Search Unsuccessful"});
     }
@@ -90,7 +97,15 @@ const readBarcode = async(req, res) => {
         const filter = {
             ItemBarcode: req.body.ItemBarcode
         }
-        const result = await Item.find({ItemBarcode: filter.ItemBarcode});
+        const result = await Item.find({ItemBarcode: filter.ItemBarcode}, {_id: 0, __v: 0});
+        await Item.bulkWrite([
+            {
+                updateOne: {
+                    filter: {ItemBarcode: req.body.ItemBarcode},
+                    update: {"$inc": {Views: 1}}
+                }
+            }
+        ])
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){
         const filter = {ItemBarcode: req.body.ItemBarcode}
@@ -100,7 +115,7 @@ const readBarcode = async(req, res) => {
 
 const readAllItems = async(req, res) => {
     try{
-        const result = await Item.find({});
+        const result = await Item.find({}, {_id: 0, __v: 0});
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){
         res.status(400).json({result: "", msg: "Search Unsuccessful"});
@@ -111,7 +126,31 @@ const readAllItems = async(req, res) => {
 
 
 const updateItem = async(req, res) => {
-
+    const filter = {
+        Username: req.body.Username,
+        ItemName: req.body.ItemName, 
+        ItemImage: req.body.ItemImage,
+        ItemBarcode: req.body.ItemBarcode,
+        ItemCateory: req.body.ItemCateory,
+        ItemAmount: req.body.ItemAmount,
+        ItemDescription: req.body.ItemDescription
+    }
+    try{
+        console.log(filter);
+        const result = await Item.bulkWrite([
+            {
+                updateOne: {
+                    filter: {ItemBarcode: req.body.ItemBarcode},
+                    update: {
+                        "$set": {ItemName: filter.ItemName, ItemImage: filter.ItemImage, ItemAmount: filter.ItemAmount, ItemDescription: filter.ItemDescription, ItemCategory: filter.ItemCateory}
+                    }
+                }
+            }
+        ])
+        res.status(200).json({result, msg: "Update Successful"})
+    }catch(err){
+        
+    }
 }
 
 const deleteItem = async(req, res) => {

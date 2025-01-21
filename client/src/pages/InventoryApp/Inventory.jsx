@@ -152,7 +152,8 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     "ItemImage" : "",
     "ItemBarcode" : "",
     "ItemCategory" : [],
-    "ItemDescription" : ""
+    "ItemDescription" : "",
+    "ItemAmount" : ""
   });
   const user = useSelector(state => state.auth);
   // pending, fulfilled, rejected are the three states
@@ -204,6 +205,10 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     }
   }
 
+  const handleQuantity = (e) => {
+    setItem({...item, "ItemAmount" : e.target.value})
+  }
+
     return(
       <CreateItemInputBoxContainer onClick = {handleFocus} $isexpanded = {expanded}>
         <CreateItemInputBox placeholder="Create an item..." onKeyUp={handleSubmit}></CreateItemInputBox>
@@ -211,7 +216,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
           <DescriptionInputBox $isexpanded = {expanded} placeholder="Enter description..." onKeyUp={updateDescription}>
           
           </DescriptionInputBox>
-
+          
           <div style = {{display: "grid", gridAutoFlow: "column"}}>
           <CategoryBox $isexpanded = {expanded} style = {{justifySelf: "end"}}>
             Category: 
@@ -225,6 +230,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
           <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
           </FileUpload>
           </div>
+          <input placeholder="Quantity" onKeyUp={handleQuantity}></input>
           </div>
           <div style = {{display: "grid", alignSelf: "center", justifySelf: "center", gridAutoFlow: "column", overflow: "hidden", gap: "4px"}}>
           Categories: 

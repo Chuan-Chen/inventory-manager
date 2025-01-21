@@ -8,7 +8,8 @@ async function create(access_token, item){
         "ItemImage" : item.ItemImage,
         "ItemBarcode" : item.ItemBarcode,
         "ItemCategory" : [...item.ItemCategory],
-        "ItemDescription" : item.ItemDescription
+        "ItemDescription" : item.ItemDescription,
+        "ItemAmount" : item.ItemAmount
     }
     
     const options = {
@@ -17,7 +18,7 @@ async function create(access_token, item){
             "Content-Type": "application/json",
             "authorization" : "Bearer " + access_token,
         },
-        body: JSON.stringify(param),
+        body: JSON.stringify(item),
         
     };
 

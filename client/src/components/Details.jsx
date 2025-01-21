@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
+import Logo from "../assets/logo.svg";
 
 const Image = styled.img`
     height: auto;
     width: 90%;
-    max-width: 50vh;
-    justify-self: center;
-
+    max-width: 40vh;
+    place-self: center;
     object-fit: contain;
     box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
     border-radius: 5px;
     user-select: none;
     grid-area: image;
-    margin: 2vh;
+    
     @media(max-width: 800px){
         max-height: 50vh;
-
         width: 90%;
         overflow: hidden;
     }
@@ -23,12 +22,15 @@ const Image = styled.img`
 `
 
 const Page = styled.div`
-    height: 86.5vh;
+    height: 100vh;
+
     width: 100%;
-    
-    display: ${props => props.isDisplayed ? "block" : "none"};
+    min-width: 100vw;
+    display: grid;
+    grid-auto-rows: .8fr 11fr;
     @media(max-width: 800px){
-        height: 100%;
+        height: 100vh;
+        border-radius: none;
     }
 
 `
@@ -75,25 +77,34 @@ const Button = styled.div`
 
 const Container = styled.div`
     display: grid;
-    height: 100%;
+    align-self: center;
+    height: 80%;
     margin-left: 15%;
     margin-right: 15%;
-    gap: 10%;
+    transition: all .2s ease-out;
     grid-template-areas:
-    "image image image wrapper wrapper" 
-    "image image image wrapper wrapper"
-    "image image image wrapper wrapper"
-    "image image image wrapper wrapper";
-
+    "image image wrapper wrapper wrapper" 
+    "image image wrapper wrapper wrapper"
+    "image image wrapper wrapper wrapper"
+    "image image wrapper wrapper wrapper"
+    "bwrapper bwrapper bwrapper bwrapper bwrapper";
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background: #1f202a;
+          color: white;
+          text-shadow: 0px 0px 10px white;
+          border-radius: 10px;
     @media(max-width: 800px){
+        height: 100%;
         margin: 0px;
+        border-radius: 0px;
         grid-template-areas:
         "image image image"
         "image image image"
         "image image image"
         "wrapper wrapper wrapper"
         "wrapper wrapper wrapper"
-        "wrapper wrapper wrapper";
+        "wrapper wrapper wrapper"
+        "bwrapper bwrapper bwrapper";
     }
 
 `
@@ -133,77 +144,109 @@ const Detail = styled.div`
 const Reviews = styled.div`
     display: flex;
     gap: 10px;
-    grid-area: rating;
+    position: aboslute;
+    bottom: 0px;
     height: 30px;
     user-select: none;
     font-weight: bold;
-`
-
-const ButtonArea = styled.div`
-    grid-area: shopbtn;
-    display: flex;
-    gap: 20px;
     
 `
+
 
 const WrapperRight = styled.div`
     display: grid;
     grid-area: wrapper;
-    margin: 20px;
-    
+    width: 90%;
+    position: relative;
     grid-template-areas: 
     "header header"
     "rating rating"
     "price price"
-    "shopbtn shopbtn"
     "detail detail"
     "detail detail"
     "detail detail";
     @media(max-width: 800px){
+        justify-self: center;
         gap: 40px;
+        width: 90%;
     }
 
 `
-export default function Details({isDisplayed, clickHandler, object}){
-    
 
+const ViewContainer = styled.div`
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+`
+
+const BottomWrapper = styled.div`
+    color: white;
+    font-size: .6em;
+    place-self: center;
+    display: grid;
+    position: relative;
+    width: 95%;
+    grid-area: bwrapper;
+    align-items: end;
+    grid-auto-flow: column;
+`
+
+const Header = styled.div`
+    background-color: #1f202a;
+    display: grid;
+    grid-auto-flow: column;
+    box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+    color: white;
+    text-shadow: 0px 0px 10px white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    @media(max-width: 800px){
+        height: 100%;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        box-shadow: none;
+    }
+`
+
+export default function Details({object}){
     
+    const [ItemDetails, setItemDetails] = useState(object[0]);    
 
     useEffect(()=>{
-
+        console.log(ItemDetails)
     }, []);
 
 
     
     //addItem([title, price, image, 1])
     return (
-        <Page isDisplayed={isDisplayed}>
+        <Page>
+            <Header>
+                <div style = {{height: "100%", display: "flex", fontWeight: "bolder", transition: "all .3s ease-out"}}>
+                    <img src = {Logo} style = {{alignSelf: "center", height: "90%", filter: "invert(99%) sepia(70%) saturate(280%) hue-rotate(263deg) brightness(114%) contrast(101%)"}}></img>
+                    <div style = {{fontSize: "2rem", alignSelf: "center"}}>Shelfy</div>
+                </div>
+                <div>
+                    <img src = {""}></img>
+                </div>
+            </Header>
             <Container>
-                <Image src = {object.ItemImage} draggable = "false"/>
+                <Image src = {ItemDetails.ItemImage} draggable = "false"/>
                 <WrapperRight>
-                <Title>{object.ItemName}</Title>
-                
-                <Price><div style = {{position: 'relative', top: '-3px'}}>Price:</div>${object.price}</Price>
-                <Detail><div>Product Details: </div>{object.description}</Detail>
-
-                
-                <Reviews>
-                    <div style = {{textDecoration: 'underline', cursor: 'pointer'}}>{rating}</div>
-                    <div style = {{width: '100px', position: "relative",top: '-2px'}}>
-                    <StarContainer>
-                        <img alt = ""/><img alt = ""/><img alt = ""/><img alt = ""/><img alt = ""/>
-                    </StarContainer>
-                    </div>
-                    
-                    <div title = "Customer Reviews" style = {{textDecoration: 'underline', cursor: 'pointer', userSelect: 'none'}}>{rateCount}</div>
-                </Reviews>
-
-                <ButtonArea>
-                    <Button onClick={()=>{addItem([object.title, object.price, object.image, 1])}}>+</Button>
-                    <Button onClick={()=>{subItem([object.title, object.price, object.image, 1])}}>-</Button>
-                </ButtonArea>
+                <Title>{ItemDetails.ItemName}</Title>
+                <Detail><div>Product Details: </div>{ItemDetails.ItemDescription}</Detail>
                 </WrapperRight>
-                </Container>    
+                <BottomWrapper>
+                <div style = {{justifySelf: "start", display: "flex", gap: "5px", width: "100%", gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))", maxHeight: "2em", overflowY: "hidden", textOverflow: "ellipsis"}} className="ItemCategory">
+                        <div style = {{borderRadius: "3px", padding: "2px"}} >Tags:</div> {ItemDetails.ItemCategory.map((element, index)=>{
+                        return <div style = {{border: "1px solid grey", borderRadius: "3px", padding: "2px", overflow: "hidden"}} key = {index}>{ItemDetails.ItemCategory[index]}</div>
+                    })}</div>
+                <ViewContainer>
+                    <div>Views: {ItemDetails.Views}</div>
+                    <div>ID: {ItemDetails.ItemID}</div>
+                </ViewContainer>
+                </BottomWrapper>
+            </Container>    
         </Page>
     )
 }
