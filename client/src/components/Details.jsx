@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Logo from "../assets/logo.svg";
+import {Link} from "react-router-dom";
+import Edit from "../assets/edit_square.svg"
 
 const Image = styled.img`
     height: auto;
-    width: 90%;
+    width: 100%;
     max-width: 40vh;
     place-self: center;
     object-fit: contain;
@@ -30,50 +32,11 @@ const Page = styled.div`
     grid-auto-rows: .8fr 11fr;
     @media(max-width: 800px){
         height: 100vh;
-        border-radius: none;
+        border-radius: 0px;
     }
 
 `
 
-
-
-const BackBtn = styled.button`
-    display: flex;
-    height: 2rem;
-    align-items: center;
-    gap: 10px;
-    background: none;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    user-select: none;
-    text-decoration: underline;
-    
-    img{
-        height: 1rem;
-    }
-`
-
-const Button = styled.div`
-    width: 100%;
-    height: 40px;
-    color: white;
-    background-color: #1e1e1e;    
-    user-select: none;
-    cursor: pointer;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    border-radius: 4px;
-    font-size: 2rem;
-    transition: background-color 0.3s linear;
-    &:hover{
-        box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
-        background: white;
-        color: black;
-        text-shadow: 0px 0px 10px white;
-    }
-`
 
 const Container = styled.div`
     display: grid;
@@ -116,21 +79,11 @@ const Title = styled.div`
     font-size: 2.5rem;
     align-self: center;
     justify-self: center;
-
+    grid-auto-flow: column;
     border-bottom: 1px solid grey;
 `
 
-const Price = styled.div`
-    grid-area: price;
-    display: flex;
-    
-    div{
-        font-size: 1.05rem;
-        font-weight: bold;
-        position: relative;
-        top: -2px;
-    }
-`
+
 const Detail = styled.div`
     grid-area: detail;
     display: flex;
@@ -141,16 +94,7 @@ const Detail = styled.div`
         font-size: 1.05rem;
     }
 `
-const Reviews = styled.div`
-    display: flex;
-    gap: 10px;
-    position: aboslute;
-    bottom: 0px;
-    height: 30px;
-    user-select: none;
-    font-weight: bold;
-    
-`
+
 
 
 const WrapperRight = styled.div`
@@ -160,8 +104,7 @@ const WrapperRight = styled.div`
     position: relative;
     grid-template-areas: 
     "header header"
-    "rating rating"
-    "price price"
+    "itemdetail itemdetail" 
     "detail detail"
     "detail detail"
     "detail detail";
@@ -208,12 +151,45 @@ const Header = styled.div`
     }
 `
 
-export default function Details({object}){
+const EditBtn = styled.button`
+    background: none;
+    color: white;
+    border: grey 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background:rgb(47, 48, 64);
+          color: white;
+          text-shadow: 0px 0px 10px white;
+    }
+`
+
+const EditImg = styled.img`
+    filter: invert(99%);
+    height: 20px; 
+    width: auto;
+`
+const Amount = styled.div`
+
+`
+const Cost = styled.div`
+
+`
+
+
+export default function Details({object, auth, user, profilePicture}){
     
-    const [ItemDetails, setItemDetails] = useState(object[0]);    
+    const [ItemDetails, setItemDetails] = useState(object[0]);
+    const [updateItem, setUpdateItem] = useState(false);
+    
+    const handleEdit = (e) => {
+        setUpdateItem(!updateItem);
+    }   
 
     useEffect(()=>{
-        console.log(ItemDetails)
+
     }, []);
 
 
@@ -223,24 +199,49 @@ export default function Details({object}){
         <Page>
             <Header>
                 <div style = {{height: "100%", display: "flex", fontWeight: "bolder", transition: "all .3s ease-out"}}>
-                    <img src = {Logo} style = {{alignSelf: "center", height: "90%", filter: "invert(99%) sepia(70%) saturate(280%) hue-rotate(263deg) brightness(114%) contrast(101%)"}}></img>
-                    <div style = {{fontSize: "2rem", alignSelf: "center"}}>Shelfy</div>
+                    <Link to = {"/"} style = {{display: "flex", alignItems: "center", justifyContent: "center", color: "white", textDecoration: "none"}}>
+                        <img src = {Logo} style = {{alignSelf: "center", height: "90%", filter: "invert(99%) sepia(70%) saturate(280%) hue-rotate(263deg) brightness(114%) contrast(101%)"}}></img>
+                        <div style = {{fontSize: "2rem", alignSelf: "center"}}>Shelfy</div>
+                    </Link>
+                    
                 </div>
-                <div>
-                    <img src = {""}></img>
+                <div style = {{alignSelf: "center", justifySelf: "end", margin: "20px", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px"}}>
+                    {auth ? 
+                    <>
+                        <EditBtn onClick={handleEdit}>{updateItem ? "Save" : "Edit Item"}</EditBtn>
+                        <Link to = {"/app/profile"}>
+                        <img src = {profilePicture} style = {{height: "32px", objectFit: "cover", width: "32px", borderRadius: "50px", boxShadow: "0px 15px 35px -5px rgba(23, 53, 87, 0.59)"}}></img>
+                        </Link>
+                        </>: 
+                        <Link to = "/auth" style = {{color: "white", outline: "none", textDecoration: "none"}}>Login</Link>
+                    }
                 </div>
             </Header>
             <Container>
-                <Image src = {ItemDetails.ItemImage} draggable = "false"/>
+                <div style = {{width: "90%", position: "relative", placeSelf: "center", maxWidth: "40vh", gridArea: "image"}}>
+                    <Image src = {ItemDetails.ItemImage} draggable = "false"/>
+                    <div style = {{position: "absolute", top: "-16px", right: "-16px"}}>{updateItem ? <EditImg src = {Edit}></EditImg> : ""}
+                    </div>
+                </div>
+                
                 <WrapperRight>
-                <Title>{ItemDetails.ItemName}</Title>
-                <Detail><div>Product Details: </div>{ItemDetails.ItemDescription}</Detail>
+                
+                <Title>{ItemDetails.ItemName}{updateItem ? <EditImg src = {Edit}></EditImg> : ""}</Title>
+                <div style = {{gridArea: "itemdetail", display: "flex", alignItems: "start", justifyContent: "center", gap: "20px", flexDirection: "column"}}>
+                    <Amount>Quantity: {ItemDetails.ItemAmount}</Amount>
+                    <Cost>Price: {ItemDetails.Cost}</Cost>
+                    <div>Total Asset Value: {ItemDetails.ItemAmount * ItemDetails.Cost}</div>
+                </div>
+                <Detail>
+                    <div>Product Details: </div>
+                    <div>{ItemDetails.ItemDescription}{updateItem ? <EditImg src = {Edit}></EditImg> : ""}</div>
+                </Detail>
                 </WrapperRight>
                 <BottomWrapper>
                 <div style = {{justifySelf: "start", display: "flex", gap: "5px", width: "100%", gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))", maxHeight: "2em", overflowY: "hidden", textOverflow: "ellipsis"}} className="ItemCategory">
                         <div style = {{borderRadius: "3px", padding: "2px"}} >Tags:</div> {ItemDetails.ItemCategory.map((element, index)=>{
                         return <div style = {{border: "1px solid grey", borderRadius: "3px", padding: "2px", overflow: "hidden"}} key = {index}>{ItemDetails.ItemCategory[index]}</div>
-                    })}</div>
+                    })}{updateItem ? <EditImg src = {Edit}></EditImg> : ""}</div>
                 <ViewContainer>
                     <div>Views: {ItemDetails.Views}</div>
                     <div>ID: {ItemDetails.ItemID}</div>

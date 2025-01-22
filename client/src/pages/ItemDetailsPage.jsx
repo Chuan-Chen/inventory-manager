@@ -24,12 +24,14 @@ export default function ItemDetails(){
     const [itemDetails, setItemDetails] = useState([]);
     const [loadstatus, setLoadstatus] = useState(false);
     const dispatch = useDispatch();
+    const user = useSelector(state => state.auth);
     //const user = useSelector(state => state.auth);
 
 
     useEffect(()=>{
         getItemDetails();
         dispatch(authSlice.actions.checkToken())
+        console.log(user);
     }, [])
 
     const getItemDetails = async() => {
@@ -55,7 +57,7 @@ export default function ItemDetails(){
         <Page>
             
             {loadstatus ? 
-            <Details object={itemDetails}></Details>
+            <Details object={itemDetails} auth = {user.isAuthenticated} token = {user.access_token}  user = {user.user} profilePicture={user.user.ProfilePicture}></Details>
             : "...loading"}
         </Page>
     )
