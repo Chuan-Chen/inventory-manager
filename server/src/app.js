@@ -18,8 +18,9 @@ dotenv.config();
 
 
 const corsOptions = {
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost'],
 }
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

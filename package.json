@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "jsbarcode": "^3.11.6"
-  },
   "scripts": {
     "dev": "npm run server & npm run client",
     "server" : "cd ./server && npm run dev", 

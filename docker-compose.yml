@@ -1,0 +1,48 @@
+# Services
+version: '0.1'
+services:
+  # Server service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "3000:3000"
+    env_file: ./server/.env
+    environment:
+      - MONGO_URI=mongodb://mongodb_server:27017
+      - LLM_URI=${LLM_URI}
+      - PORT=${PORT}
+      - GITHUB_OAUTH_CLIENT_ID=${GITHUB_OAUTH_CLIENT_ID}
+      - GITHUB_OAUTH_CLIENT_SECRET=${GITHUB_OAUTH_CLIENT_SECRET}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_ACCESS_TOKEN_SECRET=${REFRESH_ACCESS_TOKEN_SECRET}
+      - NODEMAILER_APP_PASSWORD=${NODEMAILER_APP_PASSWORD}
+    depends_on:
+      - mongodb
+
+  # Client service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+  # Database service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_server
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./../mydata:/data/db
+
+# Volumes define
+volumes: 
+  mydata:
