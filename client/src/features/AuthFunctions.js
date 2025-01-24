@@ -1,5 +1,6 @@
 import { getItems } from "../features/authSlice";
 import authStore from "./authSlice";
+import API from "./api";
 
 const Login = async (Username, Password)=> {
 
@@ -16,7 +17,7 @@ const Login = async (Username, Password)=> {
         },
         body: JSON.stringify(param),
     };
-    const response = await fetch("http://localhost:3000/api/user/read", options);
+    const response = await fetch(API.SERVER + "/api/user/read", options);
     const data1 = await response.json();
     authStore.dispatch(getItems("", data1.user.Username))
     return data1;
@@ -39,7 +40,7 @@ const Signup = async (Username, Password, Email, FirstName, LastName) => {
         },
         body: JSON.stringify(param),
     };
-    const response = await fetch("http://localhost:3000/api/user/create", options);
+    const response = await fetch(API.SERVER + "/api/user/create", options);
     const data = await response.json();
     localStorage.setItem('user', JSON.stringify(data));
     if(data.access_token){
@@ -90,7 +91,7 @@ const updateUser = async (Username, Email, FirstName, LastName, ProfilePicture, 
         },
         body: JSON.stringify(param),
     };
-    const response = await fetch("http://localhost:3000/api/user/update", options);
+    const response = await fetch(API.SERVER + "/api/user/update", options);
     const data = await response.json();
     console.log(data);
     return data;

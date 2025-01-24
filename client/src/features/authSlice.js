@@ -108,7 +108,7 @@ export const getItems = (token, Username) => async dispatch => {
 }
 
 export const getAllItems = () => async dispatch => {
-    const items = await fetch("http://localhost:3000/api/item/read");
+    const items = await fetch(API.SERVER + "/api/item/read");
     const parsedData = await items.json();
     dispatch(authSlice.actions.loadItems(await parsedData.result));
 }
