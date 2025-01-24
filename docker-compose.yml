@@ -30,7 +30,7 @@ services:
 
     container_name: frontend
     ports:
-      - "80:80"
+      - "204:80"
     depends_on:
       - server
 
