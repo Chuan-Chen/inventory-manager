@@ -1,4 +1,4 @@
-import {createSlice, configureStore, Tuple, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, configureStore } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
 import API from './api';
 
@@ -84,6 +84,7 @@ const authStore = configureStore({
 
 export const getItems = (token, Username) => async dispatch => {
         //const user = JSON.parse(localStorage.getItem('user'));
+    try{
         const param = {
             "Username": JSON.parse(localStorage.getItem('user')).Username
         }
@@ -101,6 +102,9 @@ export const getItems = (token, Username) => async dispatch => {
         const parsedData = await items.json();
         console.log(parsedData)
         dispatch(authSlice.actions.loadItems(await parsedData.result));
+    }catch(err){
+        return;
+    }
 }
 
 export const getAllItems = () => async dispatch => {

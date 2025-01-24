@@ -1,6 +1,5 @@
+import { getItems } from "../features/authSlice";
 import authStore from "./authSlice";
-import { authSlice } from "./authSlice";
-
 
 const Login = async (Username, Password)=> {
 
@@ -19,6 +18,7 @@ const Login = async (Username, Password)=> {
     };
     const response = await fetch("http://localhost:3000/api/user/read", options);
     const data1 = await response.json();
+    authStore.dispatch(getItems("", data1.user.Username))
     return data1;
 }
 
