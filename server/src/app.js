@@ -18,21 +18,21 @@ dotenv.config();
 
 
 const corsOptions = {
-    origin: ['http://localhost'],
+    origin: ['*'],
 }
 
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(cors(corsOptions));
+app.use(cors());
 
-app.use("/api/oauth", cors(corsOptions), oauthRoutes);
-app.use("/api/item", cors(corsOptions), itemRoutes);
-app.use("/api/user", cors(corsOptions), userRoutes);
+app.use("/api/oauth", oauthRoutes);
+app.use("/api/item", itemRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/ai", chatbotRoutes);
 app.use("/api/search", searchRoutes);
-app.use("/api/image", cors(corsOptions), imageRoutes);
+app.use("/api/image", imageRoutes);
 app.use("/api/stats", statsRoutes);
 app.use("/api/contact", contactRoutes)
 

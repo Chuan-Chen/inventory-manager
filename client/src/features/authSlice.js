@@ -31,6 +31,10 @@ const authSlice = createSlice({
             state.user = null;
             state.access_token = null;
             state.isAuthenticated = false;
+            localStorage.setItem('expireAt', null)
+            localStorage.setItem('isAuthenticated', state.isAuthenticated);
+            localStorage.setItem('user', state.user);
+            localStorage.setItem('access_token', state.access_token);
             //localStorage.setItem('isAuthenticated', state.isAuthenticated);
         },
         preflight: (state, action) => {
@@ -78,10 +82,12 @@ const authStore = configureStore({
 });
 
 
-export const getItems = (Username) => async dispatch => {
+export const getItems = (token, Username) => async dispatch => {
+        //const user = JSON.parse(localStorage.getItem('user'));
         const param = {
-            Username: Username
+            "Username": JSON.parse(localStorage.getItem('user')).Username
         }
+        
         const options = {
             method: "POST",
             headers: {
@@ -89,6 +95,7 @@ export const getItems = (Username) => async dispatch => {
             },
             body: JSON.stringify(param),
         }
+        console.log(options)
         const url = API.SERVER + "/api/item/read"
         const items = await fetch(url, options);
         const parsedData = await items.json();

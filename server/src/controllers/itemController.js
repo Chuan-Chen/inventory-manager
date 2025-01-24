@@ -51,6 +51,21 @@ const createItem = async(req, res) => {
     }
 }
 
+/**
+        const result = await Item.find({
+            "$or" : [
+                {Username: filter.Username},
+                {ItemName: filter.ItemName},
+                {ItemImage: filter.ItemImage}, 
+                {ItemBarcode: filter.ItemBarcode}, 
+                {ItemCateory: filter.ItemCateory},
+                {ItemAmount: filter.ItemAmount},
+                {ItemDescription: filter.ItemDescription}
+            ]
+        }, {_id: 0, __v: 0});
+
+ */
+
 const readItem = async(req, res) => {
     try{
             
@@ -64,17 +79,7 @@ const readItem = async(req, res) => {
             ItemDescription: req.body.ItemDescription
         }
 
-        const result = await Item.find({
-            "$or" : [
-                {Username: filter.Username},
-                {ItemName: filter.ItemName},
-                {ItemImage: filter.ItemImage}, 
-                {ItemBarcode: filter.ItemBarcode}, 
-                {ItemCateory: filter.ItemCateory},
-                {ItemAmount: filter.ItemAmount},
-                {ItemDescription: filter.ItemDescription}
-            ]
-        }, {_id: 0, __v: 0});
+        const result = await Item.find({Username: filter.Username}, {_id: 0, __v: 0});
 
         res.status(200).json({result, msg: "Search Successful"});
     }catch(err){

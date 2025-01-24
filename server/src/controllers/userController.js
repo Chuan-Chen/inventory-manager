@@ -85,11 +85,10 @@ const readUser = async(req, res) => {
                 const authHeader = req.headers['authorization'];
                 const token = authHeader && authHeader.split(' ')[1];
                 //console.log(token, "Token")
-                
+                console.log(req.authorization.isAuthorized)
                 if(req.authorization.isAuthorized) {
                     res.status(200).json({user: userParams, msg: "Successful login via JWT", access_token: token, expireAt: new Date(parseJWT(token).exp * 1000)})
                 }else{
-                    
                     if(hash.validate(req.body.Password, user.Salt, user.Password)){
                         const access_token = jwt.sign(userParams, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
                         res.status(200).json({user: userParams, msg: "Successful login and created new JWT", access_token: access_token, expireAt: new Date(parseJWT(access_token).exp * 1000)});
