@@ -159,7 +159,15 @@ const updateItem = async(req, res) => {
 }
 
 const deleteItem = async(req, res) => {
-
+    try{
+        if(!req.authorization.isAuthorized){
+            return res.status(401).json({result: null, msg: "Not authorized"})
+        }
+        const data = await Item.deleteOne({ItemBarcode: req.body.ItemBarcode})
+        res.status(200).json({result: await data, msg: "Delete Successful"})
+    }catch(err){
+        res.status(400).json({result: null, msg: "Delete Unsuccessful"})
+    }
 }
 
 

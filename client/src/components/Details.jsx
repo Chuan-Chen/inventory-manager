@@ -3,6 +3,12 @@ import styled from "styled-components"
 import Logo from "../assets/logo.svg";
 import {Link} from "react-router-dom";
 import Edit from "../assets/edit_square.svg"
+import Global from "../styles/Global";
+import authStore from "../features/authSlice";
+import { getItems } from "../features/authSlice";
+import API from "../features/api";
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 const Image = styled.img`
     height: auto;
@@ -171,6 +177,38 @@ const EditImg = styled.img`
     height: 20px; 
     width: auto;
 `
+const DeleteBtn = styled.button`
+    background: none;
+    color: white;
+    border: grey 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background:rgb(47, 48, 64);
+          color: white;
+          text-shadow: 0px 0px 10px white;
+    }
+`
+
+const ConfirmBtn = styled.div`
+    background: black;
+    color: white;
+    border: grey 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    height: fit-content;
+    width: fit-content;
+    &:hover{
+          box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+          background:rgb(47, 48, 64);
+          color: white;
+          text-shadow: 0px 0px 10px white;
+    }
+`
+
 const Amount = styled.div`
 
 `
@@ -178,25 +216,108 @@ const Cost = styled.div`
 
 `
 
+const Popup = styled.div`
+    display: ${props => props.$isVis === "" ?  "none" : "grid"};
+    ${Global.Animations.TrackingInFwdTop}
+    transition: all .5s ease-out;
+    background: white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 80px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0px 15px 35px -5px rgba(23, 53, 87, 0.59);
+    align-items: center;
+    justify-content: center;
+
+`
+
+const ConfirmPopup = styled.div`
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: grid;
+    backdrop-filter: blur(10px);
+`
+
+const EditInputBox = styled.input`
+    display: ${props => props.$isDisplay && props.$x !== 0 ? "grid" : "none"};
+    position: absolute;
+    left: ${props => props.$x && props.$isDisplay ? props.$x + "px" : "0px" };
+    top: ${props => props.$y && props.$isDisplay ? props.$y + "px" : "0px" };
+    z-index: 2;
+`
+
 
 export default function Details({object, auth, user, profilePicture}){
     
     const [ItemDetails, setItemDetails] = useState(object[0]);
     const [updateItem, setUpdateItem] = useState(false);
-    
+    const [PopupText, setPopupText] = useState("")
+    const [coord, setCoord] = useState({x : 0, y : 0, placeholder: null})
+    const navigate = useNavigate();
+
     const handleEdit = (e) => {
-        setUpdateItem(!updateItem);
+        if(auth){
+            setUpdateItem(!updateItem);
+        }
+        
     }   
 
-    useEffect(()=>{
+    
 
+    const changeItemObject = (e) => {
+        console.log(e.target);
+        //console.log({x: e.target.clientX, y: e.target.clientY,})
+        setCoord({
+            x: e.target.x,
+            y: e.target.y,
+            placeholder: e.target.id
+        })
+    }
+
+    const changeItemDetails = (e) => {
+    }
+
+    useEffect(()=>{
+        console.log(ItemDetails)
     }, []);
 
+    const changepopup = (e) => {
+        setPopupText(e.target.value)
+        setTimeout(() => {return "grid"}, "3000")
+    }
+
+    const deleteItem = async () => {
+        const param = {
+            "Username": user.Username,
+            "LastName" : user.LastName,
+            "Email" : user.Email,
+            "ItemBarcode" : ItemDetails.ItemBarcode
+        };
+        console.log(ItemDetails)
+        const options = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization" : "Bearer " + localStorage.getItem('access_token'),
+            },
+            body: JSON.stringify(param),
+        };
+        const response = await fetch(API.SERVER + "/api/item/delete", options);
+        const data1 = await response.json();
+        console.log( await data1)
+        authStore.dispatch(getItems("", await data1.result.Username))
+        navigate('/app/inventory');
+        return data1;
+    }
 
     
     //addItem([title, price, image, 1])
     return (
         <Page>
+            <EditInputBox $isDisplay = {updateItem} $x = {coord.x} $y = {coord.y} placeholder={coord.placeholder} onChange={changeItemDetails}></EditInputBox>
             <Header>
                 <div style = {{height: "100%", display: "flex", fontWeight: "bolder", transition: "all .3s ease-out"}}>
                     <Link to = {"/"} style = {{display: "flex", alignItems: "center", justifyContent: "center", color: "white", textDecoration: "none"}}>
@@ -207,26 +328,27 @@ export default function Details({object, auth, user, profilePicture}){
                 </div>
                 <div style = {{alignSelf: "center", justifySelf: "end", margin: "20px", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px"}}>
                     {auth ? 
-                    <>
+                    <> 
+                        <DeleteBtn onClick={deleteItem}>Delete Item</DeleteBtn>
                         <EditBtn onClick={handleEdit}>{updateItem ? "Save" : "Edit Item"}</EditBtn>
                         <Link to = {"/app/profile"}>
                         <img src = {profilePicture} style = {{height: "32px", objectFit: "cover", width: "32px", borderRadius: "50px", boxShadow: "0px 15px 35px -5px rgba(23, 53, 87, 0.59)"}}></img>
                         </Link>
                         </>: 
-                        <Link to = "/auth" style = {{color: "white", outline: "none", textDecoration: "none"}}>Login</Link>
+                        <Link to = "/auth" style = {{color: "white", outline: "none", textDecoration: "none"}} onClick={() => {localStorage.setItem("previousLink", window.location.href)}}>Login</Link>
                     }
                 </div>
             </Header>
             <Container>
                 <div style = {{width: "90%", position: "relative", placeSelf: "center", maxWidth: "40vh", gridArea: "image"}}>
                     <Image src = {ItemDetails.ItemImage} draggable = "false"/>
-                    <div style = {{position: "absolute", top: "-16px", right: "-16px"}}>{updateItem ? <EditImg src = {Edit}></EditImg> : ""}
+                    <div style = {{position: "absolute", top: "-16px", right: "-16px"}}>{updateItem ? <EditImg id = {"ItemImage"} onClick = {changeItemObject} src = {Edit}></EditImg> : ""}
                     </div>
                 </div>
                 
                 <WrapperRight>
                 
-                <Title>{ItemDetails.ItemName}{updateItem ? <EditImg src = {Edit}></EditImg> : ""}</Title>
+                <Title>{ItemDetails.ItemName}{updateItem ? <EditImg id = {"ItemName"} onClick = {changeItemObject} src = {Edit}></EditImg> : ""}</Title>
                 <div style = {{gridArea: "itemdetail", display: "flex", alignItems: "start", justifyContent: "center", gap: "20px", flexDirection: "column"}}>
                     <Amount>Quantity: {ItemDetails.ItemAmount}</Amount>
                     <Cost>Price: {ItemDetails.Cost}</Cost>
@@ -234,20 +356,29 @@ export default function Details({object, auth, user, profilePicture}){
                 </div>
                 <Detail>
                     <div>Product Details: </div>
-                    <div>{ItemDetails.ItemDescription}{updateItem ? <EditImg src = {Edit}></EditImg> : ""}</div>
+                    <div>{ItemDetails.ItemDescription}{updateItem ? <EditImg id = {"ItemDescription"} onClick = {changeItemObject} src = {Edit}></EditImg> : ""}</div>
                 </Detail>
                 </WrapperRight>
                 <BottomWrapper>
                 <div style = {{justifySelf: "start", display: "flex", gap: "5px", width: "100%", gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))", maxHeight: "2em", overflowY: "hidden", textOverflow: "ellipsis"}} className="ItemCategory">
                         <div style = {{borderRadius: "3px", padding: "2px"}} >Tags:</div> {ItemDetails.ItemCategory.map((element, index)=>{
                         return <div style = {{border: "1px solid grey", borderRadius: "3px", padding: "2px", overflow: "hidden"}} key = {index}>{ItemDetails.ItemCategory[index]}</div>
-                    })}{updateItem ? <EditImg src = {Edit}></EditImg> : ""}</div>
+                    })}{updateItem ? <EditImg id = {"ItemCategory"} onClick = {changeItemObject} src = {Edit}></EditImg> : ""}</div>
                 <ViewContainer>
                     <div>Views: {ItemDetails.Views}</div>
                     <div>ID: {ItemDetails.ItemID}</div>
                 </ViewContainer>
                 </BottomWrapper>
-            </Container>    
+            </Container>
+        <Popup $isVis = {PopupText}>
+            {PopupText}
+        </Popup>
+
         </Page>
     )
 }
+/**
+        <ConfirmPopup>
+            <ConfirmBtn>Confirm</ConfirmBtn>
+        </ConfirmPopup>
+ */

@@ -1,5 +1,6 @@
+
 const API = {
-    SERVER: "http://localhost:3000"
+    SERVER: import.meta.env.VITE_APP_BACKEND_API
 }
 
 export default API

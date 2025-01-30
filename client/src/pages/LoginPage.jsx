@@ -67,6 +67,14 @@ function LoginPage(){
 
     const handleNavi = () => {
         navi("/app/inventory");
+        /**
+                if(localStorage.getItem("previousLink")){
+            navi(-1);
+        }else{
+            navi("/app/inventory");
+        }
+         */
+        
     }
     const reset = () => { 
         setUsername("");
@@ -98,7 +106,7 @@ function LoginPage(){
                 <div style={{display: "grid", gridAutoFlow: "row", gap: '10px'}}>
                     <div style = {{display: isSignup ? "grid" : "none", gap: "10px"}}>
                         
-                        <InputText placeholder="First Name" onChange={(e)=>{setFName(e.target.value)}}></InputText>
+                        <InputText place holder="First Name" onChange={(e)=>{setFName(e.target.value)}}></InputText>
                         <InputText placeholder="Last Name" onChange={(e)=>{setLName(e.target.value)}}></InputText>
                         <InputText placeholder="E-mail" onChange={(e)=>{setEmail(e.target.value)}}></InputText> 
                     </div>

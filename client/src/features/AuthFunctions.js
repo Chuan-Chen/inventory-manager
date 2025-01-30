@@ -19,7 +19,7 @@ const Login = async (Username, Password)=> {
     };
     const response = await fetch(API.SERVER + "/api/user/read", options);
     const data1 = await response.json();
-    authStore.dispatch(getItems("", data1.user.Username))
+    authStore.dispatch(getItems("", await data1.user.Username))
     return data1;
 }
 

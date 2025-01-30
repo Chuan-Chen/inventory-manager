@@ -1,6 +1,6 @@
 # Intro
 - Inventory Management system. 
-- Intergrated with Open WEBUI with Ollama3 support. 
+- Intergrated with Ollama3 support. 
 - run ```npm run dev``` to start client and server
 
 # Server enviroment variables
@@ -19,6 +19,6 @@ NODEMAILER_APP_PASSWORD =
 NODEMAILER_APP_PASSWORD is used for contact me section of the app.
 
 
-# Issues
-- [ ] Currently on http1 needs to update to -> http2 for 100 concurrent SSE connections
-- [ ] Implementing backend AI compability using llama3, self-hosted
+# Client enviroment variables
+- Setup Client enviorment variables before running
+VITE_APP_BACKEND_API = "http://localhost:3000"

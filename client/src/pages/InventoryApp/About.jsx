@@ -152,8 +152,6 @@ const AlertBoxContainer = styled.div`
   border-radius: 10px;
   margin: 10px;
   text-align: center;
-
-
     @media only screen and (max-width: 380px) {
     width: calc(100% - 10px);
     padding: 0px;

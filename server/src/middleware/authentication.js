@@ -10,7 +10,7 @@ const generateToken = (req, res, next) => {
         FirstName: req.body.firstName,
         LastName: req.body.LastName
     }
-    const access_token = jwt.sign(userParametersAccessToken, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
+    const access_token = jwt.sign(userParametersAccessToken, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
     const refresh_token = jwt.sign(userParametersAccessToken, process.env.REFRESH_ACCESS_TOKEN_SECRET)
     req.token = {access_token: access_token, refresh_token: refresh_token}
     req.authorization = {isAuthorized: true};
@@ -27,19 +27,28 @@ const authenticateToken = async (req, res, next) => {
             console.log(req.authorization.isAuthorized)
             return next();
         }
-        console.log(token);
         const parsedToken = parseJWT(token);
-        console.log(parsedToken)
+        if((new Date() * 1000) < new Date(parsedToken.exp*1000)){
+            return res.status(401).json({result: null, msg: "Token Expired please login again."})
+        }
+        
+        //console.log(parsedToken);
+        //console.log(new Date(parsedToken.iat*1000))
+        //console.log(new Date(parsedToken.exp*1000));
         if(token == null) return res.status(401).json({msg: "null token"});
-        if((req.body.Username != parsedToken.Username || req.body.LastName != parsedToken.LastName || req.body.Email != parsedToken.Email) && req.authorization == false) {
+        if((req.body.Username != parsedToken.Username && req.body.LastName != parsedToken.LastName && req.body.Email != parsedToken.Email) ) {
             console.log(parsedToken)
             console.log(req.body)
-            return res.status(401).json({msg: "Not Authorized contact admin."})
+            return res.status(401).json({result: null, msg: "Not Authorized, include Username, LastName and Email with Token."})
         }
         
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if(err) req.authorization = {isAuthorized: false};
-            else req.authorization = {isAuthorized: true};
+            if(err) {
+                req.authorization = {isAuthorized: false};
+            }else{
+                req.authorization = {isAuthorized: true}
+                req.authorization.data = {parsedToken}
+            };
             //req.token = {access_token: token};
             next();
         });

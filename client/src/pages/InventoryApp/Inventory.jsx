@@ -13,7 +13,6 @@ const Page = styled.div`
     ${Global.Animations.SlideInTop}
     width: 100%;
     display: grid;
-    
 `
 
 
@@ -138,12 +137,24 @@ const SubmitButton = styled.button`
       }
 `
 
+const QuantityInput = styled.input`
+  border: none;
+  align-self: center;
+  justify-self: center;
+  width: 90%;
+  background: none;
+  border-bottom: 1px solid black;
+  &:focus{
+    outline: none;
+  }
+`
+
 const Container = styled.div`
   display: ${props => props.$isexpanded ? "grid" : "none"};
   gap: 15px;
 `
 
-function CreateItem({expanded, handleFocus, handleBlur, addData}){
+function CreateItem({expanded, handleFocus, handleBlur, addData, popupHandler}){
   const [categories, setCategories] = useState([]);
   const [currentCategoryText, setCurrentCategoryText] = useState("");
   const [item, setItem] = useState({
@@ -185,8 +196,10 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     console.log(item)
   }
 
-  const Submit = (user, access_token) => {
-    create(access_token, {...item, "Username" : user.Username, "ItemCategory" : [...categories], "ItemImage" : imageURL.url});
+  const Submit = async (user, access_token) => {
+    const result = await create(access_token, {...item, "Username" : user.Username, "ItemCategory" : [...categories], "ItemImage" : imageURL.url});
+    console.log(result);
+    popupHandler(result.msg);
     dispatch(getItems(access_token, user.Username))
   }
 
@@ -217,7 +230,7 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
           
           </DescriptionInputBox>
           
-          <div style = {{display: "grid", gridAutoFlow: "column"}}>
+          <div style = {{display: "grid", gridAutoFlow: "column", alignItems: "center", justifyContent: "center", width: "90%"}}>
           <CategoryBox $isexpanded = {expanded} style = {{justifySelf: "end"}}>
             Category: 
             <div style = {{display: "flex", flexDirection: "row"}}>
@@ -230,15 +243,16 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
           <FileUpload imageStatus = {imageURL.status} imageURL = {imageURL.url} handleImage={handleImage}>
           </FileUpload>
           </div>
-          <input placeholder="Quantity" onKeyUp={handleQuantity}></input>
+          <QuantityInput placeholder="Quantity" onKeyUp={handleQuantity} type="number" min="1"></QuantityInput>
+
           </div>
           <div style = {{display: "grid", alignSelf: "center", justifySelf: "center", gridAutoFlow: "column", overflow: "hidden", gap: "4px"}}>
-          Categories: 
+           
             {categories.map((e, index)=>{
               return <Category key = {index}>{e} </Category>
             })} 
           </div>
-  
+          
             
           <SubmitButton $isexpanded = {expanded} onClick={()=>{Submit(user.user, user.access_token)}}>Create Item</SubmitButton>
         
@@ -298,7 +312,19 @@ function CreateItem({expanded, handleFocus, handleBlur, addData}){
     padding: 20px;
     border-radius: 10px;
     `
-
+    const PopUp = styled.div`
+    ${Global.Animations.TrackingInFwdTop};
+    display: ${props => props.$isDisplay == "" ? "none" : "grid"};
+    align-items: center;
+    justify-content: center;
+    background: white;
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    `
 
 /**
       const sse = new EventSource(`http://localhost:3000/api/item/stream/${user.user.Username}`);
@@ -330,6 +356,7 @@ export default function Inventory(){
     const [data, setData] = useState([]);
     const [rendered, setRendered] = useState(false);
     const [err, setErr] = useState(false);
+    const [popUpMsg, setpopUpMsg] = useState("");
     const user = useSelector(state => state.auth);
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -357,6 +384,13 @@ export default function Inventory(){
         sse.close();
       }
       return sse;
+    }
+
+    const popupHandler = (message) => {
+      setpopUpMsg(message);
+      setTimeout(() => {
+        setpopUpMsg("");
+      }, 3000);
     }
 
     const fetchitem = async (Username) => {
@@ -419,8 +453,10 @@ export default function Inventory(){
                   </ItemCardsContainer>
  */
     return (
+        <div style = {{height: "100%", width: "100%"}} onClick={handleBlur}>
+        <PopUp $isDisplay={popUpMsg} onClick={handleBlur}>{popUpMsg}</PopUp>
         <Page onClick={handleBlur}>
-                <CreateItem expanded = {expanded}  handleBlur = {handleBlur} handleFocus = {handleFocus} addData = {addData}> 
+                <CreateItem expanded = {expanded}  handleBlur = {handleBlur} handleFocus = {handleFocus} addData = {addData} popupHandler = {popupHandler}> 
                 
                 </CreateItem>
                 <Content onClick={handleBlur}>
@@ -428,11 +464,26 @@ export default function Inventory(){
                 <ItemContainer>
                   {data ? data.map((element, index) => {
                     return (
-                    <ItemCard key = {element.ItemID} ItemCategory={element.ItemCategory} ItemImage={element.ItemImage} ItemAmount={element.ItemAmount ? element.ItemAmount : 0} Username = {element.Username} ItemID = {element.ItemID} ItemName={element.ItemName ? element.ItemName : "placeholder"} ItemBarcode={element.ItemBarcode ? window.location.href + "/" + element.ItemBarcode : "0000"}></ItemCard>
+                    <ItemCard 
+                      key = {element.ItemID} 
+                      ItemCategory={element.ItemCategory} 
+                      ItemImage={element.ItemImage} 
+                      ItemAmount={element.ItemAmount ? element.ItemAmount : 0} 
+                      Username = {element.Username} 
+                      ItemID = {element.ItemID} 
+                      ItemName={element.ItemName ? element.ItemName : "placeholder"} 
+                      ItemBarcode={element.ItemBarcode} 
+                      LastName = {user.user.LastName} 
+                      Email = {user.user.Email}
+                      PopupHandler = {popupHandler}>
+                    </ItemCard>
                   )}) : "Loading"}
                   </ItemContainer>
                 </div>
+                
                 </Content>
+                
         </Page>
+        </div>
     )
 }

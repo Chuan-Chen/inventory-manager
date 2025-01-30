@@ -3,6 +3,11 @@ import { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { QRCode } from 'react-qrcode-logo';
 import Logo from "../assets/logo.svg"
+import Delete from "../assets/delete.svg"
+import authStore from "../features/authSlice";
+import { getItems } from "../features/authSlice";
+import API from "../features/api";
+
 const Item = styled.div`
 
 
@@ -32,6 +37,7 @@ const ItemCardsContainer = styled.div`
     align-self: center;
     justify-self: center;
     transition: all .5s ease-out;
+    position: relative;
 `
 
 
@@ -112,7 +118,25 @@ const QRcodeBtn = styled.button`
       }
 `
 
-export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCategory, ItemAmount, ItemBarcode}){
+const DeleteBtn = styled.div`
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 4px;
+    top: 5px;
+    right: 5px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover{
+        
+    }
+`
+
+
+
+export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCategory, ItemAmount, ItemBarcode, LastName, Email, PopupHandler}){
 
     const [date, setDate] = useState("tag");
     const qrcoderef = useRef(null);
@@ -124,6 +148,8 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
         "ItemCategory" : [...ItemCategory],
         "ItemAmount" : ItemAmount
     })
+
+    const [qrcode, setQrcode] = useState((window.location.href + "/" + ItemBarcode).replace("/app/inventory", "/item")) 
 
     const [qrdisplay, setQrdisplay] = useState(false);
 
@@ -141,16 +167,44 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
 
     const downloadQR = () => {
         if(qrcoderef.current){
-            qrcoderef.current.download('png', ItemBarcode)
+            qrcoderef.current.download('png', qrcode)
         }
     }
 
+    const deleteItem = async () => {
+        const param = {
+            "Username": Username,
+            "LastName" : LastName,
+            "Email" : Email,
+            "ItemBarcode" : ItemBarcode
+        };
+        const options = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization" : "Bearer " + localStorage.getItem('access_token'),
+            },
+            body: JSON.stringify(param),
+        };
+        const response = await fetch(API.SERVER + "/api/item/delete", options);
+        const data1 = await response.json();
+        console.log( await data1)
+        PopupHandler(data1.msg != "Not authorized"? data1.msg : "Refresh and login again!");
+        authStore.dispatch(getItems("", await data1.result.Username))
+        
+        return data1;
+    }
+
     return (
-        <ItemCardsContainer onClick={()=>{console.log("clicked")}}>
+        <ItemCardsContainer>
             {qrdisplay ? 
-            <div style = {{display: qrdisplay ? "flex" : "none", position: "relative", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", flexDirection: "column", cursor: "pointer", transition: "all .5s ease-out"}} onClick={()=>{setQrdisplay(!qrdisplay)}}><QRCode ref = {qrcoderef} value = {ItemBarcode.replace("/app/inventory/", "/item/")} bgColor="#e5e4e2" logoImage={Logo} removeQrCodeBehindLogo = {true}></QRCode> <div style = {{fontSize: ".8rem", fontWeight: "bold"}}>click to close</div><button onClick={downloadQR}>Download</button></div>
+            <div 
+            style = {{display: qrdisplay ? "flex" : "none", position: "relative", height: "100%", width: "100%", alignItems: "center", justifyContent: "center", flexDirection: "column", cursor: "pointer", transition: "all .5s ease-out"}} 
+            onClick={()=>{setQrdisplay(!qrdisplay)}}><QRCode ref = {qrcoderef} value = {qrcode} bgColor="#e5e4e2" logoImage={Logo} removeQrCodeBehindLogo = {true}></QRCode> 
+            <div style = {{fontSize: ".8rem", fontWeight: "bold"}}>click to close</div><button onClick={downloadQR}>Download</button></div>
             : 
             <ItemCards>
+                <DeleteBtn onClick={deleteItem}><img src = {Delete}></img></DeleteBtn>
                 <div style = {{display: "grid", gap: "10px"}}>
                 <CardSection style = {{display: "grid"}}>
                     <img style ={{alignSelf: "center", justifySelf: "center", borderRadius: "5px", minHeight: "150px", maxHeight: "170px", height: "100%", width: "100%", objectFit: "cover"}} src = {ItemImage} alt = "ItemImage"/>
@@ -165,8 +219,7 @@ export default function ItemCard({ItemName, ItemImage, Username, ItemID, ItemCat
                 </CardSection> 
                 <CardSection style = {{display: "grid"}}>
                     <QRcodeBtn onClick={()=>{setQrdisplay(!qrdisplay)}}>QRcode</QRcodeBtn>
-                    <ViewDetailsBtn href={ItemBarcode.replace("/app/inventory/", "/item/")}>View Details</ViewDetailsBtn>
-                    
+                    <ViewDetailsBtn href={qrcode}>View Details</ViewDetailsBtn>
                 </CardSection>
                 </div>
                 <div style = {{alignSelf: "end", display: "grid", gridAutoFlow: "row", color: "grey", fontSize: ".6em"}}>

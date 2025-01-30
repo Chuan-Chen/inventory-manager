@@ -31,7 +31,6 @@ export default function ItemDetails(){
     useEffect(()=>{
         getItemDetails();
         dispatch(authSlice.actions.checkToken())
-        console.log(user);
     }, [])
 
     const getItemDetails = async() => {

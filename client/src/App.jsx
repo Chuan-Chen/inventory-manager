@@ -1,4 +1,4 @@
-import {Link, Route, Routes} from "react-router-dom";
+import {Link, Route, Routes, useParams} from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import InventoryApp from "./pages/InventoryApp";
 import LoginPage from "./pages/LoginPage";
@@ -16,6 +16,7 @@ import AIChat from "./pages/InventoryApp/AIChat";
 import Products from "./pages/Products";
 import UserDashboard from "./components/UserDashboard";
 import ItemDetails from "./pages/ItemDetailsPage";
+import Oauth from "./features/oauth";
 /*
 {
               user: JSON.parse(localStorage.getItem('user')),
@@ -65,8 +66,8 @@ function App() {
     <>
     <Routes style = {{filter: "invert(100%)"}}>
       <Route path = "/" element={<LandingPage/>}></Route>
-      <Route path = "/oauth" element={<InventoryApp/>}>
-        <Route path = ":access_token" element={<div>accesstoken</div>}></Route>
+      <Route path = "/oauth" element={<Oauth></Oauth>}>
+        <Route path = ":access_token" element={<></>}></Route>
       </Route>
       <Route path = "/auth" element={<LoginPage/>}></Route>
       <Route path = "/contact-me" element={<About/>}></Route>
