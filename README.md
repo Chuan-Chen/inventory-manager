@@ -42,14 +42,16 @@ VITE_APP_BACKEND_API = "http://localhost:3000"
 -----------------
 # Demo
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo1.png?raw=true "Landing Page")
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo2.png?raw=true "Login Page")
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_about.png?raw=true "User info")
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_chatbot.png?raw=true "Chat bot")
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_inventory_detail.png?raw=true "Item Details")
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_search.png?raw=true "Search")
+
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/mobiledemo1.png?raw=true "Search")
