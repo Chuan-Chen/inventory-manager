@@ -360,12 +360,12 @@ export default function Inventory(){
     const user = useSelector(state => state.auth);
     const dispatch = useDispatch();
     useEffect(()=>{
-      
+      console.log(user.user.Username)
       if(user.items){
         setData(user.items);
         
       }else{
-        console.log(user.user.Username)
+        
         dispatch(getItems(user.access_token, user.user.Username))
       }
       dispatch(authSlice.actions.checkToken())

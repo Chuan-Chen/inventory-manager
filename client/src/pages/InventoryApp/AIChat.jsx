@@ -3,7 +3,8 @@ import arrowUp from "../../assets/arrowUp.svg";
 import styled from "styled-components"
 import computer from "../../assets/logo.svg"
 import Global from "../../styles/Global";
-
+import API from "../../features/api";
+import { useSelector, useDispatch } from "react-redux";
 /**
   @media only screen and (max-width: 768px) {
     width: 95%;
@@ -164,14 +165,14 @@ export default function AIChat() {
         "message" : "",
         "state" : "pending"
     });
-
+    const user = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
     const [messageStack, setmessageStack] = useState([]);
 
     useEffect(()=>{
         if(chatMessage.state != "pending"){
             setmessageStack([...messageStack, {"role" : "assistant", "content": chatMessage.message}]);
-            
             setChatMessage({"message" : "", "state" : "pending"})
         }
         /**
@@ -184,20 +185,20 @@ export default function AIChat() {
     }, [chatMessage])
 
 
-    const endPoint = "http://localhost:3000/api/ai/chat";
+    const endPoint = API.SERVER + "/api/ai/chat";
 
     const sendChat = async () => {
         //console.log(chatMessage.message)
         const options = {
                 "method" : "POST",
                 "headers" : {
-                    "Content-Type": "application/json",
-                    "authorization" : "Bearer " + localStorage.getItem('access_token'),
+                    "Content-Type": "application/json", 
+                    "authorization" : "Bearer " + user.access_token,
                 },
                 "body" : JSON.stringify({
-                    "Username" : "123",
-                    "Email" : "123",
-                    "LastName" : "123",
+                    "Username" : user.user.Username,
+                    "Email" : user.user.Email,
+                    "LastName" : user.user.LastName,
                     "message" : {
                             "role" : "user",
                             "content" : text
@@ -206,6 +207,7 @@ export default function AIChat() {
         }
         //setChatMessage({...chatMessage, state: "successful", message: JSON.stringify(data)})
         const result = await fetch(endPoint, options).then(data => data.json()).then(data => {
+            console.log(data)
             setChatMessage({...chatMessage, state: "successful", message: data.message.content}) 
             localStorage.setItem("messages", `${localStorage.getItem('messages')}, ${JSON.stringify({"role" : "assistant", "content" : data.message.content})}`);
         });

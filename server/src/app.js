@@ -41,7 +41,7 @@ app.use("/api/tokencheck", tokenRoute);
 
 
 app.use("/", (req, res)=>{
-    res.send(`Backend Null`)
+    res.status(200).json({status: "successful"})
 });
 
 
