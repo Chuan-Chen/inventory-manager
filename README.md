@@ -50,6 +50,8 @@ VITE_APP_BACKEND_API = "http://localhost:3000"
 
 ![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_chatbot.png?raw=true "Chat bot")
 
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_inventory.png?raw=true "Inventory Page")
+
 ![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_inventory_detail.png?raw=true "Item Details")
 
 ![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_search.png?raw=true "Search")
