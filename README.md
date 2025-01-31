@@ -56,4 +56,4 @@ VITE_APP_BACKEND_API = "http://localhost:3000"
 
 ![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/demo_search.png?raw=true "Search")
 
-![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/mobiledemo1.png?raw=true "Search")
+![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/assets/mobiledemo1.png?raw=true "Mobile Demo")
