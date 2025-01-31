@@ -1,4 +1,4 @@
-# <div style="text-align: center; display: flex; justify-content: center; align-items: center;">![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/logo.png?raw=true "Shelfy") <br><b>Shelfy</b></br> </div>
+# <div style="text-align: center; display: flex; justify-content: center; align-items: center; font-size: 50px">![alt text](https://github.com/Chuan-Chen/inventory-manager/blob/main/logo.png?raw=true "Shelfy") <br><b>Shelfy</b></br> </div>
 - Inventory Management system. 
 - Intergrated with Ollama3 support. 
 - run ```npm run dev``` to start client and server
