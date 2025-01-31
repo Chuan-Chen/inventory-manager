@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Global from "../styles/Global";
 import API from "../features/api";
-import ItemCard from "../components/ItemCard";
 import Details from "../components/Details";
 import { authSlice } from "../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
