@@ -9,9 +9,9 @@ services:
     container_name: inventory_manager_backend
     ports:
       - "3000:3000"
-    env_file: ./server/.env
+    env_file: stack.env
     environment:
-      - MONGO_URI=mongodb://mongodb_server:27017
+      - MONGO_URI=mongodb://inventory_manager_mongodb:27017
       - LLM_URI=${LLM_URI}
       - PORT=${PORT}
       - GITHUB_OAUTH_CLIENT_ID=${GITHUB_OAUTH_CLIENT_ID}
@@ -30,6 +30,7 @@ services:
     container_name: inventory_manager_frontend
     ports:
       - "204:80"
+    env_file: stack.env
     environment:
       - VITE_APP_BACKEND_API = ${VITE_APP_BACKEND_API}
     depends_on:
@@ -38,7 +39,7 @@ services:
   # Database service
   mongodb:
     image: mongo:latest
-    container_name: mongodb_server
+    container_name: inventory_manager_mongodb
     ports:
       - "27017:27017"
     volumes:
